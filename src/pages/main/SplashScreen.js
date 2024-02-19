@@ -21,9 +21,8 @@ const SplashScreen = () => {
         <div className="flex flex-col items-center justify-center h-screen">
             {isLoading ? (
                 // Loading spinner while waiting
-                <div className="animate-spin text-4xl mb-4">Loading...</div>
+                <div className="animate-spin text-4xl mb-4">{test}</div>
             ) : (
-                // Replace this with your own image
                 <img
                     src={logo}
                     alt="Splash Image"
