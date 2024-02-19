@@ -37,6 +37,19 @@
   }
 }
 
+.bg_image {
+  background-image: url('../src/assets/images/login_image.jpeg');
+  background-size: cover;
+  background-position: center;
+}
+
+.login_container {
+  background-color: rgba(255, 255, 255, 0.7); /* White color with 70% opacity */
+  padding: 20px;
+  border-radius: 10px;
+  margin: 0 auto;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
