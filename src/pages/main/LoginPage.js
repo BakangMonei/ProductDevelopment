@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { showPassword } from "../../../src/redux/actions/passwordActions";
 import googleImage from "../../assets/images/google_image.png";
 import facebookImage from "../../assets/images/facebook_image.png";
 
-export const LoginPage = () => {
+export const LoginPage = ({ showPasswordToggle, showPassword }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const [showPassword, setShowPassword] = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
   return (
     <div className="bg_image flex items-center justify-center min-h-screen ">
       <div className="login_container p-8 rounded-xl shadow-md w-full max-w-md">
@@ -54,12 +56,19 @@ export const LoginPage = () => {
           <div className="">
             <label className="block text-sm font-medium mb-1">
               Password
-              <button
+              {/* <button
                 type="button"
                 className="float-right text-gray-500 text-sm font-medium focus:outline-none hover:text-gray-700 transition duration-200"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? "Hide" : "Show"}
+              </button> */}
+              <button
+                type="button"
+                className="float-right text-gray-500 text-sm font-medium focus:outline-none hover:text-gray-700 transition duration-200"
+                onClick={() => showPassword()}
+              >
+                {showPasswordToggle ? "Hide" : "Show"}
               </button>
               {/* <button
                 type="button"
@@ -87,14 +96,17 @@ export const LoginPage = () => {
               placeholder="Password"
               className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
               id="pass"
-              type={showPassword ? "text" : "password"}
+              type={showPasswordToggle ? "text" : "password"} // Use showPasswordToggle instead of showPassword
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="mb-4 mt-1 text-end">
             <p className="text-sm">
-              <a href="/ForgotPassword" className="text-black font-sans underline">
+              <a
+                href="/ForgotPassword"
+                className="text-black font-sans underline"
+              >
                 Forgot Password?
               </a>
             </p>
@@ -110,5 +122,8 @@ export const LoginPage = () => {
     </div>
   );
 };
+const mapStateToProps = (state) => ({
+  showPasswordToggle: state.password.showPassword,
+});
 
-export default LoginPage;
+export default connect(mapStateToProps, { showPassword })(LoginPage);
