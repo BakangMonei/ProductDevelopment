@@ -1,14 +1,58 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { showPassword } from "../../../src/redux/actions/passwordActions";
+import { signInWithEmailAndPassword } from 'firebase/auth'; // Import Firebase authentication function
+import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
+
 import googleImage from "../../assets/images/google_image.png";
 import facebookImage from "../../assets/images/facebook_image.png";
+import { auth } from '../../firebase';
 
 export const LoginPage = ({ showPasswordToggle, showPassword }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  // const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const db = getFirestore();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    if (!email || !password) {
+      setError("Email and password are required.");
+      return;
+    }
+
+    try {
+      const userSnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', email)));
+      const adminSnapshot = await getDocs(query(collection(db, 'admin'), where('email', '==', email)));
+      const s_adminSnapshot = await getDocs(query(collection(db, 's_admin'), where('email', '==', email)));
+
+      if (userSnapshot.size > 0) {
+        // User exists in the 'user' collection
+        await signInWithEmailAndPassword(auth, email, password);
+        navigate('/UserDashboard');
+      } else if (adminSnapshot.size > 0) {
+        // User exists in the 'admin' collection
+        await signInWithEmailAndPassword(auth, email, password);
+        navigate('/AdminDashboard');
+      } 
+      else if (s_adminSnapshot.size > 0) {
+        // User exists in the 's_admin' collection
+        await signInWithEmailAndPassword(auth, email, password);
+        navigate('/SuperAdminDashboard');
+      } else {
+        setError("Invalid email or password.");
+      }
+    } catch (error) {
+      setError(error.message);
+      console.error('Login error:', error);
+    }
+  };
+
+
+
   return (
     <div className="bg_image flex items-center justify-center min-h-screen ">
       <div className="login_container p-8 rounded-xl shadow-md w-full max-w-md">
@@ -42,7 +86,7 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
         </div>
 
         {error && <p className="text-red-500">{error}</p>}
-        <form>
+        <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1">Email</label>
             <input
@@ -56,13 +100,6 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
           <div className="">
             <label className="block text-sm font-medium mb-1">
               Password
-              {/* <button
-                type="button"
-                className="float-right text-gray-500 text-sm font-medium focus:outline-none hover:text-gray-700 transition duration-200"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? "Hide" : "Show"}
-              </button> */}
               <button
                 type="button"
                 className="float-right text-gray-500 text-sm font-medium focus:outline-none hover:text-gray-700 transition duration-200"
@@ -70,27 +107,6 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
               >
                 {showPasswordToggle ? "Hide" : "Show"}
               </button>
-              {/* <button
-                type="button"
-                className="float-right text-gray-500 text-sm font-medium focus:outline-none hover:text-gray-700 transition duration-200"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <span>
-                    Hide{" "}
-                    <span role="img" aria-label="Close">
-                      👀
-                    </span>
-                  </span>
-                ) : (
-                  <span>
-                    Show{" "}
-                    <span role="img" aria-label="Show">
-                      👁️
-                    </span>
-                  </span>
-                )}
-              </button> */}
             </label>
             <input
               placeholder="Password"

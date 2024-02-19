@@ -4,6 +4,7 @@ import { createStore } from 'redux'; // Import createStore from redux
 import rootReducer from './redux/reducers'; // Import your root reducer
 import SplashScreen from './pages/main/SplashScreen';
 import LoginPage from './pages/main/LoginPage';
+import ForgotPassword from './pages/main/ForgotPassword';
 import RegistrationPage from './pages/main/RegistrationPage';
 import './App.css';
 
@@ -23,7 +24,7 @@ function App() {
           {/* More functionality routes as needed */}
           <Route path="/LoginPage" element={<LoginPage />} />
           <Route path="/RegistrationPage" element={<RegistrationPage />} />
-          {/* <Route path="/ForgotPassword" element={<ForgotPassword />} /> */}
+          <Route path="/ForgotPassword" element={<ForgotPassword />} /> 
 
         </Routes>
       </Router>
