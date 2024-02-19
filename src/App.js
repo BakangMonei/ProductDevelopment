@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Import the necessary components
+import SplashScreen from './pages/main/SplashScreen';
+import LoginPage from './pages/main/LoginPage';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        {/* For testing only */}
+        <Route path="/" element={<SplashScreen />} />
+        <Route path="/SplashScreen" element={<SplashScreen />} />
+        
+
+
+        {/* More functionality routes as needed */}
+        <Route path="/LoginPage" element={<LoginPage />} />
+        {/* <Route path="/RegisterPage" element={<RegisterPage />} />
+        <Route path="/ForgotPassword" element={<ForgotPassword />} /> */}
+
+
+      </Routes>
+    </Router>
   );
 }
 
