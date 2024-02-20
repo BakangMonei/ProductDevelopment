@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../logo.svg';
-import test from '../../assets/images/login_image.jpeg';
 
 const SplashScreen = () => {
     const navigate = useNavigate();
@@ -20,8 +19,12 @@ const SplashScreen = () => {
     return (
         <div className="flex flex-col items-center justify-center h-screen">
             {isLoading ? (
-                // Loading spinner while waiting
-                <div className="animate-spin text-4xl mb-4">Loading...</div>
+                <img
+                    src={logo}
+                    alt="Splash Image"
+                    className="w-64 h-64 animate-fade-in animate-spin"
+                />
+                
             ) : (
                 <img
                     src={logo}
