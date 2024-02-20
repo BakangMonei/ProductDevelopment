@@ -8,6 +8,7 @@ import { getStorage } from "firebase/storage"; // Add Storage
 import { query, where, getDocs } from "firebase/firestore";
 
 
+
 // Web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyA1WaPhblL23jJZBib1qMAg55fHFVXa3Ro",

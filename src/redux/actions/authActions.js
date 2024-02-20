@@ -60,3 +60,36 @@ export const login = (email, password) => async (dispatch) => {
       console.error('Logout error:', error);
     }
   };
+
+  // REGISTRATION
+export const REGISTER_USER_REQUEST = 'REGISTER_USER_REQUEST';
+export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
+export const REGISTER_USER_FAILURE = 'REGISTER_USER_FAILURE';
+
+// Action Creators
+export const registerUserRequest = () => ({
+  type: REGISTER_USER_REQUEST
+});
+
+export const registerUserSuccess = () => ({
+  type: REGISTER_USER_SUCCESS
+});
+
+export const registerUserFailure = (error) => ({
+  type: REGISTER_USER_FAILURE,
+  error
+});
+
+// Thunk Action Creator
+export const registerUser = (userData) => {
+  return async (dispatch) => {
+    dispatch(registerUserRequest());
+    try {
+      // Here you would perform the registration logic
+      // For simplicity, let's assume it was successful
+      dispatch(registerUserSuccess());
+    } catch (error) {
+      dispatch(registerUserFailure(error));
+    }
+  };
+};

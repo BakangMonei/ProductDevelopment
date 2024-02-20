@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { countries } from "countries-list"; // Corrected import statement
+import { countries } from "countries-list";
 import Neiza from "../../assets/images/facebook_image.png";
+import { auth, firestore } from "../../firebase"; // Import Firebase Auth and Firestore
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 export const RegistrationPage = () => {
   const [firstname, setFirstname] = useState("");
@@ -22,10 +25,85 @@ export const RegistrationPage = () => {
   // Lists
   const sports = ["Football", "Basketball", "Tennis", "Swimming", "Golf"];
   const genderM = ["Male", "Female", "Other"];
+  // State for validation and registration success
+  const [validationError, setValidationError] = useState(false);
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission
+  // Initialize useNavigate for redirection
+  const navigate = useNavigate();
+
+  // Function to handle user registration
+  const handleRegister = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
+    // Check if any required field is empty
+    if (
+      firstname.trim() === "" ||
+      lastname.trim() === "" ||
+      email.trim() === "" ||
+      password.trim() === "" ||
+      repassword.trim() === "" ||
+      username.trim() === "" ||
+      sport.trim() === "" ||
+      selectedCountry.trim() === "" ||
+      phonenumber.trim() === "" ||
+      gender.trim() === ""
+    ) {
+      // Validation error: Some fields are empty
+      setValidationError(true);
+      setRegistrationSuccess(false);
+    } else {
+      // Clear validation error if it was previously set
+      setValidationError(false);
+
+      // Check if the email is unique
+      const emailExistsQuery = query(
+        collection(firestore, 'users'),
+        where('email', '==', email)
+      );
+      const emailExistsSnapshot = await getDocs(emailExistsQuery);
+
+      if (!emailExistsSnapshot.empty) {
+        // Email already exists in the database
+        setValidationError(true);
+        setRegistrationSuccess(false);
+        return;
+      }
+
+      try {
+        // Create a new user with email and password
+        await createUserWithEmailAndPassword(auth, email, password);
+
+        // Create an object with the user's data (excluding password)
+        const userData = {
+          firstname,
+          lastname,
+          email,
+          username,
+          gender,
+          sport,
+          selectedCountry,
+          phonenumber,
+        };
+
+        // Add the user's data to Firestore
+        const docRef = await addDoc(collection(firestore, "users"), userData);
+
+        if (docRef) {
+          // Registration and Firestore data addition successful
+          setRegistrationSuccess(true);
+
+          // Redirect to the LoginPage
+          navigate("/"); // Replace '/LoginPage' with the actual path to your LoginPage component
+        } else {
+          console.error("Error adding user data to Firestore.");
+          setRegistrationSuccess(false);
+        }
+      } catch (error) {
+        console.error("Error registering user:", error);
+        setRegistrationSuccess(false);
+      }
+    }
   };
 
   return (
@@ -41,8 +119,15 @@ export const RegistrationPage = () => {
               Log in
             </a>
           </h1>
-          {error && <p className="text-red-500">{error}</p>}
-          <form onSubmit={handleSubmit}>
+          {validationError && (
+            <p className="text-red-500 mb-2">
+              Please fill out all required fields.
+            </p>
+          )}
+          {registrationSuccess && (
+            <p className="text-green-500 mb-2">Registered Successfully!</p>
+          )}
+          <form onSubmit={handleRegister}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 w-full">
               <div>
                 <label className="block text-sm font-medium mb-1">
