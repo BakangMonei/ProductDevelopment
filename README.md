@@ -1,7 +1,9 @@
 ## PACKAGES USED
 
 -   `npm install bcrypt`
-- 
+-  `npm install redux-thunk`
+- `npm install firebase`
+- `npm install countries-list`
 
 ## Available Scripts
 

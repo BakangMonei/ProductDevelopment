@@ -2,10 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const UserDashboard = () => {
+
     return(
-        <p>
-            User Dashboard
-        </p>
+        <div>
+
+            <p>UserDashboard</p>
+
+            <button>
+                Logout
+            </button>
+        </div>
+        
     );
 };
 

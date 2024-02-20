@@ -37,7 +37,6 @@ export const ForgotPassword = ({ sendPasswordResetEmail }) => {
               placeholder="Email"
               className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
               value={email}
-              name="email"
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
