@@ -6,6 +6,9 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../redux/actions/authActions";
+
 export const RegistrationPage = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastame] = useState("");
@@ -18,6 +21,9 @@ export const RegistrationPage = () => {
   const [password, setPassword] = useState("");
   const [repassword, setRePassword] = useState("");
   const [error, setError] = useState(null);
+
+  const dispatch = useDispatch();
+  const registrationState = useSelector(state => state.auth); // Assuming you have combined your reducers and authReducer is part of the state
 
   // Extracting countries from the countries-list package
   const countryOptions = Object.values(countries);
@@ -85,6 +91,7 @@ export const RegistrationPage = () => {
           selectedCountry,
           phonenumber,
         };
+        
 
         // Add the user's data to Firestore
         const docRef = await addDoc(collection(firestore, "users"), userData);
@@ -95,6 +102,7 @@ export const RegistrationPage = () => {
 
           // Redirect to the LoginPage
           navigate("/"); // Replace '/LoginPage' with the actual path to your LoginPage component
+          dispatch(registerUser(userData));
         } else {
           console.error("Error adding user data to Firestore.");
           setRegistrationSuccess(false);
