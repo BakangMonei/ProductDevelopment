@@ -24,13 +24,13 @@ const SplashScreen = () => {
                     alt="Splash Image"
                     className="w-64 h-64 animate-fade-in animate-spin"
                 />
-                
             ) : (
                 <img
                     src={logo}
                     alt="Splash Image"
                     className="w-64 h-64 animate-fade-in"
                 />
+                
             )}
         </div>
     );
