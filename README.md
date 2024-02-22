@@ -4,6 +4,7 @@
 -  `npm install redux-thunk`
 - `npm install firebase`
 - `npm install countries-list`
+- `npm install firebase`
 
 ## Available Scripts
 
