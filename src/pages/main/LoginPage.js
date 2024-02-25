@@ -4,6 +4,7 @@ import { showPassword } from "../../../src/redux/actions/passwordActions";
 import { signInWithEmailAndPassword } from 'firebase/auth'; // Import Firebase authentication function
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import Checkbox from "../../components/checkbox";
 
 import googleImage from "../../assets/images/google_image.png";
 import facebookImage from "../../assets/images/facebook_image.png";
@@ -117,7 +118,11 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="mb-4 mt-1 text-end">
+          
+          <div className="flex flex-row mb-4 mt-1 text-end">
+          <div className="">
+          <Checkbox/>
+          </div>
             <p className="text-sm">
               <a
                 href="/ForgotPassword"
