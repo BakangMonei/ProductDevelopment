@@ -61,7 +61,7 @@ export const login = (email, password) => async (dispatch) => {
     }
   };
 
-  // REGISTRATION
+// REGISTRATION USER
 export const REGISTER_USER_REQUEST = 'REGISTER_USER_REQUEST';
 export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
 export const REGISTER_USER_FAILURE = 'REGISTER_USER_FAILURE';
@@ -96,3 +96,33 @@ export const registerUser = (userData) => {
 
 
 
+// REGISTER ADMINISTRATOR
+export const REGISTER_ADMIN_REQUEST = 'REGISTER_ADMIN_REQUEST';
+export const REGISTER_ADMIN_SUCCESS = 'REGISTER_ADMIN_SUCCESS';
+export const REGISTER_ADMIN_FAILURE = 'REGISTER_ADMIN_FAILURE';
+
+// Action Creators
+export const registerAdminRequest = () => ({
+  type: REGISTER_ADMIN_REQUEST
+});
+
+export const registerAdminSuccess = () => ({
+  type: REGISTER_ADMIN_SUCCESS
+});
+
+export const registerAdminFailure = (error) => ({
+  type: REGISTER_ADMIN_FAILURE,
+  error
+});
+
+// Thunk Action Creator
+export const registerAdmin = (userData) => {
+  return async (dispatch) => {
+    dispatch(registerAdminRequest());
+    try {
+      dispatch(registerAdminSuccess());
+    } catch (error) {
+      dispatch(registerAdminFailure(error));
+    }
+  };
+};

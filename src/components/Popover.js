@@ -49,7 +49,7 @@ const Popover = () => {
             </svg>
           </button>
           {isOpen && (
-        <div className="absolute z-10 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200">
+        <div className="createadmin_container absolute border border-gray-200 items-center justify-self-center">
           <div className="p-4">
             <CreateAdmin />
           </div>
