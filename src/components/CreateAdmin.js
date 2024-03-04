@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 
 import { auth, firestore } from "../firebase"; // Import Firebase Auth and Firestore
-import { createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { registerAdmin } from "../redux/actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +22,9 @@ const CreateAdmin = () => {
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
-  const registrationState = useSelector(state => state.auth); // Assuming you have combined your reducers and authReducer is part of the state
+  const registrationState = useSelector((state) => state.auth); // Assuming you have combined your reducers and authReducer is part of the state
+
+  const [generatedPassword, setGeneratedPassword] = useState("");
 
   // Extracting countries from the countries-list package
   const countryOptions = Object.values(countries);
@@ -42,80 +47,94 @@ const CreateAdmin = () => {
       firstname.trim() === "" ||
       lastname.trim() === "" ||
       email.trim() === "" ||
-      password.trim() === "" ||
       username.trim() === "" ||
       sport.trim() === "" ||
       selectedCountry.trim() === "" ||
-      phonenumber.trim() === "" 
+      phonenumber.trim() === ""
     ) {
       // Validation error: Some fields are empty
       setValidationError(true);
       setRegistrationSuccess(false);
-    } else {
-      // Clear validation error if it was previously set
-      setValidationError(false);
-
-      // Check if the email is unique
-      const emailExistsQuery = query(
-        collection(firestore, 'admin'),
-        where('email', '==', email)
-      );
-      const emailExistsSnapshot = await getDocs(emailExistsQuery);
-
-      if (!emailExistsSnapshot.empty) {
-        // Email already exists in the database
-        setValidationError(true);
-        setRegistrationSuccess(false);
-        return;
-      }
-
-      try {
-        // Create a new user with email and password
-        await createUserWithEmailAndPassword(auth, email, password);
-
-        // Create an object with the user's data (excluding password)
-        const userData = {
-          firstname,
-          lastname,
-          email,
-          username,
-          sport,
-          selectedCountry,
-          phonenumber,
-        };
-        
-
-        // Add the user's data to Firestore
-        const docRef = await addDoc(collection(firestore, "admin"), userData);
-
-        if (docRef) {
-          // Registration and Firestore data addition successful
-          setRegistrationSuccess(true);
-
-          // Redirect to the LoginPage
-          navigate("/SuperAdminDashboard");
-          dispatch(registerAdmin(userData));
-        } else {
-          console.error("Error adding user data to Firestore.");
-          setRegistrationSuccess(false);
-        }
-      } catch (error) {
-        console.error("Error registering user:", error);
-        setRegistrationSuccess(false);
-      }
+      return;
     }
+
+    // Generate a random password for the new admin
+    const generatedPassword = generateRandomPassword();
+    setGeneratedPassword(generatedPassword); // Set the generated password in the state
+
+    try {
+      // Create a new user with email and password
+      await createUserWithEmailAndPassword(auth, email, generatedPassword);
+
+      // Create an object with the user's data (excluding password)
+      const userData = {
+        firstname,
+        lastname,
+        email,
+        username,
+        sport,
+        selectedCountry,
+        phonenumber,
+      };
+
+      // Add the user's data to Firestore
+      const docRef = await addDoc(collection(firestore, "admin"), userData);
+
+      if (docRef) {
+        // Registration and Firestore data addition successful
+        setRegistrationSuccess(true);
+
+        // Set the generated password in the state
+        setGeneratedPassword(generatedPassword);
+
+        // Send password reset email to the new admin
+        await sendPasswordResetEmail(auth, email);
+
+        // Redirect to the LoginPage
+        navigate("/SuperAdminDashboard");
+        dispatch(registerAdmin(userData));
+      } else {
+        console.error("Error adding user data to Firestore.");
+        setRegistrationSuccess(false);
+      }
+    } catch (error) {
+      console.error("Error registering user:", error);
+      setRegistrationSuccess(false);
+    }
+  };
+
+  // Function to generate a random password
+  const generateRandomPassword = () => {
+    // Generate a random alphanumeric password
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const passwordLength = 10;
+    let password = "";
+    for (let i = 0; i < passwordLength; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      password += characters.charAt(randomIndex);
+    }
+    return password;
   };
 
   return (
     <div className="max-w-md mx-auto mt-8">
-        {validationError && (
-            <p className="text-red-500 mb-2">
-              Please fill out all required fields.
-            </p>
-          )}
-          {registrationSuccess && (
-            <p className="text-green-500 mb-2">Admin {email} Registered Successfully!</p>
-          )}
+      {/* Display the generated password */}
+      {generatedPassword && (
+        <p className="text-green-500 mb-2">
+          Generated Password: {generatedPassword}
+        </p>
+      )}
+      {validationError && (
+        <p className="text-red-500 mb-2">
+          Please fill out all required fields.
+        </p>
+      )}
+      {registrationSuccess && (
+        <p className="text-green-500 mb-2">
+          Admin {email} Registered Successfully!
+        </p>
+      )}
       <form className="space-y-4" onSubmit={handleRegisterAdmin}>
         <h1 className="text-2xl font-semibold text-center">
           Create A Sport Admin
@@ -130,7 +149,7 @@ const CreateAdmin = () => {
               id="email"
               name="email"
               value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               className="border rounded text-black font-mono p-1 border-gray-500"
             />
           </div>
@@ -142,9 +161,9 @@ const CreateAdmin = () => {
               type="password"
               id="password"
               name="password"
-              value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+              value={generatedPassword} // Display the autogenerated password
               className="border rounded text-black font-mono p-1 border-gray-500"
+              disabled // Disable the input field to prevent editing
             />
           </div>
           <div>
@@ -156,7 +175,7 @@ const CreateAdmin = () => {
               id="firstname"
               name="firstname"
               value={firstname}
-                  onChange={(e) => setFirstname(e.target.value)}
+              onChange={(e) => setFirstname(e.target.value)}
               className="border rounded text-black font-mono p-1 border-gray-500"
             />
           </div>
@@ -169,7 +188,7 @@ const CreateAdmin = () => {
               id="lastname"
               name="lastname"
               value={lastname}
-                  onChange={(e) => setLastame(e.target.value)}
+              onChange={(e) => setLastame(e.target.value)}
               className="border rounded text-black font-mono p-1 border-gray-500"
             />
           </div>
@@ -182,7 +201,7 @@ const CreateAdmin = () => {
               id="phonenumber"
               name="phonenumber"
               value={phonenumber}
-                  onChange={(e) => setPhonenumber(e.target.value)}
+              onChange={(e) => setPhonenumber(e.target.value)}
               className="border rounded text-black font-mono p-1 border-gray-500"
             />
           </div>
@@ -195,7 +214,7 @@ const CreateAdmin = () => {
               id="username"
               name="username"
               value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
               className="border rounded text-black font-mono p-1 border-gray-500"
             />
           </div>
@@ -204,34 +223,34 @@ const CreateAdmin = () => {
               Country
             </label>
             <select
-                  className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
-                  value={selectedCountry}
-                  onChange={(e) => setSelectedCountry(e.target.value)}
-                >
-                  <option value="">Select Country</option>
-                  {countryOptions.map((country, index) => (
-                    <option key={index} value={country.name}>
-                      {country.name}
-                    </option>
-                  ))}
-                </select>
+              className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
+              value={selectedCountry}
+              onChange={(e) => setSelectedCountry(e.target.value)}
+            >
+              <option value="">Select Country</option>
+              {countryOptions.map((country, index) => (
+                <option key={index} value={country.name}>
+                  {country.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <label htmlFor="sport" className="block">
               Sporting Code
             </label>
             <select
-                  className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
-                  value={sport}
-                  onChange={(e) => setSport(e.target.value)}
-                >
-                  <option value="">Select Sport</option>
-                  {sports.map((sport, index) => (
-                    <option key={index} value={sport}>
-                      {sport}
-                    </option>
-                  ))}
-                </select>
+              className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
+              value={sport}
+              onChange={(e) => setSport(e.target.value)}
+            >
+              <option value="">Select Sport</option>
+              {sports.map((sport, index) => (
+                <option key={index} value={sport}>
+                  {sport}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="flex justify-center">
