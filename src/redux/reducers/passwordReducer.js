@@ -1,8 +1,8 @@
 // reducers/passwordReducer.js
-import { SHOW_PASSWORD } from '../actions/types';
+import { SHOW_PASSWORD } from "../actions/types";
 
 const initialState = {
-  showPassword: false
+  showPassword: false,
 };
 
 const passwordReducer = (state = initialState, action) => {
@@ -10,7 +10,7 @@ const passwordReducer = (state = initialState, action) => {
     case SHOW_PASSWORD:
       return {
         ...state,
-        showPassword: !state.showPassword
+        showPassword: !state.showPassword,
       };
     default:
       return state;

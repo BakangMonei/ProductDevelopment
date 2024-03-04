@@ -23,7 +23,7 @@ export const RegistrationPage = () => {
   const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
-  const registrationState = useSelector(state => state.auth); // Assuming you have combined your reducers and authReducer is part of the state
+  const registrationState = useSelector((state) => state.auth); // Assuming you have combined your reducers and authReducer is part of the state
 
   // Extracting countries from the countries-list package
   const countryOptions = Object.values(countries);
@@ -64,8 +64,8 @@ export const RegistrationPage = () => {
 
       // Check if the email is unique
       const emailExistsQuery = query(
-        collection(firestore, 'users'),
-        where('email', '==', email)
+        collection(firestore, "users"),
+        where("email", "==", email)
       );
       const emailExistsSnapshot = await getDocs(emailExistsQuery);
 
@@ -91,7 +91,6 @@ export const RegistrationPage = () => {
           selectedCountry,
           phonenumber,
         };
-        
 
         // Add the user's data to Firestore
         const docRef = await addDoc(collection(firestore, "users"), userData);

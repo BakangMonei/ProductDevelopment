@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { showPassword } from "../../../src/redux/actions/passwordActions";
-import { signInWithEmailAndPassword } from 'firebase/auth'; // Import Firebase authentication function
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from "firebase/auth"; // Import Firebase authentication function
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 import Checkbox from "../../components/checkbox";
 
 import googleImage from "../../assets/images/google_image.png";
 import facebookImage from "../../assets/images/facebook_image.png";
-import { auth } from '../../firebase';
+import { auth } from "../../firebase";
 
 export const LoginPage = ({ showPasswordToggle, showPassword }) => {
   const [email, setEmail] = useState("");
@@ -26,33 +32,36 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
     }
 
     try {
-      const userSnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', email)));
-      const adminSnapshot = await getDocs(query(collection(db, 'admin'), where('email', '==', email)));
-      const s_adminSnapshot = await getDocs(query(collection(db, 's_admin'), where('email', '==', email)));
+      const userSnapshot = await getDocs(
+        query(collection(db, "users"), where("email", "==", email))
+      );
+      const adminSnapshot = await getDocs(
+        query(collection(db, "admin"), where("email", "==", email))
+      );
+      const s_adminSnapshot = await getDocs(
+        query(collection(db, "s_admin"), where("email", "==", email))
+      );
 
       if (userSnapshot.size > 0) {
         // User exists in the 'user' collection
         await signInWithEmailAndPassword(auth, email, password);
-        navigate('/UserDashboard');
+        navigate("/UserDashboard");
       } else if (adminSnapshot.size > 0) {
         // User exists in the 'admin' collection
         await signInWithEmailAndPassword(auth, email, password);
-        navigate('/AdminDashboard');
-      } 
-      else if (s_adminSnapshot.size > 0) {
+        navigate("/AdminDashboard");
+      } else if (s_adminSnapshot.size > 0) {
         // User exists in the 's_admin' collection
         await signInWithEmailAndPassword(auth, email, password);
-        navigate('/SuperAdminDashboard');
+        navigate("/SuperAdminDashboard");
       } else {
         setError("Invalid email or password.");
       }
     } catch (error) {
       setError(error.message);
-      console.error('Login error:', error);
+      console.error("Login error:", error);
     }
   };
-
-
 
   return (
     <div className="bg_image flex items-center justify-center min-h-screen ">
@@ -118,11 +127,11 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          
+
           <div className="flex flex-row mb-4 mt-1 text-end">
-          <div className="">
-          <Checkbox/>
-          </div>
+            <div className="">
+              <Checkbox />
+            </div>
             <p className="text-sm">
               <a
                 href="/ForgotPassword"

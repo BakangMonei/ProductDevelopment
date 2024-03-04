@@ -1,43 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import LoginPage from '../main/LoginPage';
-import AdminDashboard from '../admin/AdminDashboard';
-import UserDashboard from '../user/UserDashboard';
-import PrivateRoute from './PrivateRoute';
-import SuperAdminDashboard from '../superadmin/SuperAdminDashboard';
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import LoginPage from "../main/LoginPage";
+import AdminDashboard from "../admin/AdminDashboard";
+import UserDashboard from "../user/UserDashboard";
+import PrivateRoute from "./PrivateRoute";
+import SuperAdminDashboard from "../superadmin/SuperAdminDashboard";
 
 function App() {
-    const [authenticated, setAuthenticated] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
 
-    useEffect(() => {
-        // Use Firebase or your authentication logic to determine if the user is authenticated
-        // Update the authenticated state accordingly
-    }, []);
+  useEffect(() => {
+    // Use Firebase or your authentication logic to determine if the user is authenticated
+    // Update the authenticated state accordingly
+  }, []);
 
-    return (
-        <Router>
-            <Switch>
-                <Route path="/LoginPage" component={LoginPage} />
-                <PrivateRoute
-                    path="/AdminDashboard"
-                    component={AdminDashboard}
-                    authenticated={authenticated}
-                />
-                <PrivateRoute
-                    path="/UserDashboard"
-                    component={UserDashboard}
-                    authenticated={authenticated}
-                />
-                <PrivateRoute
-                    path="/SuperAdminDashboard"
-                    component={SuperAdminDashboard}
-                    authenticated={authenticated}
-                />
+  return (
+    <Router>
+      <Switch>
+        <Route path="/LoginPage" component={LoginPage} />
+        <PrivateRoute
+          path="/AdminDashboard"
+          component={AdminDashboard}
+          authenticated={authenticated}
+        />
+        <PrivateRoute
+          path="/UserDashboard"
+          component={UserDashboard}
+          authenticated={authenticated}
+        />
+        <PrivateRoute
+          path="/SuperAdminDashboard"
+          component={SuperAdminDashboard}
+          authenticated={authenticated}
+        />
 
-                {/* Add other routes as needed */}
-            </Switch>
-        </Router>
-    );
+        {/* Add other routes as needed */}
+      </Switch>
+    </Router>
+  );
 }
 
 export default App;

@@ -14,21 +14,21 @@ export const SuperAdminDashboard = () => {
 
       {/* People and website Analytics */}
       <div className="p-10 space-y-5">
-        <div >
+        <div>
           <UserCards />
         </div>
 
-        <div >
+        <div>
           <UserAnalytics />
         </div>
       </div>
 
       {/* Create Admins Forms*/}
       <div className="p-10 space-y-5">
-            <div>
-                <Popover/>
-            </div>
+        <div>
+          <Popover />
         </div>
+      </div>
     </div>
   );
 };
