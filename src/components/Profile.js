@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import DummyImage from "../assets/images/neizatheedev.png";
-import { auth } from "../firebase"; // Assuming this is the correct path to your firebase.js file
+import { auth, firestore } from "../firebase"; // Assuming this is the correct path to your firebase.js file
+
 
 const Profile = () => {
+  
   const [currentUser, setCurrentUser] = useState(null);
+  const [userDetails, setUserDetails] = useState(null);
 
   useEffect(() => {
     // Firebase Auth listener to get the current user
@@ -11,15 +14,67 @@ const Profile = () => {
       if (user) {
         // User is signed in.
         setCurrentUser(user);
+        
+        // Fetch user details from each collection
+        fetchUserDetails(user.uid);
       } else {
         // No user is signed in.
         setCurrentUser(null);
+        setUserDetails(null);
       }
     });
 
     // Unsubscribe from the listener when component unmounts
     return unsubscribe;
   }, []);
+
+  const fetchUserDetails = async (userId) => {
+    try {
+      // Fetch user details from each collection using user ID
+      const userDetailsA = await fetchDetailsFromCollection(userId, "s_admin");
+      const userDetailsB = await fetchDetailsFromCollection(userId, "admin");
+      const userDetailsC = await fetchDetailsFromCollection(userId, "users");
+      // const userDetailsD = await fetchDetailsFromCollection(userId, "collectionD");
+
+      // Combine or merge user details from different collections
+      const combinedUserDetails = {
+        ...userDetailsA,
+        ...userDetailsB,
+        ...userDetailsC,
+        // ...userDetailsD
+        // Add more fields as needed
+      };
+
+      // Set user details state with the combined data
+      setUserDetails(combinedUserDetails);
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    }
+  };
+
+  const fetchDetailsFromCollection = async (userId, collectionName) => {
+    try {
+      // Fetch user details from a specific collection
+      const userDetailsRef = firestore.collection(collectionName).doc(userId);
+      const userDetailsDoc = await userDetailsRef.get();
+      if (userDetailsDoc.exists) {
+        // Return user details if document exists
+        return userDetailsDoc.data();
+      } else {
+        // Return null if document does not exist
+        return null;
+      }
+    } catch (error) {
+      console.error(`Error fetching user details from ${collectionName}:`, error);
+      return null;
+    }
+  };
+
+  if (!currentUser || !userDetails) {
+    // User is not authenticated or user details not loaded, display a loading indicator or redirect to login page
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className=" justify-center items-center"> 
       <section class="  h-screen bg-gray-100/50 justify-center items-center">
@@ -33,8 +88,9 @@ const Profile = () => {
                     src={DummyImage}
                     class="mx-auto object-cover rounded-full h-16 w-16 "
                   />
+                  
                 </a>
-                <h1 class="text-gray-600">Charlie</h1>
+                <h1 className="text-gray-600">{currentUser.displayName}</h1>
               </div>
             </div>
           </div>
@@ -48,6 +104,7 @@ const Profile = () => {
                     id="user-info-email"
                     class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                     placeholder="Email"
+                    value={currentUser.email}
                   />
                 </div>
               </div>
@@ -63,6 +120,7 @@ const Profile = () => {
                       id="user-info-name"
                       class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                       placeholder="FirstName"
+                      value={currentUser.firstname}
                     />
                   </div>
                 </div>
