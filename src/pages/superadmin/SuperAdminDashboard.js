@@ -13,25 +13,19 @@ export const SuperAdminDashboard = () => {
         <SuperAdminNavBar />
       </div>
 
-      {/* People and website Analytics */}
+      <div className="bg-red-500">
 
-      <div className="p-10 space-y-5">
-        <div>
-          <UserCards />
-        </div>
-
-        {/* */}
-        <div>
-          <UserAnalytics />
-        </div>
       </div>
+        
 
-      {/* Create Admins Forms*/}
+      {/* Create Admins Forms
       <div className="p-10 space-y-5">
         <div>
           <Popover />
         </div>
-      </div>
+      </div> */}
+
+
     </div>
   );
 };

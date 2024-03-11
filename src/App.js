@@ -8,8 +8,10 @@ import ForgotPassword from "./pages/main/ForgotPassword";
 import RegistrationPage from "./pages/main/RegistrationPage";
 import UserDashboard from "./pages/user/UserDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import Profile from "./components/Profile";
 import SuperAdminDashboard from "./pages/superadmin/SuperAdminDashboard";
 import "./App.css";
+import ViewUsers from "./components/ViewUsers";
 
 // Create Redux store
 const store = createStore(rootReducer);
@@ -32,10 +34,12 @@ function App() {
           {/* Dashboards */}
           <Route path="/UserDashboard" element={<UserDashboard />} />
           <Route path="/AdminDashboard" element={<AdminDashboard />} />
-          <Route
-            path="/SuperAdminDashboard"
-            element={<SuperAdminDashboard />}
-          />
+          <Route path="/SuperAdminDashboard" element={<SuperAdminDashboard />}/>
+
+
+          {/* Add more routes as needed */}
+          <Route path="/Profile" element={<Profile/>} />
+          <Route path="/ViewUsers" element={<ViewUsers/>} />
         </Routes>
       </Router>
     </Provider>
