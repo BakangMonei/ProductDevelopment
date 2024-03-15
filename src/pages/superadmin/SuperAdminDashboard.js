@@ -5,6 +5,7 @@ import UserCards from "../../components/UserCards";
 import UserAnalytics from "../../components/UserAnalytics";
 import Popover from "../../components/Popover";
 import SearchBar from "../../components/SearchBar";
+import Footer from "../../components/Footer";
 
 export const SuperAdminDashboard = () => {
   return (
@@ -13,9 +14,7 @@ export const SuperAdminDashboard = () => {
         <SuperAdminNavBar />
       </div>
 
-      <div className="bg-red-500">
-
-      </div>
+  
         
 
       {/* Create Admins Forms
@@ -24,7 +23,6 @@ export const SuperAdminDashboard = () => {
           <Popover />
         </div>
       </div> */}
-
 
     </div>
   );

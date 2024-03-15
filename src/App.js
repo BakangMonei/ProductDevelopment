@@ -12,6 +12,8 @@ import Profile from "./components/Profile";
 import SuperAdminDashboard from "./pages/superadmin/SuperAdminDashboard";
 import "./App.css";
 import ViewUsers from "./components/ViewUsers";
+import CreateAdmin from "./components/CreateAdmin";
+import CreateUser from "./components/CreateUser";
 
 // Create Redux store
 const store = createStore(rootReducer);
@@ -40,6 +42,9 @@ function App() {
           {/* Add more routes as needed */}
           <Route path="/Profile" element={<Profile/>} />
           <Route path="/ViewUsers" element={<ViewUsers/>} />
+
+          <Route path="/create-administrators" element={<CreateAdmin/>}/>
+          <Route path="/CreateUser" element={<CreateUser/>}/>
         </Routes>
       </Router>
     </Provider>

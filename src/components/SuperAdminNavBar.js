@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const SuperAdminNavBar = () => {
   return (
-    <div className="relative bg-white dark:bg-gray-800">
+    <div className="relative bg-white dark:bg-gray-800 border-r">
       <div className="flex flex-col sm:flex-row sm:justify-around">
         <div className="h-screen w-72">
           <nav className="px-6 mt-10">
@@ -122,7 +122,7 @@ const SuperAdminNavBar = () => {
                 </span>
               </Link>
               <Link
-                to="/create-administrators"
+                to="/CreateUser"
                 className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
               >
                 <span className="text-left">
