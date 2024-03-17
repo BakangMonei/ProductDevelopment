@@ -5,6 +5,7 @@
 - `npm install firebase`
 - `npm install countries-list`
 - `npm install firebase`
+- `npm install react-chartjs-2 chart.js tailwindcss`
 
 ## Available Scripts
 

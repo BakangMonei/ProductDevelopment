@@ -10,14 +10,15 @@ import {
 import { firestore } from "../../firebase"; // Import your firebase configuration
 import ViewUsersUpdate from "../Forms/ViewUsersUpdate"; // Import the AdminUpdateUser component
 import SuperAdminNavBar from "../NavBars/SuperAdminNavBar";
+import SearchBar from "../Search/SearchBar";
 
-const ViewUsers = () => {
+const ViewAdmins = () => {
   const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const usersCollection = collection(firestore, "users");
+      const usersCollection = collection(firestore, "admin");
       const usersSnapshot = await getDocs(usersCollection);
       const usersData = [];
       usersSnapshot.forEach((doc) => {
@@ -53,7 +54,6 @@ const ViewUsers = () => {
         selectedCountry: updatedUser.selectedCountry,
         phonenumber: updatedUser.phonenumber,
         username: updatedUser.username,
-        gender: updatedUser.gender,
         sport: updatedUser.sport,
       });
 
@@ -80,17 +80,19 @@ const ViewUsers = () => {
         <SuperAdminNavBar/>
       </div>
       <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 ">Manage Users</h1>
+      <h1 className="text-2xl font-bold mb-4 ">Manage Broadcasters</h1>
+      <div className=" flex p-4 space-x-44 w-auto">
+        <SearchBar/>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {users.map((user) => (
-          <div key={user.id} className="bg-white rounded-lg shadow-md p-4" >
+          <div key={user.id} className="bg-white rounded-lg shadow-md p-4">
             <h2 className="text-lg font-semibold mb-2">
               {user.firstname} {user.lastname}
             </h2>
             <p>Email: {user.email}</p>
             <p>Username: {user.username}</p>
             <p>Phone Number: {user.phonenumber}</p>
-            <p>Gender: {user.gender}</p>
             <p>Country: {user.selectedCountry}</p>
             <p>Selected Sport: {user.sport}</p>
             <div className="mt-4 space-x-2">
@@ -116,11 +118,10 @@ const ViewUsers = () => {
           onUpdate={handleUpdateUser}
           onClose={handleCloseEditModal}
         />
-      )},
-      
+      )}
     </div>
     </div>
   );
 };
 
-export default ViewUsers;
+export default ViewAdmins;

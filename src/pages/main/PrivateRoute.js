@@ -4,6 +4,7 @@ import LoginPage from "../main/LoginPage";
 import AdminDashboard from "../admin/AdminDashboard";
 import UserDashboard from "../user/UserDashboard";
 import PrivateRoute from "./PrivateRoute";
+import ForgotPassword from "../main/ForgotPassword"
 import SuperAdminDashboard from "../superadmin/SuperAdminDashboard";
 
 function App() {
@@ -34,7 +35,11 @@ function App() {
           authenticated={authenticated}
         />
 
-        {/* Add other routes as needed */}
+        <PrivateRoute
+        path= "/ForgotPassword"
+        component={ForgotPassword}
+        authenticated={authenticated}
+        />
       </Switch>
     </Router>
   );

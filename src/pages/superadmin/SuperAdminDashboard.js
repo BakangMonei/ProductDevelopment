@@ -3,6 +3,7 @@ import SuperAdminNavBar from "../../components/NavBars/SuperAdminNavBar";
 import TableUsers from "../../components/data/TableUsers";
 import TableBroadcasters from "../../components/data/TableBroadcasters";
 
+
 export const SuperAdminDashboard = () => {
   return (
     <div className="flex flex-auto p-3">
@@ -14,6 +15,7 @@ export const SuperAdminDashboard = () => {
         <TableUsers/>
         <TableBroadcasters/>
       </div>
+
     </div>
   );
 };

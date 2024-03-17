@@ -1,20 +1,52 @@
-import React from "react";
+import React, { useState } from 'react';
+import { firestore } from '../../firebase'; // Import your Firebase configuration
 
 const SearchBar = () => {
-    return (
-        <div class="flex items-center justify-center w-full">
-            <div class="relative">
-                <input type="text" class="h-10 px-5 pr-10 text-sm bg-white border-2 border-gray-300 rounded-full focus:outline-none" placeholder="Search..." />
-                <button class="absolute top-0 right-0 mt-3 mr-4">
-                    <svg class="w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M13.071 14.657a7.5 7.5 0 111.414-1.414l3.713 3.713a1 1 0 01-1.414 1.414l-3.713-3.713zm-4.571-1.414a5 5 0 111.414-1.414 5 5 0 01-1.414 1.414z"></path>
-                    </svg>
-                </button>
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResult, setSearchResult] = useState([]);
+
+  const handleSearch = async () => {
+    if (searchTerm.trim() !== '') {
+      try {
+        const snapshot = await firestore.collection('admin').where('email', '==', searchTerm).get();
+        const searchData = snapshot.docs.map(doc => doc.data());
+        setSearchResult(searchData);
+      } catch (error) {
+        console.error('Error searching:', error);
+      }
+    }
+  };
+
+  return (
+    <div className="max-w-md mx-auto mt-4">
+      <input
+        type="text"
+        placeholder="Search by email"
+        className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
+        value={searchTerm}
+        onChange={e => setSearchTerm(e.target.value)}
+      />
+      <button
+        onClick={handleSearch}
+        className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+      >
+        Search
+      </button>
+      <div className="mt-4">
+        {searchResult.length > 0 ? (
+          searchResult.map((item, index) => (
+            <div key={index} className="bg-white p-4 rounded-md shadow-md mb-4">
+              <p><strong>Name:</strong> {item.firstname}</p>
+              <p><strong>Email:</strong> {item.email}</p>
+              {/* Add other fields as needed */}
             </div>
-        </div>
-
-    );
+          ))
+        ) : (
+          <p className="text-gray-600">No results found</p>
+        )}
+      </div>
+    </div>
+  );
 };
-
 
 export default SearchBar;
