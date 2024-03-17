@@ -1,10 +1,10 @@
 import React from "react";
-import testImage from "../assets/images/github_image.png";
+import testImage from "../../assets/images/github_image.png";
 
 const UserCards = () => {
   return (
     <div class="relative w-full p-4 overflow-hidden bg-white shadow-lg rounded-xl md:w-60 dark:bg-gray-800">
-      <p class="mb-6 text-xl font-light font-medium text-gray-600 dark:text-white">
+      <p class="mb-6 text-xl font-light  text-gray-600 dark:text-white">
         Popular influencor
       </p>
       <div class="grid grid-cols-3 gap-4">

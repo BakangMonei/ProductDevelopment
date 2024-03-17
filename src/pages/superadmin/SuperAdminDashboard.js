@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SuperAdminNavBar from "../../components/NavBars/SuperAdminNavBar";
-import UserCards from "../../components/UserCards";
-import UserAnalytics from "../../components/UserAnalytics";
-import Popover from "../../components/Popover";
-import SearchBar from "../../components/SearchBar";
-import Footer from "../../components/Footer";
+import UserCards from "../../components/Cards/UserCards";
+import UserAnalytics from "../../components/Cards/UserAnalytics";
+import Popover from "../../components/Popover/Popover";
+import SearchBar from "../../components/Search/SearchBar";
+import Footer from "../../components/Footer/Footer";
 import TableUsers from "../../components/data/TableUsers";
 import TableBroadcasters from "../../components/data/TableBroadcasters";
 

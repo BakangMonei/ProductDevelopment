@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import CreateAdmin from "./Forms/CreateAdmin"; // Assuming CreateUserForm is in a separate file
-import demoImage from "../assets/images/neizatheedev.png"
+import CreateAdmin from "../Forms/CreateAdmin"; // Assuming CreateUserForm is in a separate file
+import demoImage from "../../assets/images/neizatheedev.png"
 
 const Popover = () => {
   const [isOpen, setIsOpen] = useState(false);

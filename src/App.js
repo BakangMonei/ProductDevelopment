@@ -11,7 +11,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import Profile from "./components/Forms/Profile";
 import SuperAdminDashboard from "./pages/superadmin/SuperAdminDashboard";
 import "./App.css";
-import ViewUsers from "./components/ViewUsers";
+import ViewUsers from "./components/Cards/ViewUsers";
 import CreateAdmin from "./components/Forms/CreateAdmin";
 import CreateUser from "./components/Forms/CreateUser";
 import Settings from "./components/Settings";

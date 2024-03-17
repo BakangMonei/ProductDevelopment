@@ -7,8 +7,8 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { firestore } from "../firebase"; // Import your firebase configuration
-import ViewUsersUpdate from "./ViewUsersUpdate"; // Import the AdminUpdateUser component
+import { firestore } from "../../firebase"; // Import your firebase configuration
+import ViewUsersUpdate from "../Forms/ViewUsersUpdate"; // Import the AdminUpdateUser component
 
 const ViewUsers = () => {
   const [users, setUsers] = useState([]);
