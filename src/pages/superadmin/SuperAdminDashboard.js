@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SuperAdminNavBar from "../../components/SuperAdminNavBar";
+import SuperAdminNavBar from "../../components/NavBars/SuperAdminNavBar";
 import UserCards from "../../components/UserCards";
 import UserAnalytics from "../../components/UserAnalytics";
 import Popover from "../../components/Popover";
 import SearchBar from "../../components/SearchBar";
 import Footer from "../../components/Footer";
+import TableUsers from "../../components/data/TableUsers";
+import TableBroadcasters from "../../components/data/TableBroadcasters";
 
 export const SuperAdminDashboard = () => {
   return (
@@ -14,16 +16,10 @@ export const SuperAdminDashboard = () => {
         <SuperAdminNavBar />
       </div>
 
-  
-        
-
-      {/* Create Admins Forms
-      <div className="p-10 space-y-5">
-        <div>
-          <Popover />
-        </div>
-      </div> */}
-
+      <div className="p-3">
+        <TableUsers/>
+        <TableBroadcasters/>
+      </div>
     </div>
   );
 };

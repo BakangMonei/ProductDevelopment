@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 
-import { auth, firestore } from "../firebase"; // Import Firebase Auth and Firestore
+import { auth, firestore } from "../../firebase"; // Import Firebase Auth and Firestore
 import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
 } from "firebase/auth";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
-import { registerAdmin } from "../redux/actions/authActions";
+import { registerAdmin } from "../../redux/actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import { countries } from "countries-list";
-import SuperAdminNavBar from "./SuperAdminNavBar";
+import SuperAdminNavBar from "../NavBars/SuperAdminNavBar";
 
 const CreateAdmin = () => {
   const [firstname, setFirstname] = useState("");

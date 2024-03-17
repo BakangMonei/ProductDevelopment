@@ -72,10 +72,10 @@ const SuperAdminNavBar = () => {
                 </span>
               </Link>
             </div>
-            {/* Create Administrators & Broadcasters */}
+            {/* Create Users & Broadcasters */}
             <div>
               <p className="w-full pb-2 mb-4 ml-2 font-normal text-gray-300 border-b-2 border-gray-100 text-md">
-                Administrators & Broadcasters
+                Users & Broadcasters
               </p>
               <Link
                 to="/create-administrators"
@@ -96,31 +96,10 @@ const SuperAdminNavBar = () => {
                   </svg>
                 </span>
                 <span className="mx-4 font-normal text-md">
-                  Create Administrators
-                </span>
-              </Link>
-              <Link
-                to="/create-broadcasters"
-                className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-              >
-                <span className="text-left">
-                  <svg
-                    width="20"
-                    height="20"
-                    fill="currentColor"
-                    viewBox="0 0 2048 1792"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill="#5e72e4"
-                      d="M685 483q16 0 27.5-11.5t11.5-27.5-11.5-27.5-27.5-11.5-27 11.5-11 27.5 11 27.5 27 11.5zm422 0q16 0 27-11.5t11-27.5-11-27.5-27-11.5-27.5 11.5-11.5 27.5 11.5 27.5 27.5 11.5zm-812 184q42 0 72 30t30 72v430q0 43-29.5 73t-72.5 30-73-30-30-73v-430q0-42 30-72t73-30zm1060 19v666q0 46-32 78t-77 32h-75v227q0 43-30 73t-73 30-73-30-30-73v-227h-138v227q0 43-30 73t-73 30q-42 0-72-30t-30-73l-1-227h-74q-46 0-78-32t-32-78v-666h918zm-232-405q107 55 171 153.5t64 215.5h-925q0-117 64-215.5t172-153.5l-71-131q-7-13 5-20 13-6 20 6l72 132q95-42 201-42t201 42l72-132q7-12 20-6 12 7 5 20zm477 488v430q0 43-30 73t-73 30q-42 0-72-30t-30-73v-430q0-43 30-72.5t72-29.5q43 0 73 29.5t30 72.5z"
-                    ></path>
-                  </svg>
-                </span>
-                <span className="mx-4 font-normal text-md">
                   Create Broadcasters
                 </span>
               </Link>
+
               <Link
                 to="/CreateUser"
                 className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
@@ -145,7 +124,7 @@ const SuperAdminNavBar = () => {
 
             <div>
               <p className="w-full pb-2 mb-4 ml-2 font-normal text-gray-300 border-b-2 border-gray-100 text-md text-center">
-                Manage Administrators & Broadcasters
+                Manage Users & Broadcasters
               </p>
               <Link
                 to="/create-administrators"
@@ -166,31 +145,10 @@ const SuperAdminNavBar = () => {
                   </svg>
                 </span>
                 <span className="mx-4 font-normal text-md">
-                  View Administrators
-                </span>
-              </Link>
-              <Link
-                to="/create-broadcasters"
-                className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-              >
-                <span className="text-left">
-                  <svg
-                    width="20"
-                    height="20"
-                    fill="currentColor"
-                    viewBox="0 0 2048 1792"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill="#5e72e4"
-                      d="M685 483q16 0 27.5-11.5t11.5-27.5-11.5-27.5-27.5-11.5-27 11.5-11 27.5 11 27.5 27 11.5zm422 0q16 0 27-11.5t11-27.5-11-27.5-27-11.5-27.5 11.5-11.5 27.5 11.5 27.5 27.5 11.5zm-812 184q42 0 72 30t30 72v430q0 43-29.5 73t-72.5 30-73-30-30-73v-430q0-42 30-72t73-30zm1060 19v666q0 46-32 78t-77 32h-75v227q0 43-30 73t-73 30-73-30-30-73v-227h-138v227q0 43-30 73t-73 30q-42 0-72-30t-30-73l-1-227h-74q-46 0-78-32t-32-78v-666h918zm-232-405q107 55 171 153.5t64 215.5h-925q0-117 64-215.5t172-153.5l-71-131q-7-13 5-20 13-6 20 6l72 132q95-42 201-42t201 42l72-132q7-12 20-6 12 7 5 20zm477 488v430q0 43-30 73t-73 30q-42 0-72-30t-30-73v-430q0-43 30-72.5t72-29.5q43 0 73 29.5t30 72.5z"
-                    ></path>
-                  </svg>
-                </span>
-                <span className="mx-4 font-normal text-md">
                   View Broadcasters
                 </span>
               </Link>
+
               <Link
                 to="/ViewUsers"
                 className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
@@ -238,7 +196,7 @@ const SuperAdminNavBar = () => {
                 <span className="mx-4 font-normal text-md">View Logs</span>
               </Link>
               <Link
-                to="/logout"
+                to="/Settings"
                 className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
               >
                 <span className="text-left">

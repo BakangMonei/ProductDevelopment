@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Profile from "../../components/Profile";
+import Profile from "../../components/Forms/Profile";
 
 export const UserDashboard = () => {
   return (
