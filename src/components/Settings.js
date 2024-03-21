@@ -8,9 +8,7 @@ const Settings = () => {
     <div className="flex flex-cols-5 gap-8">
       <div>
         <SuperAdminNavBar />
-      </div>
-
-      
+      </div>      
     </div>
   );
 };

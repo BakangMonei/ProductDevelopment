@@ -29,18 +29,5 @@ const firestore = getFirestore(firebaseApp); // Initialize Firestore
 const database = getDatabase(firebaseApp); // Initialize Realtime Database
 const storage = getStorage(firebaseApp); // Initialize Storage
 
-// Getting from firebase
-async function getDetails(firestore, email) {
-  const usersCollection = collection(firestore, "users");
-  const q = query(usersCollection, where("email", "==", email));
-  const querySnapshot = await getDocs(q);
-
-  if (!querySnapshot.empty) {
-    const userData = querySnapshot.docs[0].data();
-    return userData; // Return user data
-  } else {
-    return null; // User not found
-  }
-}
 
 export { auth, firestore, database, storage, firebaseApp };
