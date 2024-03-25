@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import UploadVideoForm from "../../components/BroadCastorComponents/UploadVideoForm";
+import AdminNavbar from "../../components/NavBars/AdminNavbar";
 
 export const AdminDashboard = () => {
 
@@ -12,7 +12,7 @@ export const AdminDashboard = () => {
 
   return (
     <div>
-      
+      <AdminNavbar/>
     </div>
   );
 
