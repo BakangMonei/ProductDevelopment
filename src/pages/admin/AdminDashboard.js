@@ -1,9 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminNavbar from "../../components/NavBars/AdminNavbar";
+import PostNewBroadcast from "../../components/BroadCastorComponents/PostNewBroadcast";
+import EditBroadcast from "../../components/BroadCastorComponents/EditBroadcast";
+import ViewAvailableBroadcasts from "../../components/BroadCastorComponents/ViewAvailableBroadcasts";
+import RemoveTransmissions from "../../components/BroadCastorComponents/RemoveTransmissions";
+import SearchBroadcasts from "../../components/BroadCastorComponents/SearchBroadcasts";
+import SortByCategory from "../../components/BroadCastorComponents/SortByCategory";
+import CheckMetrics from "../../components/BroadCastorComponents/CheckMetrics";
+import ReviewBroadcastLogs from "../../components/BroadCastorComponents/ReviewBroadcastLogs";
+import VerifyIdentification from "../../components/BroadCastorComponents/VerifyIdentification";
 
 export const AdminDashboard = () => {
-
   const [showUploadForm, setShowUploadForm] = useState(false);
 
   const toggleUploadForm = () => {
@@ -15,9 +23,20 @@ export const AdminDashboard = () => {
       <div>
         <AdminNavbar />
       </div>
+      <div className="grid grid-cols-2 gap-4 p-4">
+        {/* Add your components here */}
+        <PostNewBroadcast />
+        <EditBroadcast />
+        <ViewAvailableBroadcasts />
+        <RemoveTransmissions />
+        <SearchBroadcasts />
+        <SortByCategory />
+        <CheckMetrics />
+        <ReviewBroadcastLogs />
+        {/* <VerifyIdentification /> */}
+      </div>
     </div>
   );
-
 };
 
 export default AdminDashboard;
