@@ -39,7 +39,7 @@ const AdminNavbar = ({ broadcasterName }) => {
               </p>
 
               <Link
-                to="/Profile"
+                to="/ProfileAdmin"
                 className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
               >
                 <FaUser className="mr-2" />
@@ -101,8 +101,8 @@ const AdminNavbar = ({ broadcasterName }) => {
                 className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
               >
                 <Link to="/logout" className="flex items-center">
-          <FaSignOutAlt className="mr-2" />
-        </Link>
+                  <FaSignOutAlt className="mr-2" />
+                </Link>
                 <span className="mx-4 font-normal text-md">Logout</span>
               </Link>
             </div>
@@ -112,5 +112,4 @@ const AdminNavbar = ({ broadcasterName }) => {
     </div>
   );
 };
-
 export default AdminNavbar;

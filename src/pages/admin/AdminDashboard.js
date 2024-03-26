@@ -11,8 +11,10 @@ export const AdminDashboard = () => {
   };
 
   return (
-    <div>
-      <AdminNavbar/>
+    <div className="flex flex-auto p-3">
+      <div>
+        <AdminNavbar />
+      </div>
     </div>
   );
 
