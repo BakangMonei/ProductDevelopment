@@ -1,6 +1,6 @@
 // components/VerifyIdentification.js
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const VerifyIdentification = () => {
   // State variable for email verification status
@@ -22,9 +22,12 @@ const VerifyIdentification = () => {
           <div className="text-green-600">Email verified successfully!</div>
         ) : (
           <div>
-            <p className="mb-4">To verify your identification, please check your email and click the verification link.</p>
-            <button 
-              onClick={handleVerifyEmail} 
+            <p className="mb-4">
+              To verify your identification, please check your email and click
+              the verification link.
+            </p>
+            <button
+              onClick={handleVerifyEmail}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
               Verify Email

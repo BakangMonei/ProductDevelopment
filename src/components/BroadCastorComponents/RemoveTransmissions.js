@@ -1,17 +1,17 @@
 // components/RemoveTransmissions.js
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const RemoveTransmissions = () => {
   // State variable to store selected transmission ID
-  const [selectedTransmissionId, setSelectedTransmissionId] = useState('');
+  const [selectedTransmissionId, setSelectedTransmissionId] = useState("");
 
   // Function to handle removal of transmission
   const handleRemoveTransmission = () => {
     // Logic to remove transmission with selectedTransmissionId
-    console.log('Removing transmission with ID:', selectedTransmissionId);
+    console.log("Removing transmission with ID:", selectedTransmissionId);
     // Reset selectedTransmissionId
-    setSelectedTransmissionId('');
+    setSelectedTransmissionId("");
   };
 
   return (
@@ -20,11 +20,16 @@ const RemoveTransmissions = () => {
       <div className="bg-white shadow-md rounded-lg p-4">
         {/* Transmission selection */}
         <div className="mb-4">
-          <label htmlFor="transmissionId" className="block text-gray-700 font-semibold mb-2">Select Transmission:</label>
-          <select 
-            id="transmissionId" 
-            value={selectedTransmissionId} 
-            onChange={(e) => setSelectedTransmissionId(e.target.value)} 
+          <label
+            htmlFor="transmissionId"
+            className="block text-gray-700 font-semibold mb-2"
+          >
+            Select Transmission:
+          </label>
+          <select
+            id="transmissionId"
+            value={selectedTransmissionId}
+            onChange={(e) => setSelectedTransmissionId(e.target.value)}
             className="border rounded py-2 px-3 w-full"
           >
             <option value="">Select Transmission</option>
@@ -35,10 +40,12 @@ const RemoveTransmissions = () => {
           </select>
         </div>
         {/* Remove button */}
-        <button 
-          onClick={handleRemoveTransmission} 
-          disabled={!selectedTransmissionId} 
-          className={`bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ${!selectedTransmissionId && 'opacity-50 cursor-not-allowed'}`}
+        <button
+          onClick={handleRemoveTransmission}
+          disabled={!selectedTransmissionId}
+          className={`bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ${
+            !selectedTransmissionId && "opacity-50 cursor-not-allowed"
+          }`}
         >
           Remove Transmission
         </button>

@@ -77,49 +77,49 @@ const ViewAdmins = () => {
   return (
     <div className="flex">
       <div>
-        <SuperAdminNavBar/>
+        <SuperAdminNavBar />
       </div>
       <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 ">Manage Broadcasters</h1>
-      <div className=" flex p-4 space-x-44 w-auto">
-        <SearchBar/>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {users.map((user) => (
-          <div key={user.id} className="bg-white rounded-lg shadow-md p-4">
-            <h2 className="text-lg font-semibold mb-2">
-              {user.firstname} {user.lastname}
-            </h2>
-            <p>Email: {user.email}</p>
-            <p>Username: {user.username}</p>
-            <p>Phone Number: {user.phonenumber}</p>
-            <p>Country: {user.selectedCountry}</p>
-            <p>Selected Sport: {user.sport}</p>
-            <div className="mt-4 space-x-2">
-              <button
-                onClick={() => handleDeleteUser(user.id)}
-                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
-              >
-                Delete
-              </button>
-              <button
-                onClick={() => handleEditUser(user)}
-                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
-              >
-                Update
-              </button>
+        <h1 className="text-2xl font-bold mb-4 ">Manage Broadcasters</h1>
+        <div className=" flex p-4 space-x-44 w-auto">
+          <SearchBar />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {users.map((user) => (
+            <div key={user.id} className="bg-white rounded-lg shadow-md p-4">
+              <h2 className="text-lg font-semibold mb-2">
+                {user.firstname} {user.lastname}
+              </h2>
+              <p>Email: {user.email}</p>
+              <p>Username: {user.username}</p>
+              <p>Phone Number: {user.phonenumber}</p>
+              <p>Country: {user.selectedCountry}</p>
+              <p>Selected Sport: {user.sport}</p>
+              <div className="mt-4 space-x-2">
+                <button
+                  onClick={() => handleDeleteUser(user.id)}
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={() => handleEditUser(user)}
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+                >
+                  Update
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        {editingUser && (
+          <ViewUsersUpdate
+            user={editingUser}
+            onUpdate={handleUpdateUser}
+            onClose={handleCloseEditModal}
+          />
+        )}
       </div>
-      {editingUser && (
-        <ViewUsersUpdate
-          user={editingUser}
-          onUpdate={handleUpdateUser}
-          onClose={handleCloseEditModal}
-        />
-      )}
-    </div>
     </div>
   );
 };
