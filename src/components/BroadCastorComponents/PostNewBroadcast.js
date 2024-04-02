@@ -1,73 +1,78 @@
 import React, { useState } from "react";
 import { countries } from "countries-list";
+import { firestore } from "../../firebase"; 
+import { collection, addDoc } from "firebase/firestore";
 
 const PostNewBroadcast = () => {
   const [title, setTitle] = useState("");
   const [dateTime, setDateTime] = useState("");
   const [sportName, setSportName] = useState("");
   const [venue, setVenue] = useState("");
-  // const [country, setCountry] = useState("");
   const [description, setDescription] = useState("");
   const [videoURL, setVideoURL] = useState("");
 
   const [selectedCountry, setSelectedCountry] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission here
-    console.log({
-      title,
-      dateTime,
-      sportName,
-      venue,
-      selectedCountry,
-      description,
-      videoURL,
-    });
+  const [validationError, setValidationError] = useState(false);
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
+    if (
+      title.trim() === "" ||
+      dateTime.trim() === "" ||
+      sportName.trim() === "" ||
+      venue.trim() === "" ||
+      selectedCountry.trim() === "" ||
+      description.trim() === "" ||
+      videoURL.trim() === ""
+    ) {
+      // Validation error: Some fields are empty
+      setValidationError(true);
+      setRegistrationSuccess(false);
+      return;
+    }
+
+    try {
+      // Add a new document with a generated id.
+      const docRef = await addDoc(collection(firestore, "broadcasts"), {
+        title: title,
+        dateTime: dateTime,
+        sportName: sportName,
+        venue: venue,
+        country: selectedCountry,
+        description: description,
+        videoURL: videoURL,
+      });
+      console.log("Document written with ID: ", docRef.id);
+      setRegistrationSuccess(true);
+      setValidationError(false);
+
+      // Clear input fields after successful submission
+      setTitle("");
+      setDateTime("");
+      setSportName("");
+      setVenue("");
+      setSelectedCountry("");
+      setDescription("");
+      setVideoURL("");
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      setRegistrationSuccess(false);
+      setValidationError(true);
+    }
   };
-  const sportNames = [
-    "Surfing",
-    "Bodyboarding",
-    "Wakeboarding",
-    "Kitesurfing",
-    "Mountain Bike",
-    "Longboard",
-    "Skateboarding",
-    "Windsurfing",
-    "Bodysurfing",
-    "BMX",
-    "Base jumping",
-    "Ski",
-    "Skimboarding",
-    "Snowboarding",
-    "Sandboarding",
-    "Soccer",
-    "Volleyball",
-    "Football",
-    "Hockey",
-    "Basketball",
-    "Rugby",
-    "Running",
-    "Jiu Jitsu",
-    "Mixed Martial Arts",
-    "Karate",
-    "Judo",
-    "Wrestling",
-    "Kickboxing",
-    "Muay-Thai",
-    "Rapel",
-    "Formula One",
-    "Formula Indy",
-    "Nascar",
-    "Rafting",
-  ];
 
   // Extracting countries from the countries-list package
   const countryOptions = Object.values(countries);
 
   return (
     <div className="container mx-auto mt-5 border border-black rounded p-10">
-      <h1 className="text-2xl font-semibold mb-5">Post New Broadcast</h1>
+      <h1 className="text-2xl font-semibold mb-5 text-center">Post New Broadcast</h1>
+      {registrationSuccess && (
+        <p className="text-green-600">Broadcast successfully posted!</p>
+      )}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="title" className="block mb-1">
