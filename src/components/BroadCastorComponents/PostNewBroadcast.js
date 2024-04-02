@@ -16,6 +16,7 @@ const PostNewBroadcast = () => {
   const [validationError, setValidationError] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
+  // Works
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
 
