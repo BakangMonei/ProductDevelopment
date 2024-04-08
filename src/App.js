@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux"; // Import createStore from redux
 import rootReducer from "./redux/reducers"; // Import your root reducer
@@ -19,8 +19,21 @@ import ViewAdmins from "./components/Cards/ViewAdmins";
 import ViewUploadedVideos from "./components/BroadCastorComponents/ViewUploadedVideos";
 import ProfileAdmin from "./components/Forms/ProfileAdmin";
 
+// Import the auth object from firebase.js
+import { auth } from "./firebase";
+
 // Create Redux store
 const store = createStore(rootReducer);
+
+// Function to check if user is authenticated
+const isAuthenticated = () => {
+  return auth.currentUser !== null;
+};
+
+// Private Route component to handle authentication
+const PrivateRoute = ({ element, path }) => {
+  return isAuthenticated() ? element : <Navigate to="/LoginPage" />;
+};
 
 function App() {
   return (
@@ -38,25 +51,22 @@ function App() {
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
 
           {/* Dashboards */}
-          <Route path="/UserDashboard" element={<UserDashboard />} />
-          <Route path="/AdminDashboard" element={<AdminDashboard />} />
-          <Route path="/SuperAdminDashboard" element={<SuperAdminDashboard />}/>
-
+          <Route path="/UserDashboard" element={<PrivateRoute element={<UserDashboard />} />} />
+          <Route path="/AdminDashboard" element={<PrivateRoute element={<AdminDashboard />} />} />
+          <Route path="/SuperAdminDashboard" element={<PrivateRoute element={<SuperAdminDashboard />} />}/>
 
           {/* Add more routes as needed */}
-          <Route path="/Profile" element={<Profile/>} />
-          <Route path="/ProfileAdmin" element={<ProfileAdmin/>} />
-          <Route path="/ViewUsers" element={<ViewUsers/>} />
-          <Route path="/ViewAdmins" element={<ViewAdmins/>} />
+          <Route path="/Profile" element={<PrivateRoute element={<Profile />} />} />
+          <Route path="/ProfileAdmin" element={<PrivateRoute element={<ProfileAdmin />} />} />
+          <Route path="/ViewUsers" element={<PrivateRoute element={<ViewUsers />} />} />
+          <Route path="/ViewAdmins" element={<PrivateRoute element={<ViewAdmins />} />} />
 
-          <Route path="/create-administrators" element={<CreateAdmin/>}/>
-          <Route path="/CreateUser" element={<CreateUser/>}/>
+          <Route path="/create-administrators" element={<PrivateRoute element={<CreateAdmin />} />}/>
+          <Route path="/CreateUser" element={<PrivateRoute element={<CreateUser />} />}/>
 
+          <Route path="/ViewUploadedVideos" element={<PrivateRoute element={<ViewUploadedVideos />} />} />
 
-          <Route path="/ViewUploadedVideos" element={<ViewUploadedVideos/>} />
-
-
-          <Route path="/Settings" element={<Settings/>} />
+          <Route path="/Settings" element={<PrivateRoute element={<Settings />} />} />
         </Routes>
       </Router>
     </Provider>
