@@ -16,6 +16,7 @@ import CreateAdmin from "./components/Forms/CreateAdmin";
 import CreateUser from "./components/Forms/CreateUser";
 import Settings from "./components/Settings";
 import ViewAdmins from "./components/Cards/ViewAdmins";
+import ViewUploadedVideos from "./components/BroadCastorComponents/ViewUploadedVideos";
 import ProfileAdmin from "./components/Forms/ProfileAdmin";
 
 // Create Redux store
@@ -50,6 +51,9 @@ function App() {
 
           <Route path="/create-administrators" element={<CreateAdmin/>}/>
           <Route path="/CreateUser" element={<CreateUser/>}/>
+
+
+          <Route path="/ViewUploadedVideos" element={<ViewUploadedVideos/>} />
 
 
           <Route path="/Settings" element={<Settings/>} />

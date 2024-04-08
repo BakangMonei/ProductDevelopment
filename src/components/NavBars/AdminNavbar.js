@@ -64,10 +64,10 @@ const AdminNavbar = ({ broadcasterName }) => {
               </Link>
 
               <Link
-                to="/"
+                to="/ViewUploadedVideos"
                 className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
               >
-                <Link to="/uploaded-videos" className="flex items-center">
+                <Link to="/ViewUploadedVideos" className="flex items-center">
                   <FaVideo className="mr-2" />
                 </Link>
                 <span className="mx-4 font-normal text-md">

@@ -7,16 +7,18 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { firestore } from "../../firebase"; // Import your firebase configuration
+import AdminNavbar from "../NavBars/AdminNavbar";
 
 const ViewUploadedVideos = () => {
+
+
+
   return (
+    <div className="flex flex-auto p-1">
     <div>
-      <Thumbnail video={video} />
-      <a href={video.url}>
-        <h3>{video.title}</h3>
-        <p>{video.description}</p>
-      </a>
-      <LikeButton video={video} />
+      <AdminNavbar />
+    </div>
+
     </div>
   );
 };
