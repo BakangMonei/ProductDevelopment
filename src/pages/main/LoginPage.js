@@ -128,18 +128,16 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
             />
           </div>
 
-          <div className="flex flex-row mb-4 mt-1 text-end">
+           <div className="flex flex-row mb-4 mt-1 text-end">
             <div className="">
-              <Checkbox />
+              {/* Added margin-right to create space */}
+              <CheckBox />
             </div>
-            <p className="text-sm">
-              <a
-                href="/ForgotPassword"
-                className="text-black font-sans underline"
-              >
-                Forgot Password?
+            <div className="ml-auto">
+              <a href="/ForgotPassword" className="text-gray-500">
+                Forgot password?
               </a>
-            </p>
+              </div>
           </div>
           <button
             type="submit"
