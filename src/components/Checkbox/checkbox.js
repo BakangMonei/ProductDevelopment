@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 
 
 
-const Checkbox = () => {
+const CheckBox = () => {
     const [checked, setChecked] = useState(false);
 
     return (
@@ -18,4 +18,4 @@ const Checkbox = () => {
     );
 };
 
-export default Checkbox;
+export default CheckBox;
