@@ -1,4 +1,3 @@
-// SportsCard.js
 import React, { useState, useEffect } from "react";
 import {
   collection,
@@ -6,8 +5,10 @@ import {
   deleteDoc,
   doc,
   updateDoc,
+  getDoc,
+  setDoc,
 } from "firebase/firestore";
-import { firestore } from "../../firebase"; // Import your firebase configuration
+import { firestore, auth } from "../../firebase";
 
 const VideoPlayer = ({ videoURL }) => {
   return (
@@ -70,6 +71,9 @@ const SportsCard = () => {
   const [broadcasts, setBroadcasts] = useState([]);
   const [editingBroadcast, setEditingBroadcast] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const [favorites, setFavorites] = useState({}); // keep track of favorite broadcasts
 
   const fetchBroadcasts = async () => {
     const broadcastsCollection = collection(firestore, "broadcasts");
@@ -86,9 +90,32 @@ const SportsCard = () => {
     fetchBroadcasts();
   }, []);
 
-  const handleToggleFavorite = async (broadcastId) => {
-    // Add favorite toggle logic here
-  };
+
+const handleToggleFavorite = async (broadcastId) => {
+  const userId = auth.currentUser.uid;
+  const userFavCollection = collection(firestore, `user_fav/${userId}/favorites`);
+  const broadcastRef = doc(userFavCollection, broadcastId);
+
+  const docSnapshot = await getDoc(broadcastRef);
+  const isFavorite = docSnapshot.exists();
+
+  if (isFavorite) {
+    // Remove from favorites
+    await deleteDoc(broadcastRef);
+    setFavorites((prevFavorites) => ({
+     ...prevFavorites,
+      [broadcastId]: false,
+    }));
+  } else {
+    // Add to favorites
+    await setDoc(broadcastRef, { broadcastId: broadcastId });
+    setFavorites((prevFavorites) => ({
+     ...prevFavorites,
+      [broadcastId]: true,
+      
+    }));
+  }
+};
 
   return (
     <div className="flex">
@@ -114,7 +141,7 @@ const SportsCard = () => {
               <div className="mt-4 space-x-2">
                 <FavoriteButton
                   broadcastId={broadcast.id}
-                  // isFavorite={/* check if broadcast is favorite */}
+                  isFavorite={favorites[broadcast.id] || false}
                   onToggleFavorite={handleToggleFavorite}
                 />
                 <button

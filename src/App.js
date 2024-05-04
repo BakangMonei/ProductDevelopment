@@ -23,6 +23,8 @@ import ViewAdmins from "./components/Cards/ViewAdmins";
 import ViewUploadedVideos from "./components/BroadCastorComponents/ViewUploadedVideos";
 import { auth } from "./firebase";
 import UserProfile from "./components/Forms/UserProfile";
+import FavoritesList from "./components/list/FavoritesList";
+import UserFavorites from "./components/Cards/UserFavorites";
 
 const ProfileAdmin = lazy(() => import("./components/Forms/ProfileAdmin"));
 const RegistrationPage = lazy(() => import("./pages/main/RegistrationPage"));
@@ -112,6 +114,8 @@ function App() {
           />
 
           <Route path="/UserProfile" element={<UserProfile />} />
+          <Route path="/FavoritesList" element={<FavoritesList />} />
+          <Route path="/UserFavorites" element={<UserFavorites />} />
         </Routes>
       </Router>
     </Provider>
