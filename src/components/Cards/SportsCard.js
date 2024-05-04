@@ -99,6 +99,7 @@ const SportsCard = () => {
               key={broadcast.id}
               className="bg-white rounded-lg shadow-md p-4"
             >
+              <VideoPlayer videoURL={broadcast.videoURL} />
               <h2 className="text-lg font-semibold mb-2">
                 {broadcast.sportName}
               </h2>
@@ -109,8 +110,6 @@ const SportsCard = () => {
               <p>Date & Time: {broadcast.dateTime}</p>
               <p>Venue: {broadcast.venue}</p>
               <p>Country: {broadcast.country}</p>
-
-              <VideoPlayer videoURL={broadcast.videoURL} />
 
               <div className="mt-4 space-x-2">
                 <FavoriteButton

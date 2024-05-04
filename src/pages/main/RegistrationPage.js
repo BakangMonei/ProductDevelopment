@@ -5,7 +5,6 @@ import { auth, firestore } from "../../firebase"; // Import Firebase Auth and Fi
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
-
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../redux/actions/authActions";
 
@@ -234,7 +233,7 @@ export const RegistrationPage = () => {
                   value={selectedCountry}
                   onChange={(e) => setSelectedCountry(e.target.value)}
                 >
-                  <option value="" >Select Country</option>
+                  <option value="">Select Country</option>
                   {countryOptions.map((country, index) => (
                     <option key={index} value={country.name}>
                       {country.name}

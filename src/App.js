@@ -22,6 +22,7 @@ import Settings from "./components/Settings";
 import ViewAdmins from "./components/Cards/ViewAdmins";
 import ViewUploadedVideos from "./components/BroadCastorComponents/ViewUploadedVideos";
 import { auth } from "./firebase";
+import UserProfile from "./components/Forms/UserProfile";
 
 const ProfileAdmin = lazy(() => import("./components/Forms/ProfileAdmin"));
 const RegistrationPage = lazy(() => import("./pages/main/RegistrationPage"));
@@ -56,6 +57,8 @@ function App() {
           <Route path="/LoginPage" element={<LoginPage />} />
           <Route path="/RegistrationPage" element={<RegistrationPage />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
+
+
 
           {/* Dashboards */}
           <Route
@@ -107,6 +110,8 @@ function App() {
             path="/Settings"
             element={<PrivateRoute element={<Settings />} />}
           />
+
+          <Route path="/UserProfile" element={<UserProfile />} />
         </Routes>
       </Router>
     </Provider>
