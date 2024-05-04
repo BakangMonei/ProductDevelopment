@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { countries } from "countries-list";
-import Neiza from "../../assets/images/facebook_image.png";
+import Neiza from "../../assets/images/new_black.png";
 import { auth, firestore } from "../../firebase"; // Import Firebase Auth and Firestore
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";

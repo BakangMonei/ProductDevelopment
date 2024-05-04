@@ -1,3 +1,4 @@
+import { lazy } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -8,9 +9,7 @@ import { Provider } from "react-redux";
 import { createStore } from "redux"; // Import createStore from redux
 import rootReducer from "./redux/reducers"; // Import your root reducer
 import SplashScreen from "./pages/main/SplashScreen";
-import LoginPage from "./pages/main/LoginPage";
-import ForgotPassword from "./pages/main/ForgotPassword";
-import RegistrationPage from "./pages/main/RegistrationPage";
+// import LoginPage from "./pages/main/LoginPage";
 import UserDashboard from "./pages/user/UserDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import Profile from "./components/Forms/Profile";
@@ -22,10 +21,12 @@ import CreateUser from "./components/Forms/CreateUser";
 import Settings from "./components/Settings";
 import ViewAdmins from "./components/Cards/ViewAdmins";
 import ViewUploadedVideos from "./components/BroadCastorComponents/ViewUploadedVideos";
-import ProfileAdmin from "./components/Forms/ProfileAdmin";
-
-// Import the auth object from firebase.js
 import { auth } from "./firebase";
+
+const ProfileAdmin = lazy(() => import("./components/Forms/ProfileAdmin"));
+const RegistrationPage = lazy(() => import("./pages/main/RegistrationPage"));
+const ForgotPassword = lazy(() => import("./pages/main/ForgotPassword"));
+const LoginPage = lazy(() => import("./pages/main/LoginPage"));
 
 // Create Redux store
 const store = createStore(rootReducer);
@@ -48,6 +49,7 @@ function App() {
         <Routes>
           {/* For testing only */}
           <Route path="/" element={<SplashScreen />} />
+          {/* <Route path="/" element={<UserDashboard />} /> */}
           <Route path="/SplashScreen" element={<SplashScreen />} />
 
           {/* More functionality routes as needed */}

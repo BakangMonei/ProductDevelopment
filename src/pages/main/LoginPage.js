@@ -54,6 +54,7 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
         // User exists in the 's_admin' collection
         await signInWithEmailAndPassword(auth, email, password);
         navigate("/SuperAdminDashboard");
+        console.log("Successfully Logged in As Super Admin " + email)
       } else {
         setError("Invalid email or password.");
       }

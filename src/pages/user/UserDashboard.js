@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import Profile from "../../components/Forms/Profile";
+import Sidebar from "../../components/sidebar/SideBar";
+import SportsCard from "../../components/Cards/SportsCard";
 
 export const UserDashboard = () => {
   return (
-    <div>
-      <p>UserDashboard</p>
+    <div className="flex flex-auto">
 
-      <Profile/>
+
+    <SportsCard/>
     </div>
   );
 };
