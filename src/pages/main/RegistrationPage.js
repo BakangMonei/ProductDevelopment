@@ -117,10 +117,10 @@ export const RegistrationPage = () => {
     <div className="bg_image flex items-center justify-center min-h-screen">
       <div className="login_container grid grid-cols-3 gap-4 p-8 rounded-xl shadow-md w-full max-w-4xl">
         <div className="col-span-2">
-          <h1 className="text-4xl font-sans mb-1 text-center">
+          <h1 className="text-4xl font-sans mb-1 text-left">
             Create an account
           </h1>
-          <h1 className="text-center font-thin mb-4">
+          <h1 className="text-left font-thin mb-4">
             Already have an account?{" "}
             <a href="/LoginPage" className="text-black underline">
               Log in
@@ -137,7 +137,7 @@ export const RegistrationPage = () => {
           <form onSubmit={handleRegister}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 w-full">
               <div>
-                <label className="block text-sm font-medium mb-1">
+                <label className="block text-sm font-thin mb-1">
                   FirstName
                 </label>
                 <input
@@ -149,9 +149,7 @@ export const RegistrationPage = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">
-                  LastName
-                </label>
+                <label className="block text-sm font-thin mb-1">LastName</label>
                 <input
                   type="text"
                   placeholder="LastName"
@@ -161,7 +159,7 @@ export const RegistrationPage = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">
+                <label className="block text-sm font-thin mb-1">
                   Phone Number
                 </label>
                 <input
@@ -173,7 +171,7 @@ export const RegistrationPage = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">Sport</label>
+                <label className="block text-sm font-thin mb-1">Sport</label>
                 <select
                   className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
                   value={sport}
@@ -188,7 +186,7 @@ export const RegistrationPage = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">Gender</label>
+                <label className="block text-sm font-thin mb-1">Gender</label>
                 <select
                   className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
                   value={gender}
@@ -203,9 +201,7 @@ export const RegistrationPage = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">
-                  Country
-                </label>
+                <label className="block text-sm font-thin mb-1">Country</label>
                 <select
                   className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
                   value={selectedCountry}
@@ -220,7 +216,7 @@ export const RegistrationPage = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">Email</label>
+                <label className="block text-sm font-thin mb-1">Email</label>
                 <input
                   type="email"
                   placeholder="Email"
@@ -230,9 +226,7 @@ export const RegistrationPage = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">
-                  Username
-                </label>
+                <label className="block text-sm font-thin mb-1">Username</label>
                 <input
                   type="text"
                   placeholder="Username"
@@ -242,9 +236,7 @@ export const RegistrationPage = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">
-                  Password
-                </label>
+                <label className="block text-sm font-thin mb-1">Password</label>
                 <input
                   type="password"
                   placeholder="Password"
@@ -254,7 +246,7 @@ export const RegistrationPage = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">
+                <label className="block text-sm font-thin mb-1">
                   Confirm Password
                 </label>
                 <input
@@ -266,12 +258,30 @@ export const RegistrationPage = () => {
                 />
               </div>
             </div>
-            <button
+            <p className="font-thin p-3">
+              Use 8 or more characters with a mix of letters, numbers & symbols
+            </p>
+            <div className="flex items-center mb-4">
+              <input type="checkbox" className="mr-2" id="terms" name="terms" />
+              <label htmlFor="terms" className="text-sm font-thin">
+                I agree to the{" "}
+                <a href="/terms" className="text-black underline">
+                  Terms and Conditions
+                </a>
+              </label>
+            </div>
+           <div className="flex flex-auto">
+
+            {/*Navigate to forgot Password Page*/}
+            <a href="/ForgotPassword" className="text-black underline w-full p-3">Forgot Password?</a>
+
+           <button
               type="submit"
               className="w-full bg-gray-500 text-white py-2 rounded-3xl hover:bg-gray-800 transition duration-200"
             >
               Sign Up
             </button>
+           </div>
           </form>
         </div>
         <div className="col-span-1 flex justify-center items-center">
