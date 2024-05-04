@@ -38,11 +38,38 @@ export const RegistrationPage = () => {
   // Initialize useNavigate for redirection
   const navigate = useNavigate();
 
+  const validatePassword = (password, repassword) => {
+    if (password !== repassword) {
+      return { error: true, message: "Passwords do not match" };
+    }
+    if (password.length < 8) {
+      return { error: true, message: "Password must be at least 8 characters" };
+    }
+    if (
+      !/[a-zA-Z]/.test(password) ||
+      !/\d/.test(password) ||
+      !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)
+    ) {
+      return {
+        error: true,
+        message:
+          "Password must include a mix of letters, numbers, and special characters",
+      };
+    }
+    return { error: false, message: "" };
+  };
+
   // Function to handle user registration
   const handleRegister = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
 
     // Check if any required field is empty
+    const passwordError = validatePassword(password, repassword);
+    if (passwordError.error) {
+      setValidationError(true);
+      setError(passwordError.message);
+      return;
+    }
     if (
       firstname.trim() === "" ||
       lastname.trim() === "" ||
@@ -203,11 +230,11 @@ export const RegistrationPage = () => {
               <div>
                 <label className="block text-sm font-thin mb-1">Country</label>
                 <select
-                  className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
+                  className=" bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
                   value={selectedCountry}
                   onChange={(e) => setSelectedCountry(e.target.value)}
                 >
-                  <option value="">Select Country</option>
+                  <option value="" >Select Country</option>
                   {countryOptions.map((country, index) => (
                     <option key={index} value={country.name}>
                       {country.name}
@@ -270,18 +297,22 @@ export const RegistrationPage = () => {
                 </a>
               </label>
             </div>
-           <div className="flex flex-auto">
+            <div className="flex flex-auto">
+              {/*Navigate to forgot Password Page*/}
+              <a
+                href="/ForgotPassword"
+                className="text-black underline w-full p-3"
+              >
+                Forgot Password?
+              </a>
 
-            {/*Navigate to forgot Password Page*/}
-            <a href="/ForgotPassword" className="text-black underline w-full p-3">Forgot Password?</a>
-
-           <button
-              type="submit"
-              className="w-full bg-gray-500 text-white py-2 rounded-3xl hover:bg-gray-800 transition duration-200"
-            >
-              Sign Up
-            </button>
-           </div>
+              <button
+                type="submit"
+                className="w-full bg-gray-500 text-white py-2 rounded-3xl hover:bg-gray-800 transition duration-200"
+              >
+                Sign Up
+              </button>
+            </div>
           </form>
         </div>
         <div className="col-span-1 flex justify-center items-center">
