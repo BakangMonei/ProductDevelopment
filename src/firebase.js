@@ -24,7 +24,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(firebaseApp);
 
 // Initialize Firebase services
-const auth = getAuth(firebaseApp); // Initialize Auth
+const auth = getAuth(firebaseApp); // Initialize Auth 
 const firestore = getFirestore(firebaseApp); // Initialize Firestore
 const database = getDatabase(firebaseApp); // Initialize Realtime Database
 const storage = getStorage(firebaseApp); // Initialize Storage

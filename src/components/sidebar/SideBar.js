@@ -75,8 +75,8 @@ const Sidebar = () => {
               </Link>
             </li>
             <li>
-              <Link to="" className="block py-2 px-4 hover:bg-gray-700">
-                Team
+              <Link to="/BlogPage" className="block py-2 px-4 hover:bg-gray-700">
+                Posts
               </Link>
             </li>
            
