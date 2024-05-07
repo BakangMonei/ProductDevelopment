@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { auth, firestore } from "../../firebase"; // Import auth and firestore from firebase.js
+import { query, where, getDocs, collection } from "firebase/firestore";
 
 const SuperAdminNavBar = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+  const handleLogout = () => {
+    auth
+      .signOut()
+      .then(() => {
+        console.log("User signed out");
+        // Redirect to login page or homepage after logout
+        window.location.href = "/LoginPage";
+      })
+      .catch((error) => {
+        console.error("Error signing out:", error);
+      });
+  };
   return (
     <div className="relative bg-white dark:bg-gray-800 border-r">
       <div className="flex flex-col sm:flex-row sm:justify-around">
@@ -151,13 +166,13 @@ const SuperAdminNavBar = () => {
                 <span className="mx-4 font-normal text-md">View Users</span>
               </Link>
             </div>
-            {/* Statistics & Analytics */}
+            {/* Others*/}
             <div>
               <p className="w-full pb-2 mb-4 ml-2 font-normal text-gray-300 border-b-2 border-gray-100 text-md">
-                Statistics & Analytics
+                Viewing As User
               </p>
               <Link
-                to="/view-logs"
+                to="/AdminBlogPage"
                 className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
               >
                 <span className="text-left">
@@ -174,7 +189,7 @@ const SuperAdminNavBar = () => {
                     ></path>
                   </svg>
                 </span>
-                <span className="mx-4 font-normal text-md">View Logs</span>
+                <span className="mx-4 font-normal text-md">Create A Post</span>
               </Link>
               <Link
                 to="/Settings"
@@ -196,26 +211,23 @@ const SuperAdminNavBar = () => {
                 </span>
                 <span className="mx-4 font-normal text-md">Settings</span>
               </Link>
-              <Link
-                to="/logout"
-                className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-              >
-                <span className="text-left">
-                  <svg
-                    width="20"
-                    height="20"
-                    fill="currentColor"
-                    viewBox="0 0 2048 1792"
-                    xmlns="http://www.w3.org/2000/svg"
+              <div>
+                {currentUser ? (
+                  <button
+                    className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={handleLogout}
                   >
-                    <path
-                      fill="#5e72e4"
-                      d="M960 0l960 384v128h-128q0 26-20.5 45t-48.5 19h-1526q-28 0-48.5-19t-20.5-45h-128v-128zm-704 640h256v768h128v-768h256v768h128v-768h256v768h128v-768h256v768h59q28 0 48.5 19t20.5 45v64h-1664v-64q0-26 20.5-45t48.5-19h59v-768zm1595 960q28 0 48.5 19t20.5 45v128h-1920v-128q0-26 20.5-45t48.5-19h1782z"
-                    ></path>
-                  </svg>
-                </span>
-                <span className="mx-4 font-normal text-md">Logout</span>
-              </Link>
+                    Logout
+                  </button>
+                ) : (
+                  <Link
+                    to="/LoginPage"
+                    className="block py-2 px-4 hover:bg-gray-700"
+                  >
+                    Sign Out
+                  </Link>
+                )}
+              </div>
             </div>
           </nav>
         </div>

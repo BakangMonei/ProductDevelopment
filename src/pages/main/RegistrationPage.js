@@ -7,6 +7,7 @@ import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../redux/actions/authActions";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export const RegistrationPage = () => {
   const [firstname, setFirstname] = useState("");
@@ -20,6 +21,15 @@ export const RegistrationPage = () => {
   const [password, setPassword] = useState("");
   const [repassword, setRePassword] = useState("");
   const [error, setError] = useState(null);
+
+  const [isCaptchaVerified, setCaptchaVerified] = useState(false);
+  const verifyCaptcha = () => {
+    setCaptchaVerified(true);
+  };
+
+  const resetCaptcha = () => {
+    setCaptchaVerified(false);
+  };
 
   const dispatch = useDispatch();
   const registrationState = useSelector((state) => state.auth); // Assuming you have combined your reducers and authReducer is part of the state
@@ -64,6 +74,12 @@ export const RegistrationPage = () => {
 
     // Check if any required field is empty
     const passwordError = validatePassword(password, repassword);
+
+    //check the captch has been verified
+    if (!isCaptchaVerified) {
+      alert(`Verify you're human`);
+      return;
+    }
     if (passwordError.error) {
       setValidationError(true);
       setError(passwordError.message);
@@ -311,6 +327,15 @@ export const RegistrationPage = () => {
               >
                 Sign Up
               </button>
+            </div>
+
+            <div className="item-center justify-center flex-auto p-3">
+              <ReCAPTCHA
+                sitekey="6LcgtOIfAAAAAPKY4tPJouA-7ujrn7IHYJNvuOk6"
+                // sitekey="6Lcmd9EpAAAAAB-OWZucytCG02_mFrByM5sJDEid"
+                onChange={verifyCaptcha}
+                onExpired={resetCaptcha}
+              />
             </div>
           </form>
         </div>

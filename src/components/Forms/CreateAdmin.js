@@ -31,7 +31,8 @@ const CreateAdmin = () => {
   const countryOptions = Object.values(countries);
 
   // Lists
-  const sports = ["Football", "Basketball", "Tennis", "Swimming", "Golf"];
+  const sports = ["Swimming", "Athletics", "Gymnastics", "Cycling", "Basketball", "Football", "Tennis", "Boxing", "Rowing", "Diving", "Wrestling", "Sailing", "Archery", "Equestrian", "Triathlon", "Volleyball", "Handball", "Table Tennis", "Taekwondo", "Canoeing", "Fencing", "Shooting", "Badminton", "Rhythmic Gymnastics", "Weightlifting", "Hockey", "Rugby Sevens", "Synchronized Swimming", "Water Polo", "Modern Pentathlon"];
+
 
   // State for validation and registration success
   const [validationError, setValidationError] = useState(false);

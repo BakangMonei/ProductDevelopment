@@ -27,6 +27,7 @@ import FavoritesList from "./components/list/FavoritesList";
 import UserFavorites from "./components/Cards/UserFavorites";
 import BlogPage from "./components/blog/BlogPage";
 import Setting from "./components/settings/Setting";
+import AdminBlogPage from "./components/blog/AdminBlogPage";
 
 const ProfileAdmin = lazy(() => import("./components/Forms/ProfileAdmin"));
 const RegistrationPage = lazy(() => import("./pages/main/RegistrationPage"));
@@ -79,10 +80,14 @@ function App() {
           />
 
           {/* Add more routes as needed */}
+
+           {/* SuperAdmin*/}
           <Route
             path="/Profile"
             element={<PrivateRoute element={<Profile />} />}
           />
+
+           {/* Broadcaster*/}
           <Route
             path="/ProfileAdmin"
             element={<PrivateRoute element={<ProfileAdmin />} />}
@@ -119,6 +124,7 @@ function App() {
           <Route path="/FavoritesList" element={<FavoritesList />} />
           <Route path="/UserFavorites" element={<UserFavorites />} />
           <Route path="/BlogPage" element={<BlogPage/>}/>
+          <Route path="/AdminBlogPage" element={<AdminBlogPage/>}/>
           <Route path="/Setting" element={<Setting/>}/>
 
         </Routes>

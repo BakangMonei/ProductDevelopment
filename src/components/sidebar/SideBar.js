@@ -47,7 +47,7 @@ const Sidebar = () => {
     <div className="h-screen fixed top-0 left-0 w-64 bg-gray-900 text-white">
       <div className="flex flex-col justify-between h-full p-4">
         <div>
-          <h1 className="text-2xl font-bold mb-4">Sidebar</h1>
+          <h1 className="text-2xl font-bold mb-4">Olympics</h1>
           {currentUser && (
             <p>
               Welcome, {currentUser.firstname} {currentUser.lastname}!
@@ -85,7 +85,7 @@ const Sidebar = () => {
         <div>
           {currentUser ? (
             <button
-              className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               onClick={handleLogout}
             >
               Logout

@@ -10,6 +10,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha";
 
 import googleImage from "../../assets/images/google_image.png";
 import facebookImage from "../../assets/images/facebook_image.png";
@@ -23,11 +24,25 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
   const navigate = useNavigate();
   const db = getFirestore();
 
+  const [isCaptchaVerified, setCaptchaVerified] = useState(false);
+  const verifyCaptcha = () => {
+    setCaptchaVerified(true);
+  };
+
+  const resetCaptcha = () => {
+    setCaptchaVerified(false);
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
       setError("Email and password are required.");
+      return;
+    }
+    //check the captch has been verified
+    if (!isCaptchaVerified) {
+      alert(`Verify you're human`);
       return;
     }
 
@@ -139,6 +154,14 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
                 Forgot password?
               </a>
               </div>
+          </div>
+          <div className="item-center justify-center flex-auto p-3">
+          <ReCAPTCHA
+                sitekey="6LcgtOIfAAAAAPKY4tPJouA-7ujrn7IHYJNvuOk6"
+                // sitekey="6Lcmd9EpAAAAAB-OWZucytCG02_mFrByM5sJDEid"
+                onChange={verifyCaptcha}
+                onExpired={resetCaptcha}
+              />
           </div>
           <button
             type="submit"

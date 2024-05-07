@@ -77,6 +77,8 @@ const CommentSection = ({ broadcastId }) => {
 const SportsCard = () => {
   const [broadcasts, setBroadcasts] = useState([]);
   const [editingBroadcast, setEditingBroadcast] = useState(null);
+  const [broadcasts1, setBroadcasts1] = useState([]);
+  const [editingBroadcast1, setEditingBroadcast1] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -84,6 +86,8 @@ const SportsCard = () => {
 
   const fetchBroadcasts = async () => {
     const broadcastsCollection = collection(firestore, "broadcasts");
+    
+
     const broadcastsSnapshot = await getDocs(broadcastsCollection);
     const broadcastsData = [];
     broadcastsSnapshot.forEach((doc) => {
@@ -134,7 +138,7 @@ const SportsCard = () => {
           className=" mb-5 p-8 bg-black"
         >
           <Typography variant="h6" color="white">
-            Freestyle
+            High Jump
           </Typography>
         </CardHeader>
         <Carousel>
@@ -188,7 +192,7 @@ const SportsCard = () => {
           className=" mb-5 p-8 bg-black"
         >
           <Typography variant="h6" color="white">
-            Freestyle
+            Long Jump
           </Typography>
         </CardHeader>
         <Carousel>

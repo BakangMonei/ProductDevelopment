@@ -101,7 +101,8 @@ function CreatePost() {
   return (
     <div className="container mx-auto p-4">
       {/* Post form */}
-      <form onSubmit={handlePostSubmit} className="mb-4">
+      <form onSubmit={handlePostSubmit} className="mb-4 border p-4 ">
+        <h1 className="text-4xl font-extrabold">Post Something About The Games </h1>
         <textarea
           value={newPostContent}
           onChange={(e) => setNewPostContent(e.target.value)}
