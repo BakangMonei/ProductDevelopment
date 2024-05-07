@@ -11,7 +11,7 @@ export const UserDashboard = () => {
           <Sidebar />
         </aside>
         <div className="flex-grow p-4">
-        <UserSearchBar />
+          <UserSearchBar />
           <SportsCard />
         </div>
       </div>
