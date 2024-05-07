@@ -6,9 +6,6 @@ import SportsCard from "../../components/Cards/SportsCard";
 export const UserDashboard = () => {
   return (
     <main className="h-screen flex flex-col">
-      {/* <header className="bg-gray-100 py-4 ">
-        <UserSearchBar />
-      </header> */}
       <div className="flex flex-grow">
         <aside className="w-64 bg-gray-200 p-4">
           <Sidebar />

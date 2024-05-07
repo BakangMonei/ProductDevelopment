@@ -26,6 +26,7 @@ import UserProfile from "./components/Forms/UserProfile";
 import FavoritesList from "./components/list/FavoritesList";
 import UserFavorites from "./components/Cards/UserFavorites";
 import BlogPage from "./components/blog/BlogPage";
+import Setting from "./components/settings/Setting";
 
 const ProfileAdmin = lazy(() => import("./components/Forms/ProfileAdmin"));
 const RegistrationPage = lazy(() => import("./pages/main/RegistrationPage"));
@@ -118,6 +119,8 @@ function App() {
           <Route path="/FavoritesList" element={<FavoritesList />} />
           <Route path="/UserFavorites" element={<UserFavorites />} />
           <Route path="/BlogPage" element={<BlogPage/>}/>
+          <Route path="/Setting" element={<Setting/>}/>
+
         </Routes>
       </Router>
     </Provider>
