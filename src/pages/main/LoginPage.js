@@ -15,7 +15,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import googleImage from "../../assets/images/google_image.png";
 import facebookImage from "../../assets/images/facebook_image.png";
 import { auth } from "../../firebase";
-// import CheckBox from "../../components/Checkbox/CheckBox";
+import CheckBox from "../../components/Checkbox/CheckBox";
 
 export const LoginPage = ({ showPasswordToggle, showPassword }) => {
   const [email, setEmail] = useState("");
@@ -147,7 +147,7 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
            <div className="flex flex-row mb-4 mt-1 text-end">
             <div className="">
               {/* Added margin-right to create space */}
-              {/* <CheckBox /> */}
+              <CheckBox />
             </div>
             <div className="ml-auto">
               <a href="/ForgotPassword" className="text-gray-500">
