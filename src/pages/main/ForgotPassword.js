@@ -1,20 +1,19 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { sendPasswordResetEmail } from "../../redux/actions/authActions";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "../../firebase";
 
-export const ForgotPassword = ({ sendPasswordResetEmail }) => {
+const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const [validationError, setValidationError] = useState(false);
-  const [emailSent, setEmailSent] = useState(false);
+  const [sent, setSent] = useState(false);
 
-  const handleSend = () => {
-    if (email.trim() === "") {
-      setValidationError(true);
-      setEmailSent(false);
-    } else {
-      setValidationError(false);
-      sendPasswordResetEmail(email); // Dispatch the action
-      setEmailSent(true);
+  const handleSend = async () => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setSent(true);
+      alert("Password reset link sent to your email!");
+    } catch (error) {
+      console.error("Error sending password reset link:", error);
     }
   };
 
@@ -46,7 +45,7 @@ export const ForgotPassword = ({ sendPasswordResetEmail }) => {
             className="w-full bg-gray-500 text-white py-2 rounded-3xl hover:bg-gray-800 transition duration-200"
             onClick={handleSend}
           >
-            Send Link
+            {sent? "Link Sent!" : "Send Link"}
           </button>
 
           <div className="mb-4 mt-1 text-start">
@@ -61,4 +60,5 @@ export const ForgotPassword = ({ sendPasswordResetEmail }) => {
     </div>
   );
 };
-export default connect(null, { sendPasswordResetEmail })(ForgotPassword);
+
+export default ForgotPassword;

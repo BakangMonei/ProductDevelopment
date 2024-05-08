@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { countries } from "countries-list";
 import Neiza from "../../assets/images/new_black.png";
-import { auth, firestore } from "../../firebase"; // Import Firebase Auth and Firestore
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, firestore } from "../../firebase";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../redux/actions/authActions";
@@ -70,88 +74,90 @@ export const RegistrationPage = () => {
 
   // Function to handle user registration
   const handleRegister = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-
+    e.preventDefault();
+  
     // Check if any required field is empty
     const passwordError = validatePassword(password, repassword);
-
-    //check the captch has been verified
+  
+    // Check if captcha has been verified
     if (!isCaptchaVerified) {
       alert(`Verify you're human`);
       return;
     }
+  
     if (passwordError.error) {
       setValidationError(true);
       setError(passwordError.message);
       return;
     }
-    if (
-      firstname.trim() === "" ||
-      lastname.trim() === "" ||
-      email.trim() === "" ||
-      password.trim() === "" ||
-      repassword.trim() === "" ||
-      username.trim() === "" ||
-      sport.trim() === "" ||
-      selectedCountry.trim() === "" ||
-      phonenumber.trim() === "" ||
-      gender.trim() === ""
-    ) {
-      // Validation error: Some fields are empty
+  
+    // Check if all required fields are filled
+    const requiredFields = [
+      firstname,
+      lastname,
+      email,
+      password,
+      repassword,
+      username,
+      sport,
+      selectedCountry,
+      phonenumber,
+      gender,
+    ];
+  
+    if (requiredFields.some((field) => field.trim() === "")) {
       setValidationError(true);
       setRegistrationSuccess(false);
-    } else {
-      // Clear validation error if it was previously set
-      setValidationError(false);
-
-      // Check if the email is unique
-      const emailExistsQuery = query(
-        collection(firestore, "users"),
-        where("email", "==", email)
-      );
-      const emailExistsSnapshot = await getDocs(emailExistsQuery);
-
-      if (!emailExistsSnapshot.empty) {
-        // Email already exists in the database
-        setValidationError(true);
-        setRegistrationSuccess(false);
-        return;
-      }
-
-      try {
-        // Create a new user with email and password
-        await createUserWithEmailAndPassword(auth, email, password);
-
-        // Create an object with the user's data (excluding password)
-        const userData = {
-          firstname,
-          lastname,
-          email,
-          username,
-          gender,
-          sport,
-          selectedCountry,
-          phonenumber,
-        };
-
-        // Add the user's data to Firestore
-        const docRef = await addDoc(collection(firestore, "users"), userData);
-
-        if (docRef) {
-          // Registration and Firestore data addition successful
-          setRegistrationSuccess(true);
-
-          // Redirect to the LoginPage
-          navigate("/"); // Replace '/LoginPage' with the actual path to your LoginPage component
-          dispatch(registerUser(userData));
-        } else {
-          console.error("Error adding user data to Firestore.");
-          setRegistrationSuccess(false);
-        }
-      } catch (error) {
-        console.error("Error registering user:", error);
+      return;
+    }
+  
+    // Check if email is unique
+    const emailQuery = query(collection(firestore, "users"), where("email", "==", email));
+    const emailSnapshot = await getDocs(emailQuery);
+  
+    if (!emailSnapshot.empty) {
+      setValidationError(true);
+      setRegistrationSuccess(false);
+      return;
+    }
+  
+    try {
+      // Create a new user with email and password
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  
+      // Create an object with the user's data (excluding password)
+      const userData = {
+        firstname,
+        lastname,
+        email,
+        username,
+        gender,
+        sport,
+        selectedCountry,
+        phonenumber,
+        password,
+      };
+  
+      // Add the user's data to Firestore
+      const docRef = await addDoc(collection(firestore, "users"), userData);
+  
+      if (docRef) {
+        // Registration and Firestore data addition successful
+        setRegistrationSuccess(true);
+  
+        // Send verification email
+        await sendEmailVerification(userCredential.user);
+  
+        // Redirect to verification page or display message
+        navigate("/LoginPage"); // Replace '/verify-email' with the actual path to your verification page
+        alert("Please verify your email address before logging in.");
+      } else {
+        console.error("Error adding user data to Firestore.");
         setRegistrationSuccess(false);
       }
+    } catch (error) {
+      console.error("Error registering user:", error);
+      setRegistrationSuccess(false);
     }
   };
 

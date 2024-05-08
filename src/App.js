@@ -28,8 +28,9 @@ import UserFavorites from "./components/Cards/UserFavorites";
 import BlogPage from "./components/blog/BlogPage";
 import Setting from "./components/settings/Setting";
 import AdminBlogPage from "./components/blog/AdminBlogPage";
+import ProfileAdmin from "./components/Forms/ProfileAdmin"
 
-const ProfileAdmin = lazy(() => import("./components/Forms/ProfileAdmin"));
+
 const RegistrationPage = lazy(() => import("./pages/main/RegistrationPage"));
 const ForgotPassword = lazy(() => import("./pages/main/ForgotPassword"));
 const LoginPage = lazy(() => import("./pages/main/LoginPage"));

@@ -1,6 +1,7 @@
-// components/SideBar.js
-import React from "react";
-import { Link } from "react-router-dom"; // If using React Router for navigation
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { auth, firestore } from "../../firebase"; // Import auth and firestore from firebase.js
+import { query, where, getDocs, collection } from "firebase/firestore";
 import {
   FaUser,
   FaCog,
@@ -9,11 +10,54 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 
-const AdminNavbar = ({ broadcasterName }) => {
+const AdminNavbar = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const q = query(
+          collection(firestore, "admin"),
+          where("email", "==", user.email)
+        );
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+          console.log("No matching documents found.");
+          setCurrentUser(null);
+        } else {
+          const userData = querySnapshot.docs[0].data();
+          setCurrentUser(userData);
+        }
+      } else {
+        setCurrentUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = () => {
+    auth
+      .signOut()
+      .then(() => {
+        console.log("User signed out");
+        // Redirect to login page or homepage after logout
+        window.location.href = "/LoginPage";
+      })
+      .catch((error) => {
+        console.error("Error signing out:", error);
+      });
+  };
   return (
     <div className="relative bg-white dark:bg-gray-800 border-r">
       <div className="flex flex-col sm:flex-row sm:justify-around">
         <div className="h-screen w-72">
+          <div className="border p-2">
+          {currentUser && (
+                <p>
+                  Welcome, {currentUser.firstname} {currentUser.lastname}!
+                </p>
+              )}
+          </div>
           <nav className="px-6 mt-10">
             <Link
               to="/AdminDashboard"
@@ -32,7 +76,9 @@ const AdminNavbar = ({ broadcasterName }) => {
                 ></path>
               </svg>
               <span className="mx-4 font-normal text-md">Dashboard</span>
+              
             </Link>
+            
             <div>
               <p className="w-full pb-2 mb-4 ml-2 font-extrabold text-gray-300 border-b-2 border-gray-100 text-md">
                 My Profile
@@ -97,10 +143,10 @@ const AdminNavbar = ({ broadcasterName }) => {
                 <span className="mx-4 font-normal text-md">Settings</span>
               </Link>
               <Link
-                to="/logout"
+                onClick={handleLogout}
                 className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
               >
-                <Link to="/logout" className="flex items-center">
+                <Link  className="flex items-center" onClick={handleLogout}>
                   <FaSignOutAlt className="mr-2" />
                 </Link>
                 <span className="mx-4 font-normal text-md">Logout</span>
