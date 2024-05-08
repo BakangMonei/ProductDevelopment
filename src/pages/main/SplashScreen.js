@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../../logo.svg";
+import Spinner from "react-spinkit"; // Import Spinner component
 
 const SplashScreen = () => {
   const navigate = useNavigate();
@@ -18,19 +18,15 @@ const SplashScreen = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      {isLoading ? (
-        <img
-          src={logo}
-          alt="Splash Image"
-          className="w-64 h-64 animate-fade-in animate-spin"
-        />
-      ) : (
-        <img
-          src={logo}
-          alt="Splash Image"
-          className="w-64 h-64 animate-fade-in"
-        />
-      )}
+      {/* Use react-spinkit Spinner component */}
+      <Spinner
+        name="ball-clip-rotate-multiple" // You can choose from various spinner styles
+        color="blue" // Customize spinner color if needed
+        fadeIn="ball-zig-zag-deflect"
+        className="w-100 h-100 animate-fade-in animate-spin"
+        style={{ display: isLoading ? "block" : "none" }} // Show spinner when isLoading is true
+      />
+      
     </div>
   );
 };
