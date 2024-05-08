@@ -29,6 +29,7 @@ import BlogPage from "./components/blog/BlogPage";
 import Setting from "./components/settings/Setting";
 import AdminBlogPage from "./components/blog/AdminBlogPage";
 import ProfileAdmin from "./components/Forms/ProfileAdmin"
+import AdminTwoBlogPage from "./components/blog/AdminTwoBlogPage";
 
 
 const RegistrationPage = lazy(() => import("./pages/main/RegistrationPage"));
@@ -126,6 +127,7 @@ function App() {
           <Route path="/UserFavorites" element={<UserFavorites />} />
           <Route path="/BlogPage" element={<BlogPage/>}/>
           <Route path="/AdminBlogPage" element={<AdminBlogPage/>}/>
+          <Route path="/AdminTwoBlogPage" element={<AdminTwoBlogPage/>}/>
           <Route path="/Setting" element={<Setting/>}/>
 
         </Routes>
