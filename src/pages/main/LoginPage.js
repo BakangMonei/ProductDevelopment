@@ -69,7 +69,7 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
         // User exists in the 's_admin' collection
         await signInWithEmailAndPassword(auth, email, password);
         navigate("/SuperAdminDashboard");
-        console.log("Successfully Logged in As Super Admin " + email)
+        console.log("Successfully Logged in As Super Admin " + email);
       } else {
         setError("Invalid email or password.");
       }
@@ -144,7 +144,7 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
             />
           </div>
 
-           <div className="flex flex-row mb-4 mt-1 text-end">
+          <div className="flex flex-row mb-4 mt-1 text-end">
             <div className="">
               {/* Added margin-right to create space */}
               <CheckBox />
@@ -153,15 +153,15 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
               <a href="/ForgotPassword" className="text-gray-500">
                 Forgot password?
               </a>
-              </div>
+            </div>
           </div>
           <div className="item-center justify-center flex-auto p-3">
-          <ReCAPTCHA
-                sitekey="6LcgtOIfAAAAAPKY4tPJouA-7ujrn7IHYJNvuOk6"
-                // sitekey="6Lcmd9EpAAAAAB-OWZucytCG02_mFrByM5sJDEid"
-                onChange={verifyCaptcha}
-                onExpired={resetCaptcha}
-              />
+            <ReCAPTCHA
+              sitekey="6LcgtOIfAAAAAPKY4tPJouA-7ujrn7IHYJNvuOk6"
+              // sitekey="6Lcmd9EpAAAAAB-OWZucytCG02_mFrByM5sJDEid"
+              onChange={verifyCaptcha}
+              onExpired={resetCaptcha}
+            />
           </div>
           <button
             type="submit"
