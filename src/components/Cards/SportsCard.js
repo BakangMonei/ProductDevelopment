@@ -86,8 +86,13 @@ const SportsCard = () => {
 
   useEffect(() => {
     fetchBroadcasts();
-    fetchFavorites();
   }, []);
+
+  useEffect(() => {
+    if (broadcasts.length > 0) {
+      fetchFavorites();
+    }
+  }, [broadcasts]);
 
   const fetchBroadcasts = async () => {
     const broadcastsCollection = collection(firestore, "broadcasts");
