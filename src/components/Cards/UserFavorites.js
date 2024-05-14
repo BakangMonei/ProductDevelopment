@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { collection, getDocs, doc, query, deleteDoc } from "firebase/firestore";
-import { firestore, auth } from "../../firebase";
+import { firestore, auth } from "../../Database/firebase";
 import FavoriteCard from "../Cards/FavoriteCard";
 
 // Existing imports...

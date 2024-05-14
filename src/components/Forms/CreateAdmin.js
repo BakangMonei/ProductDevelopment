@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { auth, firestore } from "../../firebase"; // Import Firebase Auth and Firestore
+import { auth, firestore } from "../../Database/firebase"; // Import Firebase Auth and Firestore
 import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,

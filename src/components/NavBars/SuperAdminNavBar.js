@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { auth, firestore } from "../../firebase"; // Import auth and firestore from firebase.js
+import { auth, firestore } from "../../Database/firebase";  // Import auth and firestore from firebase.js
 import { query, where, getDocs, collection } from "firebase/firestore";
 
 const SuperAdminNavBar = () => {

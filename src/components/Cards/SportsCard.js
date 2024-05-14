@@ -10,7 +10,7 @@ import {
   where,
   setDoc,
 } from "firebase/firestore";
-import { firestore, auth } from "../../firebase";
+import { firestore, auth } from "../../Database/firebase"; 
 import {
   Card,
   CardHeader,

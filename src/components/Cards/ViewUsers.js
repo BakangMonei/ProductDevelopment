@@ -7,7 +7,7 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { firestore } from "../../firebase"; // Import your firebase configuration
+import { firestore } from "../../Database/firebase"; // Import your firebase configuration
 import ViewUsersUpdate from "../Forms/ViewUsersUpdate"; // Import the AdminUpdateUser component
 import SuperAdminNavBar from "../NavBars/SuperAdminNavBar";
 

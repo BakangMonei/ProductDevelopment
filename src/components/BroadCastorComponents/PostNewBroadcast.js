@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { countries } from "countries-list";
-import { firestore } from "../../firebase"; 
+import { firestore } from "../../Database/firebase"; 
 import { collection, addDoc } from "firebase/firestore";
 
 const PostNewBroadcast = () => {

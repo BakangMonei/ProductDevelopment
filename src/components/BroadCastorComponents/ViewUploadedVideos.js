@@ -6,7 +6,7 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { firestore } from "../../firebase"; // Import your firebase configuration
+import { firestore } from "../../Database/firebase";  // Import your firebase configuration
 import AdminNavbar from "../NavBars/AdminNavbar";
 
 const ViewUploadedVideos = () => {

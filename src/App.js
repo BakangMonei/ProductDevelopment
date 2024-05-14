@@ -21,7 +21,7 @@ import CreateUser from "./components/Forms/CreateUser";
 import Settings from "./components/Settings";
 import ViewAdmins from "./components/Cards/ViewAdmins";
 import ViewUploadedVideos from "./components/BroadCastorComponents/ViewUploadedVideos";
-import { auth } from "./firebase";
+import { auth } from "./Database/firebase";
 import UserProfile from "./components/Forms/UserProfile";
 import FavoritesList from "./components/list/FavoritesList";
 import UserFavorites from "./components/list/FavoritesList";

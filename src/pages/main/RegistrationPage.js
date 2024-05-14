@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { countries } from "countries-list";
 import Neiza from "../../assets/images/new_black.png";
-import { auth, firestore } from "../../firebase";
+import { auth, firestore } from "../../Database/firebase";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,

@@ -11,7 +11,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { auth, firestore, storage } from "../../firebase"; // Import your firebase instances
+import { auth, firestore, storage } from "../../Database/firebase";  // Import your firebase instances
 
 function CreatePost() {
   const [posts, setPosts] = useState([]);

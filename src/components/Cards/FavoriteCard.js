@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { collection, doc, getDoc } from "firebase/firestore";
-import { firestore } from "../../firebase";
+import { firestore } from "../../Database/firebase";
 
 const FavoriteCard = ({ broadcastId, onRemove }) => {
   const [broadcastDetails, setBroadcastDetails] = useState(null);

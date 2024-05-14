@@ -1,6 +1,6 @@
 // SearchBar.js
 import React, { useState, useEffect } from 'react';
-import { firestore } from '../../firebase';
+import { firestore } from "../../Database/firebase"; 
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import SportsCard from '../Cards/SportsCard';
 

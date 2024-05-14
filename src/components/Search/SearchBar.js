@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { firestore } from '../../firebase'; // Import your Firebase configuration
+import { firestore } from "../../Database/firebase"; // Import your Firebase configuration
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');

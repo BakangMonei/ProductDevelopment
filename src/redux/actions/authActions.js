@@ -1,5 +1,5 @@
 // authActions.js
-import { auth } from "../../firebase"; // Import your Firebase configuration here
+import { auth } from "../../Database/firebase"; // Import your Firebase configuration here
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 // FORGOTPASSWORD
