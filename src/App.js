@@ -24,7 +24,7 @@ import ViewUploadedVideos from "./components/BroadCastorComponents/ViewUploadedV
 import { auth } from "./firebase";
 import UserProfile from "./components/Forms/UserProfile";
 import FavoritesList from "./components/list/FavoritesList";
-import UserFavorites from "./components/Cards/UserFavorites";
+import UserFavorites from "./components/list/FavoritesList";
 import BlogPage from "./components/blog/BlogPage";
 import Setting from "./components/settings/Setting";
 import AdminBlogPage from "./components/blog/AdminBlogPage";

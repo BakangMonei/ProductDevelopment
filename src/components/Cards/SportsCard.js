@@ -6,6 +6,8 @@ import {
   doc,
   updateDoc,
   getDoc,
+  query,
+  where,
   setDoc,
 } from "firebase/firestore";
 import { firestore, auth } from "../../firebase";
@@ -16,6 +18,7 @@ import {
   Typography,
   Carousel,
 } from "@material-tailwind/react";
+import FavoriteCard from "./FavoriteCard";
 
 const VideoPlayer = ({ videoURL }) => {
   return (
@@ -79,10 +82,11 @@ const CommentSection = ({ broadcastId }) => {
 
 const SportsCard = () => {
   const [broadcasts, setBroadcasts] = useState([]);
-  const [favorites, setFavorites] = useState({});
+  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
     fetchBroadcasts();
+    fetchFavorites();
   }, []);
 
   const fetchBroadcasts = async () => {
@@ -95,12 +99,21 @@ const SportsCard = () => {
     setBroadcasts(broadcastsData);
   };
 
+  const fetchFavorites = async () => {
+    const userId = auth.currentUser.uid;
+    const userFavCollection = collection(firestore, `user_fav/${userId}/favorites`);
+    const q = query(userFavCollection, where("broadcastId", "in", broadcasts.map(b => b.id)));
+    const querySnapshot = await getDocs(q);
+    const favoritesData = [];
+    querySnapshot.forEach((doc) => {
+      favoritesData.push({ id: doc.id, broadcastId: doc.data().broadcastId });
+    });
+    setFavorites(favoritesData);
+  };
+
   const handleToggleFavorite = async (broadcastId) => {
     const userId = auth.currentUser.uid;
-    const userFavCollection = collection(
-      firestore,
-      `user_fav/${userId}/favorites`
-    );
+    const userFavCollection = collection(firestore, `user_fav/${userId}/favorites`);
     const broadcastRef = doc(userFavCollection, broadcastId);
 
     const docSnapshot = await getDoc(broadcastRef);
@@ -108,18 +121,11 @@ const SportsCard = () => {
 
     if (isFavorite) {
       await deleteDoc(broadcastRef);
-      setFavorites((prevFavorites) => ({
-        ...prevFavorites,
-        [broadcastId]: false,
-      }));
     } else {
       await setDoc(broadcastRef, { broadcastId: broadcastId });
-      setFavorites((prevFavorites) => ({
-        ...prevFavorites,
-        [broadcastId]: true,
-      }));
     }
   };
+
 
   return (
     <div className="t-12 mb-8 flex flex-col gap-12">
@@ -156,7 +162,7 @@ const SportsCard = () => {
                   <div className="mt-4 space-x-2">
                     <FavoriteButton
                       broadcastId={broadcast.id}
-                      isFavorite={favorites[broadcast.id] || false}
+                      isFavorite={favorites.some(fav => fav.broadcastId === broadcast.id)}
                       onToggleFavorite={handleToggleFavorite}
                     />
                     <button

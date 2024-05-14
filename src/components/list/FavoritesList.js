@@ -1,19 +1,20 @@
-// FavoritesList.js
-import React from 'react';
+import React from "react";
+import Sidebar from "../../components/sidebar/SideBar";
+import UserFavorites from "../../components/Cards/UserFavorites";
 
-const FavoritesList = ({ favorites }) => {
+export const FavoriteList = () => {
   return (
-    <div className="flex flex-col w-full p-4 mb-4 bg-white border border-gray-200 rounded-md shadow-md">
-      <h2 className="text-lg font-bold">Favorites</h2>
-      <ul>
-        {favorites.map((sport) => (
-          <li key={sport.id} className="py-2 border-b border-gray-200">
-            {sport.name}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <main className="h-screen flex flex-col">
+      <div className="flex flex-grow">
+        <aside className="w-64 bg-gray-200 p-4">
+          <Sidebar />
+        </aside>
+        <div className="flex-grow p-4">
+          <UserFavorites />
+        </div>
+      </div>
+    </main>
   );
 };
 
-export default FavoritesList;
+export default FavoriteList;
