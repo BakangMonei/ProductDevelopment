@@ -31,6 +31,8 @@ import AdminBlogPage from "./components/blog/AdminBlogPage";
 import ProfileAdmin from "./components/Forms/ProfileAdmin";
 import AdminTwoBlogPage from "./components/blog/AdminTwoBlogPage";
 
+import ChatBot from "./components/chatbot/ChatBot";
+
 const RegistrationPage = lazy(() => import("./pages/main/RegistrationPage"));
 const ForgotPassword = lazy(() => import("./pages/main/ForgotPassword"));
 const LoginPage = lazy(() => import("./pages/main/LoginPage"));
@@ -56,6 +58,7 @@ function App() {
         <Routes>
           {/* For testing only */}
           <Route path="/" element={<SplashScreen />} />
+          {/* <Route path="/" element={<ChatBot />} /> */}
           {/* <Route path="/" element={<UserDashboard />} /> */}
           <Route path="/SplashScreen" element={<SplashScreen />} />
 

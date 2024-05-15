@@ -77,6 +77,7 @@ const CreateAdmin = () => {
         sport,
         selectedCountry,
         phonenumber,
+        generatedPassword,
       };
 
       // Add the user's data to Firestore

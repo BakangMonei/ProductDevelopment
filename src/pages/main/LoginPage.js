@@ -16,6 +16,7 @@ import googleImage from "../../assets/images/google_image.png";
 import facebookImage from "../../assets/images/facebook_image.png";
 import { auth } from "../../Database/firebase";
 import CheckBox from "../../components/Checkbox/CheckBox";
+import Trefoill from "../../components/loaders/Trefoill";
 
 export const LoginPage = ({ showPasswordToggle, showPassword }) => {
   const [email, setEmail] = useState("");
@@ -23,6 +24,8 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const db = getFirestore();
+
+  const [loginClicked, setLoginClicked] = useState(false); // Add this state variable
 
   const [isCaptchaVerified, setCaptchaVerified] = useState(false);
   const verifyCaptcha = () => {
@@ -35,7 +38,7 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    setLoginClicked(true); // Set loginClicked to true when button is clicked
     if (!email || !password) {
       setError("Email and password are required.");
       return;
@@ -155,7 +158,7 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
               </a>
             </div>
           </div>
-          <div className="item-center justify-center flex-auto p-3">
+          <div className="justify-center items-center flex p-3">
             <ReCAPTCHA
               sitekey="6LcgtOIfAAAAAPKY4tPJouA-7ujrn7IHYJNvuOk6"
               // sitekey="6Lcmd9EpAAAAAB-OWZucytCG02_mFrByM5sJDEid"
@@ -169,6 +172,9 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
           >
             Log in
           </button>
+          <div className="justify-center items-center flex">
+            {loginClicked && <Trefoill />}
+          </div>
         </form>
       </div>
     </div>
