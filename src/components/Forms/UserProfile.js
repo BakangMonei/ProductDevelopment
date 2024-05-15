@@ -391,7 +391,6 @@ const UserProfile = () => {
                         />
                       </div>
                     </div>
-                    
 
                     <div className="mb-5.5">
                       <label

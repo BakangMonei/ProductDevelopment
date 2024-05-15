@@ -28,9 +28,8 @@ import UserFavorites from "./components/list/FavoritesList";
 import BlogPage from "./components/blog/BlogPage";
 import Setting from "./components/settings/Setting";
 import AdminBlogPage from "./components/blog/AdminBlogPage";
-import ProfileAdmin from "./components/Forms/ProfileAdmin"
+import ProfileAdmin from "./components/Forms/ProfileAdmin";
 import AdminTwoBlogPage from "./components/blog/AdminTwoBlogPage";
-
 
 const RegistrationPage = lazy(() => import("./pages/main/RegistrationPage"));
 const ForgotPassword = lazy(() => import("./pages/main/ForgotPassword"));
@@ -65,8 +64,6 @@ function App() {
           <Route path="/RegistrationPage" element={<RegistrationPage />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
 
-
-
           {/* Dashboards */}
           <Route
             path="/UserDashboard"
@@ -83,13 +80,13 @@ function App() {
 
           {/* Add more routes as needed */}
 
-           {/* SuperAdmin*/}
+          {/* SuperAdmin*/}
           <Route
             path="/Profile"
             element={<PrivateRoute element={<Profile />} />}
           />
 
-           {/* Broadcaster*/}
+          {/* Broadcaster*/}
           <Route
             path="/ProfileAdmin"
             element={<PrivateRoute element={<ProfileAdmin />} />}
@@ -125,11 +122,10 @@ function App() {
           <Route path="/UserProfile" element={<UserProfile />} />
           <Route path="/FavoritesList" element={<FavoritesList />} />
           <Route path="/UserFavorites" element={<UserFavorites />} />
-          <Route path="/BlogPage" element={<BlogPage/>}/>
-          <Route path="/AdminBlogPage" element={<AdminBlogPage/>}/>
-          <Route path="/AdminTwoBlogPage" element={<AdminTwoBlogPage/>}/>
-          <Route path="/Setting" element={<Setting/>}/>
-
+          <Route path="/BlogPage" element={<BlogPage />} />
+          <Route path="/AdminBlogPage" element={<AdminBlogPage />} />
+          <Route path="/AdminTwoBlogPage" element={<AdminTwoBlogPage />} />
+          <Route path="/Setting" element={<Setting />} />
         </Routes>
       </Router>
     </Provider>
