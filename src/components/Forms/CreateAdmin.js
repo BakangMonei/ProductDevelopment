@@ -95,7 +95,7 @@ const CreateAdmin = () => {
 
         // Display confirmation dialog
         const confirmed = window.confirm(
-          `Admin [${email}] created successfully. \nGenerated Password: ${generatedPassword}. \nDo you want to proceed to SuperAdminDashboard?`
+          `Admin [ ${email} ] created successfully. \nGenerated Password: ${generatedPassword}. \nDo you want to proceed to SuperAdminDashboard? \nIt is adviced that new Admin should check email to CHANGE PASSWORD!!!!!`
         );
 
         // If user confirms, navigate to SuperAdminDashboard

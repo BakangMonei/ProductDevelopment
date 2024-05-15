@@ -11,6 +11,23 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+
+  #about,
+  #services,
+  #testimonials,
+  #team,
+  #contact,
+  #footer {
+    width: 111%;
+  }
+
+  #portfolio {
+    width: 110%;
+  }
+  #features {
+    padding: 20px;
+    width: 111%;
+  }
 }
 
 .App-header {
