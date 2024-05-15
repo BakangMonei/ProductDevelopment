@@ -75,22 +75,22 @@ export const RegistrationPage = () => {
   // Function to handle user registration
   const handleRegister = async (e) => {
     e.preventDefault();
-  
+
     // Check if any required field is empty
     const passwordError = validatePassword(password, repassword);
-  
+
     // Check if captcha has been verified
-    if (!isCaptchaVerified) {
-      alert(`Verify you're human`);
-      return;
-    }
-  
+    // if (!isCaptchaVerified) {
+    //   alert(`Verify you're human`);
+    //   return;
+    // }
+
     if (passwordError.error) {
       setValidationError(true);
       setError(passwordError.message);
       return;
     }
-  
+
     // Check if all required fields are filled
     const requiredFields = [
       firstname,
@@ -103,28 +103,36 @@ export const RegistrationPage = () => {
       selectedCountry,
       phonenumber,
       gender,
+      password,
     ];
-  
+
     if (requiredFields.some((field) => field.trim() === "")) {
       setValidationError(true);
       setRegistrationSuccess(false);
       return;
     }
-  
+
     // Check if email is unique
-    const emailQuery = query(collection(firestore, "users"), where("email", "==", email));
+    const emailQuery = query(
+      collection(firestore, "users"),
+      where("email", "==", email)
+    );
     const emailSnapshot = await getDocs(emailQuery);
-  
+
     if (!emailSnapshot.empty) {
       setValidationError(true);
       setRegistrationSuccess(false);
       return;
     }
-  
+
     try {
       // Create a new user with email and password
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-  
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
       // Create an object with the user's data (excluding password)
       const userData = {
         firstname,
@@ -137,17 +145,17 @@ export const RegistrationPage = () => {
         phonenumber,
         password,
       };
-  
+
       // Add the user's data to Firestore
       const docRef = await addDoc(collection(firestore, "users"), userData);
-  
+
       if (docRef) {
         // Registration and Firestore data addition successful
         setRegistrationSuccess(true);
-  
+
         // Send verification email
         await sendEmailVerification(userCredential.user);
-  
+
         // Redirect to verification page or display message
         navigate("/LoginPage"); // Replace '/verify-email' with the actual path to your verification page
         alert("Please verify your email address before logging in.");
@@ -335,14 +343,14 @@ export const RegistrationPage = () => {
               </button>
             </div>
 
-            <div className="item-center justify-center flex-auto p-3">
+            {/* <div className="item-center justify-center flex-auto p-3">
               <ReCAPTCHA
                 sitekey="6LcgtOIfAAAAAPKY4tPJouA-7ujrn7IHYJNvuOk6"
                 // sitekey="6Lcmd9EpAAAAAB-OWZucytCG02_mFrByM5sJDEid"
                 onChange={verifyCaptcha}
                 onExpired={resetCaptcha}
               />
-            </div>
+            </div> */}
           </form>
         </div>
         <div className="col-span-1 flex justify-center items-center">
