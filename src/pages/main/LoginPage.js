@@ -24,6 +24,9 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const db = getFirestore();
+  // const siteKey = process.env.API_SITE_KEY; // Accessing the environment variable
+
+  const siteKey = "6LcgtOIfAAAAAPKY4tPJouA-7ujrn7IHYJNvuOk6"; // Hardcode the site key
 
   const [loginClicked, setLoginClicked] = useState(false); // Add this state variable
 
@@ -34,6 +37,14 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
 
   const resetCaptcha = () => {
     setCaptchaVerified(false);
+  };
+
+  const checkCaptcha = () => {
+    if (!isCaptchaVerified) {
+      alert(`Verify you're human`);
+      return false;
+    }
+    return true;
   };
 
   const handleLogin = async (e) => {
@@ -160,7 +171,7 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
           </div>
           <div className="justify-center items-center flex p-3">
             <ReCAPTCHA
-              sitekey="6LcgtOIfAAAAAPKY4tPJouA-7ujrn7IHYJNvuOk6"
+              sitekey={siteKey}
               // sitekey="6Lcmd9EpAAAAAB-OWZucytCG02_mFrByM5sJDEid"
               onChange={verifyCaptcha}
               onExpired={resetCaptcha}
