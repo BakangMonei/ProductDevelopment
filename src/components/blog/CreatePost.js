@@ -5,8 +5,6 @@ import {
   query,
   orderBy,
   onSnapshot,
-  doc,
-  getDoc,
   where,
   getDocs,
 } from "firebase/firestore";
@@ -42,17 +40,27 @@ function CreatePost() {
     // Listen for auth state changes and fetch user data
     const unsubscribeAuth = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        const q = query(
-          collection(firestore, "users"),
-          where("email", "==", user.email)
-        );
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) {
+        const collections = ["users", "admin", "s_admin"];
+        let userData = null;
+
+        for (const collectionName of collections) {
+          const q = query(
+            collection(firestore, collectionName),
+            where("email", "==", user.email)
+          );
+          const querySnapshot = await getDocs(q);
+
+          if (!querySnapshot.empty) {
+            userData = querySnapshot.docs[0].data();
+            break;
+          }
+        }
+
+        if (userData) {
+          setCurrentUser(userData);
+        } else {
           console.log("No matching documents found.");
           setCurrentUser(null);
-        } else {
-          const userData = querySnapshot.docs[0].data();
-          setCurrentUser(userData);
         }
       } else {
         setCurrentUser(null);
