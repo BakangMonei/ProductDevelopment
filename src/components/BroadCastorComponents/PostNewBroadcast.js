@@ -3,7 +3,43 @@ import { countries } from "countries-list";
 import { firestore } from "../../Database/firebase";
 import { collection, addDoc } from "firebase/firestore";
 
-
+const olympicSports = [
+  "Archery",
+  "Athletics",
+  "Badminton",
+  "Basketball",
+  "Boxing",
+  "Canoeing",
+  "Cycling",
+  "Diving",
+  "Equestrian",
+  "Fencing",
+  "Football",
+  "Golf",
+  "Gymnastics",
+  "Handball",
+  "Hockey",
+  "Judo",
+  "Karate",
+  "Modern Pentathlon",
+  "Rowing",
+  "Rugby Sevens",
+  "Sailing",
+  "Shooting",
+  "Skateboarding",
+  "Sport Climbing",
+  "Surfing",
+  "Swimming",
+  "Table Tennis",
+  "Taekwondo",
+  "Tennis",
+  "Trampoline",
+  "Triathlon",
+  "Volleyball",
+  "Water Polo",
+  "Weightlifting",
+  "Wrestling",
+];
 
 const PostNewBroadcast = () => {
   const [title, setTitle] = useState("");
@@ -76,10 +112,7 @@ const PostNewBroadcast = () => {
       )}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label
-            htmlFor="title"
-            className="block mb-1 text-gray-700"
-          >
+          <label htmlFor="title" className="block mb-1 text-gray-700">
             Title
           </label>
           <input
@@ -92,10 +125,7 @@ const PostNewBroadcast = () => {
           />
         </div>
         <div>
-          <label
-            htmlFor="dateTime"
-            className="block mb-1 text-gray-700"
-          >
+          <label htmlFor="dateTime" className="block mb-1 text-gray-700">
             Time and Date
           </label>
           <input
@@ -108,26 +138,26 @@ const PostNewBroadcast = () => {
           />
         </div>
         <div>
-          <label
-            htmlFor="sportName"
-            className="block mb-1 text-gray-700"
-          >
+          <label htmlFor="sportName" className="block mb-1 text-gray-700">
             Sport Name
           </label>
-          <input
-            type="text"
+          <select
             id="sportName"
             value={sportName}
             onChange={(e) => setSportName(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
             required
-          />
+          >
+            <option value="">Select a sport</option>
+            {olympicSports.map((sport) => (
+              <option key={sport} value={sport}>
+                {sport}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
-          <label
-            htmlFor="venue"
-            className="block mb-1 text-gray-700"
-          >
+          <label htmlFor="venue" className="block mb-1 text-gray-700">
             Venue
           </label>
           <input
@@ -140,10 +170,7 @@ const PostNewBroadcast = () => {
           />
         </div>
         <div>
-          <label
-            htmlFor="country"
-            className="block mb-1 text-gray-700"
-          >
+          <label htmlFor="country" className="block mb-1 text-gray-700">
             Country
           </label>
           <select
@@ -161,10 +188,7 @@ const PostNewBroadcast = () => {
           </select>
         </div>
         <div>
-          <label
-            htmlFor="description"
-            className="block mb-1 text-gray-700"
-          >
+          <label htmlFor="description" className="block mb-1 text-gray-700">
             Description
           </label>
           <textarea
@@ -177,10 +201,7 @@ const PostNewBroadcast = () => {
           />
         </div>
         <div>
-          <label
-            htmlFor="videoURL"
-            className="block mb-1 text-gray-700"
-          >
+          <label htmlFor="videoURL" className="block mb-1 text-gray-700">
             Video URL
           </label>
           <input
@@ -201,6 +222,6 @@ const PostNewBroadcast = () => {
       </form>
     </div>
   );
-}
+};
 
 export default PostNewBroadcast;

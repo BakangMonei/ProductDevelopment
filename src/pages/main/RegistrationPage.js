@@ -13,6 +13,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../redux/actions/authActions";
 import ReCAPTCHA from "react-google-recaptcha";
 
+
+
+
 export const RegistrationPage = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastame] = useState("");
@@ -42,7 +45,41 @@ export const RegistrationPage = () => {
   const countryOptions = Object.values(countries);
 
   // Lists
-  const sports = ["Football", "Basketball", "Tennis", "Swimming", "Golf"];
+  const sports = [  "Archery",
+  "Athletics",
+  "Badminton",
+  "Basketball",
+  "Boxing",
+  "Canoeing",
+  "Cycling",
+  "Diving",
+  "Equestrian",
+  "Fencing",
+  "Football",
+  "Golf",
+  "Gymnastics",
+  "Handball",
+  "Hockey",
+  "Judo",
+  "Karate",
+  "Modern Pentathlon",
+  "Rowing",
+  "Rugby Sevens",
+  "Sailing",
+  "Shooting",
+  "Skateboarding",
+  "Sport Climbing",
+  "Surfing",
+  "Swimming",
+  "Table Tennis",
+  "Taekwondo",
+  "Tennis",
+  "Trampoline",
+  "Triathlon",
+  "Volleyball",
+  "Water Polo",
+  "Weightlifting",
+  "Wrestling"];
   const genderM = ["Male", "Female", "Other"];
   // State for validation and registration success
   const [validationError, setValidationError] = useState(false);
