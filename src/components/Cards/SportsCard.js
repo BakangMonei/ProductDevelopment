@@ -131,58 +131,68 @@ const SportsCard = () => {
     }
   };
 
+  // Group broadcasts by sport name
+  const groupedBroadcasts = {};
+  broadcasts.forEach((broadcast) => {
+    if (!groupedBroadcasts[broadcast.sportName]) {
+      groupedBroadcasts[broadcast.sportName] = [];
+    }
+    groupedBroadcasts[broadcast.sportName].push(broadcast);
+  });
 
   return (
     <div className="t-12 mb-8 flex flex-col gap-12">
-      <Card>
-        <CardHeader
-          variant="gradient"
-          color="gray"
-          className=" mb-5 p-8 bg-black"
-        >
-          <Typography variant="h6" color="white">
-            High Jump
-          </Typography>
-        </CardHeader>
-        <Carousel>
-          <div className="container mx-auto p-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {broadcasts.map((broadcast) => (
-                <div
-                  key={broadcast.id}
-                  className="bg-white rounded-lg shadow-md p-4"
-                >
-                  <VideoPlayer videoURL={broadcast.videoURL} />
-                  <h2 className="text-lg font-semibold mb-2">
-                    {broadcast.sportName}
-                  </h2>
-                  <h3 className="text-sm font-mono mb-2">
-                    {broadcast.description}
-                  </h3>
-                  <p>title: {broadcast.title}</p>
-                  <p>Date & Time: {broadcast.dateTime}</p>
-                  <p>Venue: {broadcast.venue}</p>
-                  <p>Country: {broadcast.country}</p>
+      {Object.entries(groupedBroadcasts).map(([sportName, broadcasts]) => (
+        <Card key={sportName}>
+          <CardHeader
+            variant="gradient"
+            color="gray"
+            className=" mb-5 p-8 bg-black"
+          >
+            <Typography variant="h6" color="white">
+              {sportName}
+            </Typography>
+          </CardHeader>
+          <Carousel>
+            <div className="container mx-auto p-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {broadcasts.map((broadcast) => (
+                  <div
+                    key={broadcast.id}
+                    className="bg-white rounded-lg shadow-md p-4"
+                  >
+                    <VideoPlayer videoURL={broadcast.videoURL} />
+                    <h2 className="text-lg font-semibold mb-2">
+                      {broadcast.sportName}
+                    </h2>
+                    <h3 className="text-sm font-mono mb-2">
+                      {broadcast.description}
+                    </h3>
+                    <p>title: {broadcast.title}</p>
+                    <p>Date & Time: {broadcast.dateTime}</p>
+                    <p>Venue: {broadcast.venue}</p>
+                    <p>Country: {broadcast.country}</p>
 
-                  <div className="mt-4 space-x-2">
-                    <FavoriteButton
-                      broadcastId={broadcast.id}
-                      isFavorite={favorites.some(fav => fav.broadcastId === broadcast.id)}
-                      onToggleFavorite={handleToggleFavorite}
-                    />
-                    <button
-                      className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
-                      onClick={() => console.log("Add Comment")}
-                    >
-                      Add Comment
-                    </button>
+                    <div className="mt-4 space-x-2">
+                      <FavoriteButton
+                        broadcastId={broadcast.id}
+                        isFavorite={favorites.some(fav => fav.broadcastId === broadcast.id)}
+                        onToggleFavorite={handleToggleFavorite}
+                      />
+                      <button
+                        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+                        onClick={() => console.log("Add Comment")}
+                      >
+                        Add Comment
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        </Carousel>
-      </Card>
+          </Carousel>
+        </Card>
+      ))}
     </div>
   );
 };
