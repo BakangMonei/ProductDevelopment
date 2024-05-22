@@ -17,6 +17,7 @@ import {
   CardBody,
   Typography,
   Carousel,
+  Button,
 } from "@material-tailwind/react";
 import FavoriteCard from "./FavoriteCard";
 
@@ -76,6 +77,28 @@ const CommentSection = ({ broadcastId }) => {
           <li key={comment.id}>{comment.text}</li>
         ))}
       </ul>
+    </div>
+  );
+};
+
+const ShowMoreText = ({ text }) => {
+  const [isTruncated, setIsTruncated] = useState(true);
+
+  const toggleTruncated = () => {
+    setIsTruncated(!isTruncated);
+  };
+
+  const truncatedText = text.split(" ").slice(0, 15).join(" ") + "...";
+  const displayText = isTruncated ? truncatedText : text;
+
+  return (
+    <div>
+      <p>{displayText}</p>
+      {text.split(" ").length > 15 && (
+        <Button variant="text" color="blue" onClick={toggleTruncated}>
+          {isTruncated ? "Show More" : "Show Less"}
+        </Button>
+      )}
     </div>
   );
 };
@@ -178,9 +201,10 @@ const SportsCard = () => {
                     <h2 className="text-lg font-semibold mb-2">
                       {broadcast.sportName}
                     </h2>
-                    <h3 className="text-sm font-mono mb-2">
+                    {/* <h3 className="text-sm font-mono mb-2">
                       {broadcast.description}
-                    </h3>
+                    </h3> */}
+                    <ShowMoreText text={broadcast.description} />
                     <p>title: {broadcast.title}</p>
                     <p>Date & Time: {broadcast.dateTime}</p>
                     <p>Venue: {broadcast.venue}</p>
