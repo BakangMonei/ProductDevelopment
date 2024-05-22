@@ -98,9 +98,9 @@ const WebLogs = () => {
   const broadcastVenueData = Object.values(broadcastVenueCounts);
 
   return (
-    <div className="p-8">
+    <div className="p-8 border rounded-xl">
       <h1 className="text-3xl font-bold mb-8">Web Logs Statistics</h1>
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-3 gap-8">
         <div className="bg-white p-4 rounded-lg shadow">
           <h2 className="text-xl font-bold mb-4">Gender Distribution</h2>
           <Pie
