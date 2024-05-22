@@ -10,6 +10,7 @@ import SortByCategory from "../../components/BroadCastorComponents/SortByCategor
 import CheckMetrics from "../../components/BroadCastorComponents/CheckMetrics";
 import ReviewBroadcastLogs from "../../components/BroadCastorComponents/ReviewBroadcastLogs";
 import VerifyIdentification from "../../components/BroadCastorComponents/VerifyIdentification";
+import WebLogs from "../../components/Forms/WebLogs";
 
 export const AdminDashboard = () => {
   const [showUploadForm, setShowUploadForm] = useState(false);
@@ -26,6 +27,7 @@ export const AdminDashboard = () => {
       <div className="grid grid-cols-2 gap-4 p-4">
         {/* Add your components here */}
         <PostNewBroadcast />
+        <WebLogs/>
       </div>
     </div>
   );

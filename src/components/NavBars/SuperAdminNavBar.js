@@ -1,10 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { auth, firestore } from "../../Database/firebase";  // Import auth and firestore from firebase.js
+import { auth, firestore } from "../../Database/firebase"; // Import auth and firestore from firebase.js
 import { query, where, getDocs, collection } from "firebase/firestore";
 
 const SuperAdminNavBar = () => {
   const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const q = query(
+          collection(firestore, "s_admin"),
+          where("email", "==", user.email)
+        );
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+          console.log("No matching documents found.");
+          setCurrentUser(null);
+        } else {
+          const userData = querySnapshot.docs[0].data();
+          setCurrentUser(userData);
+        }
+      } else {
+        setCurrentUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   const handleLogout = () => {
     auth
       .signOut()
@@ -40,6 +64,11 @@ const SuperAdminNavBar = () => {
               </svg>
               <span className="mx-4 font-normal text-md">Dashboard</span>
             </Link>
+            {currentUser && (
+              <p className="p-3 ">
+                Welcome, {currentUser.firstname} {currentUser.lastname}!
+              </p>
+            )}
             <div>
               <p className="w-full pb-2 mb-4 ml-2 font-extrabold text-gray-300 border-b-2 border-gray-100 text-md">
                 My Profile

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { countries } from "countries-list";
-import { firestore } from "../../Database/firebase"; 
+import { firestore } from "../../Database/firebase";
 import { collection, addDoc } from "firebase/firestore";
 
 const PostNewBroadcast = () => {
@@ -10,15 +10,12 @@ const PostNewBroadcast = () => {
   const [venue, setVenue] = useState("");
   const [description, setDescription] = useState("");
   const [videoURL, setVideoURL] = useState("");
-
   const [selectedCountry, setSelectedCountry] = useState("");
-
   const [validationError, setValidationError] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
-  // Works
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
 
     if (
       title.trim() === "" ||
@@ -29,28 +26,25 @@ const PostNewBroadcast = () => {
       description.trim() === "" ||
       videoURL.trim() === ""
     ) {
-      // Validation error: Some fields are empty
       setValidationError(true);
       setRegistrationSuccess(false);
       return;
     }
 
     try {
-      // Add a new document with a generated id.
       const docRef = await addDoc(collection(firestore, "broadcasts"), {
-        title: title,
-        dateTime: dateTime,
-        sportName: sportName,
-        venue: venue,
+        title,
+        dateTime,
+        sportName,
+        venue,
         country: selectedCountry,
-        description: description,
-        videoURL: videoURL,
+        description,
+        videoURL,
       });
       console.log("Document written with ID: ", docRef.id);
       setRegistrationSuccess(true);
       setValidationError(false);
 
-      // Clear input fields after successful submission
       setTitle("");
       setDateTime("");
       setSportName("");
@@ -65,18 +59,25 @@ const PostNewBroadcast = () => {
     }
   };
 
-  // Extracting countries from the countries-list package
   const countryOptions = Object.values(countries);
 
   return (
-    <div className="container mx-auto mt-5 border border-black rounded p-10">
-      <h1 className="text-2xl font-semibold mb-5 text-center">Post New Broadcast</h1>
+    <div className="container mx-auto mt-5 p-10 bg-white shadow-md rounded">
+      <h1 className="text-2xl font-semibold mb-5 text-center">
+        Post New Broadcast
+      </h1>
       {registrationSuccess && (
-        <p className="text-green-600">Broadcast successfully posted!</p>
+        <p className="text-green-600 mb-4">Broadcast successfully posted!</p>
+      )}
+      {validationError && (
+        <p className="text-red-600 mb-4">Please fill in all fields.</p>
       )}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="title" className="block mb-1">
+          <label
+            htmlFor="title"
+            className="block mb-1 text-gray-700"
+          >
             Title
           </label>
           <input
@@ -84,12 +85,15 @@ const PostNewBroadcast = () => {
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
             required
           />
         </div>
         <div>
-          <label htmlFor="dateTime" className="block mb-1">
+          <label
+            htmlFor="dateTime"
+            className="block mb-1 text-gray-700"
+          >
             Time and Date
           </label>
           <input
@@ -97,12 +101,15 @@ const PostNewBroadcast = () => {
             id="dateTime"
             value={dateTime}
             onChange={(e) => setDateTime(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
             required
           />
         </div>
         <div>
-          <label htmlFor="sportName" className="block mb-1">
+          <label
+            htmlFor="sportName"
+            className="block mb-1 text-gray-700"
+          >
             Sport Name
           </label>
           <input
@@ -110,12 +117,15 @@ const PostNewBroadcast = () => {
             id="sportName"
             value={sportName}
             onChange={(e) => setSportName(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
             required
           />
         </div>
         <div>
-          <label htmlFor="venue" className="block mb-1">
+          <label
+            htmlFor="venue"
+            className="block mb-1 text-gray-700"
+          >
             Venue
           </label>
           <input
@@ -123,60 +133,72 @@ const PostNewBroadcast = () => {
             id="venue"
             value={venue}
             onChange={(e) => setVenue(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
             required
           />
         </div>
         <div>
-          <label htmlFor="country" className="block mb-1">
+          <label
+            htmlFor="country"
+            className="block mb-1 text-gray-700"
+          >
             Country
           </label>
           <select
-            className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
+            className="bg-transparent w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
             value={selectedCountry}
             onChange={(e) => setSelectedCountry(e.target.value)}
+            required
           >
-            <option value="">Select Country</option>
-            {countryOptions.map((country, index) => (
-              <option key={index} value={country.name}>
+            <option value="">Select a country</option>
+            {countryOptions.map((country) => (
+              <option key={country.alpha2Code} value={country.alpha2Code}>
                 {country.name}
               </option>
             ))}
           </select>
         </div>
         <div>
-          <label htmlFor="description" className="block mb-1">
+          <label
+            htmlFor="description"
+            className="block mb-1 text-gray-700"
+          >
             Description
           </label>
           <textarea
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+            rows="5"
             required
           />
         </div>
         <div>
-          <label htmlFor="videoURL" className="block mb-1">
+          <label
+            htmlFor="videoURL"
+            className="block mb-1 text-gray-700"
+          >
             Video URL
           </label>
           <input
-            type="text"
+            type="url"
             id="videoURL"
             value={videoURL}
             onChange={(e) => setVideoURL(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+            required
           />
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md"
         >
-          Submit
+          Post Broadcast
         </button>
       </form>
     </div>
   );
-};
+}
 
 export default PostNewBroadcast;

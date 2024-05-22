@@ -7,16 +7,21 @@ import {
   onSnapshot,
   where,
   getDocs,
+  deleteDoc,
+  doc,
+  updateDoc,
+  getDoc,
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { auth, firestore, storage } from "../../Database/firebase";  // Import your firebase instances
+import { auth, firestore, storage } from "../../Database/firebase"; // Import your firebase instances
 
 function CreatePost() {
   const [posts, setPosts] = useState([]);
   const [newPostContent, setNewPostContent] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
-  const [image, setImage] = useState(null); // Add a state for the image
-  const [imageUrl, setImageUrl] = useState(""); // Add a state for the image URL
+  const [image, setImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
+  const [newComments, setNewComments] = useState({});
 
   useEffect(() => {
     // Fetch posts from Firestore and subscribe to updates
@@ -28,7 +33,15 @@ function CreatePost() {
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const data = [];
         querySnapshot.forEach((doc) => {
-          data.push({ id: doc.id, ...doc.data() });
+          const postData = doc.data();
+          // Ensure comments and likes property is defined
+          if (!postData.comments) {
+            postData.comments = [];
+          }
+          if (!postData.likedBy) {
+            postData.likedBy = [];
+          }
+          data.push({ id: doc.id, ...postData });
         });
         setPosts(data);
       });
@@ -77,23 +90,26 @@ function CreatePost() {
     if (newPostContent.trim() === "") return;
 
     try {
+      let imageUrl = "";
       // Upload image to Firebase Storage
       if (image) {
         const imageRef = ref(storage, `posts/${image.name}`);
         await uploadBytes(imageRef, image);
-        const imageUrl = await getDownloadURL(imageRef);
-        setImageUrl(imageUrl);
+        imageUrl = await getDownloadURL(imageRef);
       }
 
       // Add post to Firestore
       await addDoc(collection(firestore, "posts"), {
         content: newPostContent,
         timestamp: new Date(),
-        user: currentUser
-          ? `${currentUser.firstname} ${currentUser.lastname}`
-          : "Unknown",
-        image: imageUrl, // Add image URL to post document
+        user: currentUser ? `${currentUser.firstname} ${currentUser.lastname}` : "Unknown",
+        userId: currentUser ? currentUser.email : "unknown",
+        image: imageUrl,
+        likes: 0,
+        likedBy: [],
+        comments: [],
       });
+
       setNewPostContent("");
       setImage(null);
       setImageUrl("");
@@ -106,21 +122,73 @@ function CreatePost() {
     setImage(e.target.files[0]);
   };
 
+  const handleDeletePost = async (postId) => {
+    try {
+      await deleteDoc(doc(firestore, "posts", postId));
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    }
+  };
+
+  const handleLikePost = async (postId, currentLikes, likedBy) => {
+    if (likedBy.includes(currentUser.email)) {
+      alert("You have already liked this post.");
+      return;
+    }
+    try {
+      const postRef = doc(firestore, "posts", postId);
+      await updateDoc(postRef, {
+        likes: currentLikes + 1,
+        likedBy: [...likedBy, currentUser.email],
+      });
+    } catch (error) {
+      console.error("Error liking document: ", error);
+    }
+  };
+
+  const handleCommentChange = (postId, comment) => {
+    setNewComments((prevComments) => ({
+      ...prevComments,
+      [postId]: comment,
+    }));
+  };
+
+  const handleCommentSubmit = async (postId, comment) => {
+    if (comment.trim() === "") return;
+    try {
+      const postRef = doc(firestore, "posts", postId);
+      const postDoc = await getDoc(postRef);
+      const post = postDoc.data();
+      await updateDoc(postRef, {
+        comments: [...post.comments, { text: comment, user: `${currentUser.firstname} ${currentUser.lastname}` }],
+      });
+      setNewComments((prevComments) => ({
+        ...prevComments,
+        [postId]: "",
+      }));
+    } catch (error) {
+      console.error("Error adding comment: ", error);
+    }
+  };
+
   return (
     <div className="container mx-auto p-4">
       {/* Post form */}
-      <form onSubmit={handlePostSubmit} className="mb-4 border p-4 ">
-        <h1 className="text-4xl font-extrabold">Post Something About The Games </h1>
+      <form
+        onSubmit={handlePostSubmit}
+        className="mb-4 border p-4 bg-white rounded-lg shadow-md"
+      >
+        <h1 className="text-2xl font-bold mb-4">Post Something About The Games</h1>
         <textarea
           value={newPostContent}
           onChange={(e) => setNewPostContent(e.target.value)}
           placeholder="What's on your mind?"
-          className="w-full p-2 border border-gray-300 rounded-md"
+          className="w-full p-2 border border-gray-300 rounded-md mb-4"
         ></textarea>
-        <input type="file" onChange={handleImageChange} />
+        <input type="file" onChange={handleImageChange} className="mb-4" />
         <button
           type="submit"
-          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
+          className="px-4 py-2 bg-blue-500 text-white rounded-md"
         >
           Post
         </button>
@@ -130,17 +198,65 @@ function CreatePost() {
       {posts.map((post) => (
         <div
           key={post.id}
-          className="border border-gray-300 rounded-md p-4 mb-4"
+          className="border border-gray-300 rounded-md p-4 mb-4 bg-white shadow-md flex"
         >
-          <p className="text-lg font-semibold mb-2">{post.content}</p>
           {post.image && (
-            <img src={post.image} alt="Post image" className="w-full mb-2" />
+            <img
+              src={post.image}
+              alt="Post"
+              className="w-32 h-32 object-cover rounded-md mr-4"
+            />
           )}
-          <p className="text-gray-500">Posted by: {post.user}</p>
-          <p className="text-gray-500">
-            {post.timestamp.toDate().toLocaleString()}
-          </p>
-          {post.image && <p className="text-gray-500">Image: {post.image}</p>}
+          <div className="flex-1">
+            <p className="text-lg font-semibold mb-2">{post.content}</p>
+            <p className="text-gray-500">Posted by: {post.user}</p>
+            <p className="text-gray-500">
+              {new Date(post.timestamp.seconds * 1000).toLocaleString()}
+            </p>
+            <div className="mt-2 flex items-center">
+              <button
+                onClick={() => handleLikePost(post.id, post.likes, post.likedBy)}
+                className="px-4 py-2 bg-green-500 text-white rounded-md mr-4"
+              >
+                Like
+              </button>
+              <span>{post.likes} {post.likes === 1 ? 'Like' : 'Likes'}</span>
+              {currentUser && currentUser.email === post.userId && (
+                <button
+                  onClick={() => handleDeletePost(post.id)}
+                  className="ml-auto px-4 py-2 bg-red-500 text-white rounded-md"
+                >
+                  Delete
+                </button>
+              )}
+            </div>
+            <div className="mt-4">
+              <h3 className="font-semibold">Comments:</h3>
+              {post.comments.map((comment, index) => (
+                <p key={index} className="text-gray-700">{comment.user}: {comment.text}</p>
+              ))}
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleCommentSubmit(post.id, newComments[post.id] || "");
+                }}
+                className="mt-2"
+              >
+                <textarea
+                  value={newComments[post.id] || ""}
+                  onChange={(e) => handleCommentChange(post.id, e.target.value)}
+                  placeholder="Add a comment..."
+                  className="w-full p-2 border border-gray-300 rounded-md mb-2"
+                ></textarea>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                >
+                  Comment
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       ))}
     </div>
