@@ -10,7 +10,7 @@ import {
   where,
   setDoc,
 } from "firebase/firestore";
-import { firestore, auth } from "../../Database/firebase"; 
+import { firestore, auth } from "../../Database/firebase";
 import {
   Card,
   CardHeader,
@@ -106,8 +106,18 @@ const SportsCard = () => {
 
   const fetchFavorites = async () => {
     const userId = auth.currentUser.uid;
-    const userFavCollection = collection(firestore, `user_fav/${userId}/favorites`);
-    const q = query(userFavCollection, where("broadcastId", "in", broadcasts.map(b => b.id)));
+    const userFavCollection = collection(
+      firestore,
+      `user_fav/${userId}/favorites`
+    );
+    const q = query(
+      userFavCollection,
+      where(
+        "broadcastId",
+        "in",
+        broadcasts.map((b) => b.id)
+      )
+    );
     const querySnapshot = await getDocs(q);
     const favoritesData = [];
     querySnapshot.forEach((doc) => {
@@ -118,7 +128,10 @@ const SportsCard = () => {
 
   const handleToggleFavorite = async (broadcastId) => {
     const userId = auth.currentUser.uid;
-    const userFavCollection = collection(firestore, `user_fav/${userId}/favorites`);
+    const userFavCollection = collection(
+      firestore,
+      `user_fav/${userId}/favorites`
+    );
     const broadcastRef = doc(userFavCollection, broadcastId);
 
     const docSnapshot = await getDoc(broadcastRef);
@@ -176,7 +189,9 @@ const SportsCard = () => {
                     <div className="mt-4 space-x-2">
                       <FavoriteButton
                         broadcastId={broadcast.id}
-                        isFavorite={favorites.some(fav => fav.broadcastId === broadcast.id)}
+                        isFavorite={favorites.some(
+                          (fav) => fav.broadcastId === broadcast.id
+                        )}
                         onToggleFavorite={handleToggleFavorite}
                       />
                       <button
