@@ -21,7 +21,7 @@ jobs:
         run: npm install
 
       - name: Install Playwright
-        run: npx playwright install --with-deps
+        run: npm run playwright:install
 
       - name: Build
         run: npm run build
@@ -38,10 +38,12 @@ jobs:
         run: npm run cypress:run
 
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npm run playwright:test
 
       - name: Install Lighthouse CI
         run: npm install -g @lhci/cli
 
       - name: Run Lighthouse CI
-        run: lhci autorun
+        run: npm run lighthouse:ci
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
