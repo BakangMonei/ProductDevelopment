@@ -10,7 +10,7 @@ const SplashScreen = () => {
     // Simulate a loading process for 4 seconds
     const timer = setTimeout(() => {
       setIsLoading(false);
-      navigate("/LandingPage"); // Navigate to LoginPage.js
+      navigate("/LoginPage"); // Navigate to LoginPage.js
     }, 4000);
 
     return () => clearTimeout(timer);
