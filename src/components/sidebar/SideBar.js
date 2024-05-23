@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { auth, firestore } from "../../Database/firebase"; // Import auth and firestore from firebase.js
 import { query, where, getDocs, collection } from "firebase/firestore";
 
-
 const Sidebar = () => {
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -55,31 +54,50 @@ const Sidebar = () => {
           )}
           <ul>
             <li>
-              <Link to="/UserDashboard" className="block py-2 px-4 hover:bg-gray-700">
+              <Link
+                to="/UserDashboard"
+                className="block py-2 px-4 hover:bg-gray-700"
+              >
                 Home
               </Link>
             </li>
             <li>
-              <Link to="/UserProfile" className="block py-2 px-4 hover:bg-gray-700">
+              <Link
+                to="/UserProfile"
+                className="block py-2 px-4 hover:bg-gray-700"
+              >
                 My Profile
               </Link>
             </li>
             <li>
-              <Link to="/UserFavorites" className="block py-2 px-4 hover:bg-gray-700">
+              <Link
+                to="/UserFavorites"
+                className="block py-2 px-4 hover:bg-gray-700"
+              >
                 Favorites
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="" className="block py-2 px-4 hover:bg-gray-700">
                 Events
               </Link>
-            </li>
+            </li> */}
             <li>
-              <Link to="/BlogPage" className="block py-2 px-4 hover:bg-gray-700">
+              <Link
+                to="/BlogPage"
+                className="block py-2 px-4 hover:bg-gray-700"
+              >
                 Posts
               </Link>
             </li>
-           
+            <li>
+              <Link
+                to="/ContactAdmins"
+                className="block py-2 px-4 hover:bg-gray-700"
+              >
+                Contact Help
+              </Link>
+            </li>
           </ul>
         </div>
         <div>

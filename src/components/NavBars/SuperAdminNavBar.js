@@ -42,7 +42,7 @@ const SuperAdminNavBar = () => {
       });
   };
   return (
-    <div className="relative bg-white dark:bg-gray-800 border-r">
+    <div className="relative bg-white dark:bg-gray-800 border-r max-h-screen">
       <div className="flex flex-col sm:flex-row sm:justify-around">
         <div className="h-screen w-72">
           <nav className="px-6 mt-10">
@@ -102,6 +102,35 @@ const SuperAdminNavBar = () => {
               <p className="w-full pb-2 mb-4 ml-2 font-normal text-gray-300 border-b-2 border-gray-100 text-md">
                 Users & Broadcasters
               </p>
+
+
+
+              <Link
+                to="/create-super-administrators"
+                className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+              >
+                <span className="text-left">
+                  <svg
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    viewBox="0 0 2048 1792"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill="#5e72e4"
+                      d="M1070 1178l306-564h-654l-306 564h654zm722-282q0 182-71 348t-191 286-286 191-348 71-348-71-286-191-191-286-71-348 71-348 191-286 286-191 348-71 348 71 286 191 191 286 71 348z"
+                    ></path>
+                  </svg>
+                </span>
+                <span className="mx-4 font-normal text-md">
+                  Create Super Admin
+                </span>
+              </Link>
+
+
+
+
               <Link
                 to="/create-administrators"
                 className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
@@ -146,6 +175,7 @@ const SuperAdminNavBar = () => {
                 <span className="mx-4 font-normal text-md">Create Users</span>
               </Link>
             </div>
+
 
             <div>
               <p className="w-full pb-2 mb-4 ml-2 font-normal text-gray-300 border-b-2 border-gray-100 text-md text-center">

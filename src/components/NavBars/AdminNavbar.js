@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { auth, firestore } from "../../Database/firebase";  // Import auth and firestore from firebase.js
+import { auth, firestore } from "../../Database/firebase"; // Import auth and firestore from firebase.js
 import { query, where, getDocs, collection } from "firebase/firestore";
 import {
   FaUser,
@@ -52,11 +52,11 @@ const AdminNavbar = () => {
       <div className="flex flex-col sm:flex-row sm:justify-around">
         <div className="h-screen w-72">
           <div className="border p-2">
-          {currentUser && (
-                <p>
-                  Welcome, {currentUser.firstname} {currentUser.lastname}!
-                </p>
-              )}
+            {currentUser && (
+              <p>
+                Welcome, {currentUser.firstname} {currentUser.lastname}!
+              </p>
+            )}
           </div>
           <nav className="px-6 mt-10">
             <Link
@@ -76,9 +76,8 @@ const AdminNavbar = () => {
                 ></path>
               </svg>
               <span className="mx-4 font-normal text-md">Dashboard</span>
-              
             </Link>
-            
+
             <div>
               <p className="w-full pb-2 mb-4 ml-2 font-extrabold text-gray-300 border-b-2 border-gray-100 text-md">
                 My Profile
@@ -106,10 +105,10 @@ const AdminNavbar = () => {
                 <Link to="/AdminTwoBlogPage" className="flex items-center">
                   <FaUser className="mr-2" />
                 </Link>
-                <span className="mx-4 font-normal text-md">View As User</span>
+                <span className="mx-4 font-normal text-md">Create A Blog</span>
               </Link>
 
-              <Link
+              {/* <Link
                 to="/ViewUploadedVideos"
                 className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
               >
@@ -119,7 +118,7 @@ const AdminNavbar = () => {
                 <span className="mx-4 font-normal text-md">
                   View My Uploaded Videos
                 </span>
-              </Link>
+              </Link> */}
             </div>
             {/* Statistics & Analytics */}
             <div>
@@ -127,10 +126,10 @@ const AdminNavbar = () => {
                 Statistics & Analytics
               </p>
               <Link
-                to="/"
+                to="/ContactAdmins"
                 className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
               >
-                <Link to="/contact-admins" className="flex items-center">
+                <Link to="/ContactAdmins" className="flex items-center">
                   <FaEnvelope className="mr-2" />
                 </Link>
                 <span className="mx-4 font-normal text-md">Contact Admins</span>
@@ -146,7 +145,7 @@ const AdminNavbar = () => {
                 onClick={handleLogout}
                 className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
               >
-                <Link  className="flex items-center" onClick={handleLogout}>
+                <Link className="flex items-center" onClick={handleLogout}>
                   <FaSignOutAlt className="mr-2" />
                 </Link>
                 <span className="mx-4 font-normal text-md">Logout</span>

@@ -4,9 +4,9 @@ import SuperAdminNavBar from "../../components/NavBars/SuperAdminNavBar";
 // import { TableBroadcasters } from "../../components/data"; // import TableBroadcasters
 import { LineChart, CartesianGrid, XAxis, YAxis } from "recharts"; // import from recharts
 import LoginChart from "../../components/Charts/LoginChart";
-import SportsWatchedChart from "../../components/Charts/SportsWatchedChart";
-import StatisticsChart from "../../components/Charts/StatisticsChart";
-import AdminTable from "../../components/tables/AdminTable";
+import PostNewBroadcast from "../../components/BroadCastorComponents/PostNewBroadcast";
+import SportsCard from "../../components/Cards/SportsCard";
+import WebLogs from "../../components/Forms/WebLogs";
 
 export const SuperAdminDashboard = () => {
   const [admins, setAdmins] = useState([]);
@@ -21,13 +21,19 @@ export const SuperAdminDashboard = () => {
         <SuperAdminNavBar />
       </div>
 
-      <div className="p-3">
-        <div className="flex flex-wrap">
-          <div className="w-full md:w-1/3 xl:w-1/4 p-3">
-            <LoginChart />
-          </div>
+      <div>
+        <div className=" gap-4 p-4">
+          {/* Add your components here */}
+          
+            <WebLogs />
+       
         </div>
-
+        <div>
+          <p className="text-black text-6xl font-extrabold text-center items-center underline p-3">Stream here</p>
+        </div>
+        <div>
+          <SportsCard />
+        </div>
       </div>
     </div>
   );

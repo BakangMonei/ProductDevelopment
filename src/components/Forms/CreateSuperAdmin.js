@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate for naviga
 import { countries } from "countries-list";
 import SuperAdminNavBar from "../NavBars/SuperAdminNavBar";
 
-const CreateAdmin = () => {
+const CreateSuperAdmin = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastame] = useState("");
   const [phonenumber, setPhonenumber] = useState("");
@@ -20,6 +20,7 @@ const CreateAdmin = () => {
   const [sport, setSport] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
@@ -64,6 +65,8 @@ const CreateAdmin = () => {
     "Modern Pentathlon",
   ];
 
+  const genders = ["Male", "Female", "Others"];
+
   // State for validation and registration success
   const [validationError, setValidationError] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
@@ -82,6 +85,7 @@ const CreateAdmin = () => {
       username.trim() === "" ||
       sport.trim() === "" ||
       selectedCountry.trim() === "" ||
+      gender.trim() === "" ||
       phonenumber.trim() === ""
     ) {
       // Validation error: Some fields are empty
@@ -107,11 +111,12 @@ const CreateAdmin = () => {
         sport,
         selectedCountry,
         phonenumber,
+        gender,
         generatedPassword,
       };
 
       // Add the user's data to Firestore
-      const docRef = await addDoc(collection(firestore, "admin"), userData);
+      const docRef = await addDoc(collection(firestore, "s_admin"), userData);
 
       if (docRef) {
         // Registration and Firestore data addition successful
@@ -142,6 +147,7 @@ const CreateAdmin = () => {
           setSport("");
           setSelectedCountry("");
           setPhonenumber("");
+          setGender("");
           setGeneratedPassword("");
           setValidationError(false);
           setRegistrationSuccess(false);
@@ -160,7 +166,7 @@ const CreateAdmin = () => {
   const generateRandomPassword = () => {
     // Generate a random alphanumeric password
     const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()`''/)_+";
     const passwordLength = 10;
     let password = "";
     for (let i = 0; i < passwordLength; i++) {
@@ -179,7 +185,7 @@ const CreateAdmin = () => {
         <div className="login_container  items-center justify-center grid grid-cols-2 gap-4 p-8 rounded-xl shadow-md w-full max-w-4xl">
           <div className="col-span-2">
             <h1 className="text-2xl font-semibold text-center mb-4">
-              Create An Admin
+              Create A Super Admin
             </h1>
             {validationError && (
               <p className="text-red-500 mb-2 text-center">
@@ -306,13 +312,31 @@ const CreateAdmin = () => {
                     ))}
                   </select>
                 </div>
+
+                <div>
+                  <label htmlFor="gender" className="block">
+                    Gender
+                  </label>
+                  <select
+                    className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                  >
+                    <option value="">Select Gender</option>
+                    {genders.map((gender, index) => (
+                      <option key={index} value={gender}>
+                        {gender}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <div className="flex justify-center mt-5">
                 <button
                   type="submit"
                   className="bg-blue-500 text-white py-2 px-4 rounded"
                 >
-                  Create Admin
+                  Create Super Admin
                 </button>
               </div>
             </form>
@@ -323,4 +347,4 @@ const CreateAdmin = () => {
   );
 };
 
-export default CreateAdmin;
+export default CreateSuperAdmin;

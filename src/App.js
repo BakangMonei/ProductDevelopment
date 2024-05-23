@@ -32,6 +32,8 @@ import ProfileAdmin from "./components/Forms/ProfileAdmin";
 import AdminTwoBlogPage from "./components/blog/AdminTwoBlogPage";
 
 import ChatBot from "./components/chatbot/ChatBot";
+import CreateSuperAdmin from "./components/Forms/CreateSuperAdmin";
+import ContactAdmins from "./components/Forms/ContactAdmins";
 
 const RegistrationPage = lazy(() => import("./pages/main/RegistrationPage"));
 const ForgotPassword = lazy(() => import("./pages/main/ForgotPassword"));
@@ -103,6 +105,14 @@ function App() {
             element={<PrivateRoute element={<ViewAdmins />} />}
           />
 
+          <Route
+            path="/create-super-administrators"
+            element={<PrivateRoute element={<CreateSuperAdmin />} />}
+          />
+          <Route
+            path="/ContactAdmins"
+            element={<PrivateRoute element={<ContactAdmins />} />}
+          />
           <Route
             path="/create-administrators"
             element={<PrivateRoute element={<CreateAdmin />} />}
