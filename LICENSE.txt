@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2024 Monei Bakang
+Copyright (c) 2024 Monei Bakang Motshegwe [bi56kg]
 
 University Of Sunderland (Botswana Accountancy College [BSc (Hons) in Computer Systems Engineering])
 
