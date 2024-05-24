@@ -45,6 +45,12 @@ const SuperAdminNavBar = () => {
     <div className="relative bg-white dark:bg-gray-800 border-r max-h-screen">
       <div className="flex flex-col sm:flex-row sm:justify-around">
         <div className="h-screen w-72">
+          <p className="text-2xl font-bold">Welcome Super Admin, </p>
+        {currentUser && (
+              <p className="p-3 ">
+                {currentUser.firstname} {currentUser.lastname}!
+              </p>
+            )}
           <nav className="px-6 mt-10">
             <Link
               to="/SuperAdminDashboard"
@@ -64,11 +70,7 @@ const SuperAdminNavBar = () => {
               </svg>
               <span className="mx-4 font-normal text-md">Dashboard</span>
             </Link>
-            {currentUser && (
-              <p className="p-3 ">
-                Welcome, {currentUser.firstname} {currentUser.lastname}!
-              </p>
-            )}
+            
             <div>
               <p className="w-full pb-2 mb-4 ml-2 font-extrabold text-gray-300 border-b-2 border-gray-100 text-md">
                 My Profile

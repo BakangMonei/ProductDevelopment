@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 
-import { countries } from "countries-list";
-
 import { auth, firestore } from "../../Database/firebase"; // Import Firebase Auth and Firestore
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
-
+import { registerAdmin } from "../../redux/actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../../redux/actions/authActions";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { countries } from "countries-list";
 import SuperAdminNavBar from "../NavBars/SuperAdminNavBar";
 
 const CreateUser = () => {
@@ -17,31 +18,146 @@ const CreateUser = () => {
   const [phonenumber, setPhonenumber] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [sport, setSport] = useState("");
-  const [gender, setGender] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [repassword, setRePassword] = useState("");
-  const [error, setError] = useState(null);
+  const [gender, setGender] = useState("");
 
   const dispatch = useDispatch();
   const registrationState = useSelector((state) => state.auth); // Assuming you have combined your reducers and authReducer is part of the state
 
   const [generatedPassword, setGeneratedPassword] = useState("");
-  const [generatedConfirmPassword, setGeneratedConfirmPassword] = useState("");
 
   // Extracting countries from the countries-list package
   const countryOptions = Object.values(countries);
 
   // Lists
-  const sports = ["Football", "Basketball", "Tennis", "Swimming", "Golf"];
-  const genderM = ["Male", "Female", "Other"];
+  const sports = [
+    "Swimming",
+    "Athletics",
+    "Gymnastics",
+    "Cycling",
+    "Basketball",
+    "Football",
+    "Tennis",
+    "Boxing",
+    "Rowing",
+    "Diving",
+    "Wrestling",
+    "Sailing",
+    "Archery",
+    "Equestrian",
+    "Triathlon",
+    "Volleyball",
+    "Handball",
+    "Table Tennis",
+    "Taekwondo",
+    "Canoeing",
+    "Fencing",
+    "Shooting",
+    "Badminton",
+    "Rhythmic Gymnastics",
+    "Weightlifting",
+    "Hockey",
+    "Rugby Sevens",
+    "Synchronized Swimming",
+    "Water Polo",
+    "Modern Pentathlon",
+  ];
+  const genders = ["Male", "Female", "Other"]
+
   // State for validation and registration success
   const [validationError, setValidationError] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
   // Initialize useNavigate for redirection
   const navigate = useNavigate();
+
+  const handleRegisterAdmin = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
+    // Check if any required field is empty
+    if (
+      firstname.trim() === "" ||
+      lastname.trim() === "" ||
+      email.trim() === "" ||
+      username.trim() === "" ||
+      sport.trim() === "" ||
+      gender.trim() === "" ||
+      selectedCountry.trim() === "" ||
+      phonenumber.trim() === ""
+    ) {
+      // Validation error: Some fields are empty
+      setValidationError(true);
+      setRegistrationSuccess(false);
+      return;
+    }
+
+    // Generate a random password for the new admin
+    const generatedPassword = generateRandomPassword();
+    setGeneratedPassword(generatedPassword); // Set the generated password in the state
+
+    try {
+      // Create a new user with email and password
+      await createUserWithEmailAndPassword(auth, email, generatedPassword);
+
+      // Create an object with the user's data (excluding password)
+      const userData = {
+        firstname,
+        lastname,
+        email,
+        username,
+        sport,
+        selectedCountry,
+        phonenumber,
+        generatedPassword,
+        gender,
+      };
+
+      // Add the user's data to Firestore
+      const docRef = await addDoc(collection(firestore, "users"), userData);
+
+      if (docRef) {
+        // Registration and Firestore data addition successful
+        setRegistrationSuccess(true);
+
+        // Set the generated password in the state
+        setGeneratedPassword(generatedPassword);
+
+        // Send password reset email to the new admin
+        await sendPasswordResetEmail(auth, email);
+
+        // Display confirmation dialog
+        const confirmed = window.confirm(
+          `User [ ${email} ] created successfully. \nGenerated Password: ${generatedPassword}. \nIt is adviced that ${firstname} ${lastname} should check their email to CHANGE PASSWORD!!!!!`
+        );
+
+        // If user confirms, navigate to SuperAdminDashboard
+        if (confirmed) {
+          setFirstname("");
+          setLastame("");
+          setEmail("");
+          setUsername("");
+          setSport("");
+          setSelectedCountry("");
+          setPhonenumber("");
+          setGeneratedPassword("");
+          setGender("");
+          setValidationError(false);
+          setRegistrationSuccess(false);
+
+        } else {
+
+        }
+      } else {
+        console.error("Error adding user data to Firestore.");
+        setRegistrationSuccess(false);
+      }
+    } catch (error) {
+      console.error("Error registering user:", error);
+      setRegistrationSuccess(false);
+    }
+  };
 
   // Function to generate a random password
   const generateRandomPassword = () => {
@@ -56,92 +172,112 @@ const CreateUser = () => {
     }
     return password;
   };
-
   return (
     <div className="flex flex-auto">
       <div>
         <SuperAdminNavBar />
       </div>
-
       <div className=" flex min-h-screen  max-w-3xl mx-auto p-4 justify-center items-center">
         <div className="login_container  items-center justify-center grid grid-cols-2 gap-4 p-8 rounded-xl shadow-md w-full max-w-4xl">
           <div className="col-span-2">
             <h1 className="text-2xl font-semibold text-center mb-4">
-              Create A User
+              Create New User
             </h1>
-
             {validationError && (
-              <p className="text-red-500 mb-2">
+              <p className="text-red-500 mb-2 text-center">
                 Please fill out all required fields.
               </p>
             )}
-            {registrationSuccess && (
-              <p className="text-green-500 mb-2">Registered Successfully!</p>
-            )}
-            <form>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 w-full">
+            <form onSubmit={handleRegisterAdmin}>
+              <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block">FirstName</label>
+                  <label htmlFor="email" className="block">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="password" className="block">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Generated Password"
+                    value={generatedPassword} // Display the autogenerated password
+                    className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
+                    disabled // Disable the input field to prevent editing
+                  />
+                </div>
+                <div>
+                  <label htmlFor="firstname" className="block">
+                    First Name
+                  </label>
                   <input
                     type="text"
-                    placeholder="FirstName"
-                    className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
+                    id="firstname"
+                    name="firstname"
                     value={firstname}
+                    placeholder="First Name"
                     onChange={(e) => setFirstname(e.target.value)}
+                    className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
                   />
                 </div>
                 <div>
-                  <label className="block">LastName</label>
+                  <label htmlFor="lastname" className="block">
+                    Last Name
+                  </label>
                   <input
                     type="text"
-                    placeholder="LastName"
-                    className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
+                    id="lastname"
+                    name="lastname"
                     value={lastname}
+                    placeholder="Last Name"
                     onChange={(e) => setLastame(e.target.value)}
+                    className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
                   />
                 </div>
                 <div>
-                  <label className="block">Phone Number</label>
+                  <label htmlFor="phonenumber" className="block">
+                    Phone Number
+                  </label>
                   <input
                     type="text"
-                    placeholder="Phone Number"
-                    className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
+                    id="phonenumber"
+                    name="phonenumber"
                     value={phonenumber}
+                    placeholder="Phone Number"
                     onChange={(e) => setPhonenumber(e.target.value)}
+                    className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
                   />
                 </div>
                 <div>
-                  <label className="block">Sport</label>
-                  <select
+                  <label htmlFor="username" className="block">
+                    Username
+                  </label>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    value={username}
+                    placeholder="UserName"
+                    onChange={(e) => setUsername(e.target.value)}
                     className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
-                    value={sport}
-                    onChange={(e) => setSport(e.target.value)}
-                  >
-                    <option value="">Select Sport</option>
-                    {sports.map((sport, index) => (
-                      <option key={index} value={sport}>
-                        {sport}
-                      </option>
-                    ))}
-                  </select>
+                  />
                 </div>
                 <div>
-                  <label className="block">Gender</label>
-                  <select
-                    className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
-                  >
-                    <option value="">Select Gender</option>
-                    {genderM.map((gender, index) => (
-                      <option key={index} value={gender}>
-                        {gender}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block">Country</label>
+                  <label htmlFor="selectedCountry" className="block">
+                    Country
+                  </label>
                   <select
                     className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
                     value={selectedCountry}
@@ -156,48 +292,41 @@ const CreateUser = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block">Email</label>
-                  <input
-                    type="email"
-                    placeholder="Email"
+                  <label htmlFor="sport" className="block">
+                    Sporting Code
+                  </label>
+                  <select
                     className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+                    value={sport}
+                    onChange={(e) => setSport(e.target.value)}
+                  >
+                    <option value="">Select Sport</option>
+                    {sports.map((sport, index) => (
+                      <option key={index} value={sport}>
+                        {sport}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div>
-                  <label className="block">Username</label>
-                  <input
-                    type="text"
-                    placeholder="Username"
+                  <label htmlFor="gender" className="block">
+                    Select Gender
+                  </label>
+                  <select
                     className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label className="block">Password</label>
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    disabled
-                  />
-                </div>
-                <div>
-                  <label className="block">Confirm Password</label>
-                  <input
-                    type="password"
-                    placeholder="Confirm Password"
-                    className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
-                    value={repassword}
-                    onChange={(e) => setRePassword(e.target.value)}
-                    disabled
-                  />
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                  >
+                    <option value="">Select Gender</option>
+                    {genders.map((gender, index) => (
+                      <option key={index} value={gender}>
+                        {gender}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
+
               <div className="flex justify-center mt-5">
                 <button
                   type="submit"

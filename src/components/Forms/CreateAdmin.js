@@ -21,6 +21,7 @@ const CreateAdmin = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [gender, setGender] = useState("");
 
   const dispatch = useDispatch();
   const registrationState = useSelector((state) => state.auth); // Assuming you have combined your reducers and authReducer is part of the state
@@ -63,6 +64,7 @@ const CreateAdmin = () => {
     "Water Polo",
     "Modern Pentathlon",
   ];
+  const genders = ["Male", "Female", "Other"]
 
   // State for validation and registration success
   const [validationError, setValidationError] = useState(false);
@@ -81,6 +83,7 @@ const CreateAdmin = () => {
       email.trim() === "" ||
       username.trim() === "" ||
       sport.trim() === "" ||
+      gender.trim() === "" ||
       selectedCountry.trim() === "" ||
       phonenumber.trim() === ""
     ) {
@@ -108,6 +111,7 @@ const CreateAdmin = () => {
         selectedCountry,
         phonenumber,
         generatedPassword,
+        gender,
       };
 
       // Add the user's data to Firestore
@@ -130,8 +134,8 @@ const CreateAdmin = () => {
 
         // If user confirms, navigate to SuperAdminDashboard
         if (confirmed) {
-          navigate("/SuperAdminDashboard");
-          dispatch(registerAdmin(userData));
+          // navigate("/SuperAdminDashboard");
+
         } else {
           // Handle other actions if user cancels
           // For example, reset form fields
@@ -143,6 +147,7 @@ const CreateAdmin = () => {
           setSelectedCountry("");
           setPhonenumber("");
           setGeneratedPassword("");
+          setGender("");
           setValidationError(false);
           setRegistrationSuccess(false);
         }
@@ -306,7 +311,25 @@ const CreateAdmin = () => {
                     ))}
                   </select>
                 </div>
+                <div>
+                  <label htmlFor="gender" className="block">
+                    Select Gender
+                  </label>
+                  <select
+                    className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                  >
+                    <option value="">Select Gender</option>
+                    {genders.map((gender, index) => (
+                      <option key={index} value={gender}>
+                        {gender}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
+
               <div className="flex justify-center mt-5">
                 <button
                   type="submit"

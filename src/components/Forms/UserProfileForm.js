@@ -9,9 +9,6 @@ import {
     doc,
     updateDoc,
 } from "firebase/firestore";
-import Sidebar from "../sidebar/SideBar";
-import Breadcrumb from "../Breadcrumps/Breadcrumb";
-import userThree from "../../assets/images/neizatheedev.png";
 
 const UserProfileForm = () => {
 
@@ -32,34 +29,41 @@ const UserProfileForm = () => {
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
-            if (currentUser) {
-                try {
-                    const q = query(
-                        collection(firestore, "users"),
-                        where("email", "==", currentUser.email)
-                    );
-                    const querySnapshot = await getDocs(q);
-                    if (querySnapshot.empty) {
-                        console.log("No matching documents found.");
-                        setUser(null);
-                    } else {
-                        const userData = querySnapshot.docs[0].data();
-                        setUser(userData);
-                        setOriginalUser(userData);
-                    }
-                } catch (error) {
-                    console.error("Error fetching user data: ", error);
-                } finally {
-                    setLoading(false);
+          if (currentUser) {
+            try {
+              let userData;
+              const collections = ["users", "admin", "s_admin"];
+      
+              for (const collectionName of collections) {
+                const q = query(collection(firestore, collectionName), where("email", "==", currentUser.email));
+                const querySnapshot = await getDocs(q);
+      
+                if (!querySnapshot.empty) {
+                  userData = querySnapshot.docs[0].data();
+                  break;
                 }
-            } else {
+              }
+      
+              if (userData) {
+                setUser(userData);
+                setOriginalUser(userData);
+              } else {
+                console.log("No matching documents found.");
                 setUser(null);
-                setLoading(false);
+              }
+            } catch (error) {
+              console.error("Error fetching user data: ", error);
+            } finally {
+              setLoading(false);
             }
+          } else {
+            setUser(null);
+            setLoading(false);
+          }
         });
-
+      
         return () => unsubscribe();
-    }, []);
+      }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -93,11 +97,45 @@ const UserProfileForm = () => {
                     const userRef = querySnapshot.docs[0].ref;
                     await updateDoc(userRef, changes);
                     console.log("User data updated successfully!");
+                    alert("User data updated successfully!");
                 }
             } catch (error) {
                 console.error("Error updating user data: ", error);
             }
-        } else {
+        } 
+        if (Object.keys(changes).length > 0) {
+            try {
+                const q = query(collection(firestore, "admin"), where("email", "==", user.email));
+                const querySnapshot = await getDocs(q);
+                if (querySnapshot.empty) {
+                    console.log("No matching documents found.");
+                } else {
+                    const userRef = querySnapshot.docs[0].ref;
+                    await updateDoc(userRef, changes);
+                    console.log("User data updated successfully!");
+                    alert("User data updated successfully!");
+                }
+            } catch (error) {
+                console.error("Error updating user data: ", error);
+            }
+        }
+        if (Object.keys(changes).length > 0) {
+            try {
+                const q = query(collection(firestore, "s_admin"), where("email", "==", user.email));
+                const querySnapshot = await getDocs(q);
+                if (querySnapshot.empty) {
+                    console.log("No matching documents found.");
+                } else {
+                    const userRef = querySnapshot.docs[0].ref;
+                    await updateDoc(userRef, changes);
+                    console.log("User data updated successfully!");
+                    alert("User data updated successfully!");
+                }
+            } catch (error) {
+                console.error("Error updating user data: ", error);
+            }
+        }
+        else {
             console.log("No changes to update.");
         }
     };
