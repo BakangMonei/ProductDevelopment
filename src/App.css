@@ -84,6 +84,23 @@
   background-color: rgba(255, 255, 255, 0.7);
   /* White color with 70% opacity */
 }
+@keyframes carouselAnimation {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  30% { opacity: 1; }
+  40% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.carousel-inner {
+  display: flex;
+  animation: carouselAnimation 15s infinite;
+}
+
+.carousel-item {
+  min-width: 100%;
+}
+
 
 @tailwind base;
 @tailwind components;
