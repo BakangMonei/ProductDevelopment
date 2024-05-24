@@ -60,8 +60,8 @@ function App() {
       <Router>
         <Routes>
           {/* For testing only */}
-          <Route path="/" element={<LandingPage />} />
-          {/* <Route path="/LandingPage" element={<LandingPage />} /> */}
+          <Route path="/" element={<SplashScreen />} />
+          <Route path="/LandingPage" element={<LandingPage />} />
           {/* <Route path="/" element={<ChatBot />} /> */}
           {/* <Route path="/" element={<UserDashboard />} /> */}
           <Route path="/SplashScreen" element={<SplashScreen />} />
