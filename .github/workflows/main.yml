@@ -1,4 +1,4 @@
-name: Run Production Build and Cypress Tests
+name: Run Production Build and Tests
 
 on:
   push:
@@ -16,11 +16,34 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "18"
+
       - name: Install dependencies
         run: npm install
+
       - name: Install Playwright
-        run: npm install playwright
+        run: npm run playwright:install
+
       - name: Build
         run: npm run build
+
       - name: Start server
-        run: npm start
+        run: npm start &
+        env:
+          CI: true
+
+      - name: Wait for server to be ready
+        run: npx wait-on http://localhost:3000
+
+      - name: Run Cypress tests
+        run: npm run cypress:run
+
+      - name: Run Playwright tests
+        run: npm run playwright:test
+
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli
+
+      - name: Run Lighthouse CI
+        run: npm run lighthouse:ci
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
