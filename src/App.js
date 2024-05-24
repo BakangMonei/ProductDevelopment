@@ -1,9 +1,6 @@
 import { lazy } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
+import { BrowserRouter as Router,
+  Route, Routes, Navigate,
 } from "react-router-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux"; // Import createStore from redux
@@ -53,15 +50,12 @@ const PrivateRoute = ({ element, path }) => {
 
 function App() {
   return (
-    // Provide the Redux store to your React app
     <Provider store={store}>
       <Router>
         <Routes>
           {/* For testing only */}
           <Route path="/" element={<SplashScreen />} />
           <Route path="/LandingPage" element={<LandingPage />} />
-          {/* <Route path="/" element={<ChatBot />} /> */}
-          {/* <Route path="/" element={<UserDashboard />} /> */}
           <Route path="/SplashScreen" element={<SplashScreen />} />
 
           {/* More functionality routes as needed */}
@@ -78,12 +72,11 @@ function App() {
             path="/AdminDashboard"
             element={<PrivateRoute element={<AdminDashboard />} />}
           />
+
           <Route
             path="/SuperAdminDashboard"
             element={<PrivateRoute element={<SuperAdminDashboard />} />}
           />
-
-          {/* Add more routes as needed */}
 
           {/* SuperAdmin*/}
           <Route
@@ -118,19 +111,11 @@ function App() {
             element={<PrivateRoute element={<CreateAdmin />} />}
           />
           <Route
-            path="/CreateUser"
-            element={<PrivateRoute element={<CreateUser />} />}
-          />
+            path="/CreateUser" element={<PrivateRoute element={<CreateUser />} />}/>
 
-          <Route
-            path="/ViewUploadedVideos"
-            element={<PrivateRoute element={<ViewUploadedVideos />} />}
-          />
+          <Route path="/ViewUploadedVideos" element={<PrivateRoute element={<ViewUploadedVideos />} />}/>
 
-          <Route
-            path="/Settings"
-            element={<PrivateRoute element={<Settings />} />}
-          />
+          <Route path="/Settings" element={<PrivateRoute element={<Settings />} />} />
 
           <Route path="/UserProfile" element={<UserProfile />} />
           <Route path="/FavoritesList" element={<FavoritesList />} />
