@@ -30,8 +30,6 @@ import Setting from "./components/settings/Setting";
 import AdminBlogPage from "./components/blog/AdminBlogPage";
 import ProfileAdmin from "./components/Forms/ProfileAdmin";
 import AdminTwoBlogPage from "./components/blog/AdminTwoBlogPage";
-
-import ChatBot from "./components/chatbot/ChatBot";
 import CreateSuperAdmin from "./components/Forms/CreateSuperAdmin";
 import ContactAdmins from "./components/Forms/ContactAdmins";
 import LandingPage from "./pages/main/LandingPage";
