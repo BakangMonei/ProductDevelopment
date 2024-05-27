@@ -14,8 +14,6 @@ import { registerUser } from "../../redux/actions/authActions";
 import ReCAPTCHA from "react-google-recaptcha";
 
 
-
-
 export const RegistrationPage = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastame] = useState("");
