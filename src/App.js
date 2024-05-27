@@ -35,6 +35,7 @@ const RegistrationPage = lazy(() => import("./pages/main/RegistrationPage"));
 const ForgotPassword = lazy(() => import("./pages/main/ForgotPassword"));
 const LoginPage = lazy(() => import("./pages/main/LoginPage"));
 
+
 // Create Redux store
 const store = createStore(rootReducer);
 
