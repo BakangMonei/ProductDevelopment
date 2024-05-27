@@ -10,16 +10,7 @@ const Popover = () => {
   };
 
   return (
-    // <div className="relative w-full px-4 py-6 bg-white shadow-lg dark:bg-gray-800">
-    //   <button onClick={togglePopover} className="btn bg-blue-500 text-white py-2 px-4 rounded">Create User</button>
-    //   {isOpen && (
-    //     <div className="absolute z-10 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200">
-    //       <div className="p-4">
-    //         <CreateAdmin />
-    //       </div>
-    //     </div>
-    //   )}
-    // </div>
+
 
     <div class="w-64 p-2 m-auto bg-white shadow-lg rounded-2xl">
       <img

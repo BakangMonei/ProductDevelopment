@@ -10,6 +10,7 @@ const Check = () => {
         type="checkbox"
         checked={checked}
         onChange={() => setChecked(!checked)}
+        required
       />
       <label>Remember me</label>
     </div>

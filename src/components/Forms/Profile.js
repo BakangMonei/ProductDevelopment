@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import DummyImage from "../../assets/images/neizatheedev.png";
 import CoverOne from "../../assets/images/cover-01.png";
-import userSix from "../../assets/images/user/user-06.png";
-import { auth, firestore } from "../../Database/firebase";  // Import auth and firestore from firebase.js
-import { query, where, getDocs, collection } from "firebase/firestore";
 import SuperAdminNavBar from "../NavBars/SuperAdminNavBar";
-import AdminNavbar from "../NavBars/AdminNavbar";
 import UserProfileChangePasswordFor from "./UserProfileChangePasswordFor";
 import UserProfileForm from "./UserProfileForm";
 

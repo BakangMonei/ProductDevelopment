@@ -76,6 +76,7 @@ const CreateSuperAdmin = () => {
         selectedCountry,
         phonenumber,
         gender,
+        generatedPassword,
       };
 
       const docRef = await addDoc(collection(firestore, "s_admin"), userData);

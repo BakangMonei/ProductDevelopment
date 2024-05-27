@@ -9,6 +9,7 @@ const CheckBoxTwo = () => {
         type="checkbox"
         checked={checked}
         onChange={() => setChecked(!checked)}
+        required
       />
       <label>Show Passwords</label>
     </div>

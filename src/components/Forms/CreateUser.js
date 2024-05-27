@@ -76,6 +76,7 @@ const CreateUser = () => {
         selectedCountry,
         phonenumber,
         gender,
+        generatedPassword,
       };
 
       const docRef = await addDoc(collection(firestore, "users"), userData);
