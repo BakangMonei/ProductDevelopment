@@ -46,11 +46,11 @@ const SuperAdminNavBar = () => {
       <div className="flex flex-col sm:flex-row sm:justify-around">
         <div className="h-screen w-72">
           <p className="text-2xl font-bold">Welcome Super Admin, </p>
-        {currentUser && (
-              <p className="p-3 ">
-                {currentUser.firstname} {currentUser.lastname}!
-              </p>
-            )}
+          {currentUser && (
+            <p className="p-3 ">
+              {currentUser.firstname} {currentUser.lastname}!
+            </p>
+          )}
           <nav className="px-6 mt-10">
             <Link
               to="/SuperAdminDashboard"
@@ -70,7 +70,7 @@ const SuperAdminNavBar = () => {
               </svg>
               <span className="mx-4 font-normal text-md">Dashboard</span>
             </Link>
-            
+
             <div>
               <p className="w-full pb-2 mb-4 ml-2 font-extrabold text-gray-300 border-b-2 border-gray-100 text-md">
                 My Profile
@@ -152,7 +152,7 @@ const SuperAdminNavBar = () => {
                   </svg>
                 </span>
                 <span className="mx-4 font-normal text-md">
-                  Create Broadcasters
+                  Create Broadcaster/Admin
                 </span>
               </Link>
 
@@ -270,7 +270,7 @@ const SuperAdminNavBar = () => {
                     ></path>
                   </svg>
                 </span>
-                <span className="mx-4 font-normal text-md">Settings</span>
+                <span className="mx-4 font-normal text-md">View Live Streams</span>
               </Link>
               <div>
                 {currentUser ? (

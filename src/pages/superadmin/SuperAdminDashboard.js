@@ -28,12 +28,8 @@ export const SuperAdminDashboard = () => {
             <WebLogs />
        
         </div>
-        <div>
-          <p className="text-black text-6xl font-extrabold text-center items-center underline p-3">Stream here</p>
-        </div>
-        <div>
-          <SportsCard />
-        </div>
+        
+        
       </div>
     </div>
   );

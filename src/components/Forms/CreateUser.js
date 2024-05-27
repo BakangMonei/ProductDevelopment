@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-
-import { auth, firestore } from "../../Database/firebase"; // Import Firebase Auth and Firestore
-import {
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-} from "firebase/auth";
-import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
-import { registerAdmin } from "../../redux/actions/authActions";
+import Modal from "react-modal";
+import { auth, firestore } from "../../Database/firebase";
+import { createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import { collection, addDoc } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { useNavigate } from "react-router-dom";
 import { countries } from "countries-list";
 import SuperAdminNavBar from "../NavBars/SuperAdminNavBar";
+
+Modal.setAppElement("#root");
 
 const CreateUser = () => {
   const [firstname, setFirstname] = useState("");
@@ -22,61 +20,32 @@ const CreateUser = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState("");
+  const [generatedPassword, setGeneratedPassword] = useState("");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const dispatch = useDispatch();
-  const registrationState = useSelector((state) => state.auth); // Assuming you have combined your reducers and authReducer is part of the state
+  const registrationState = useSelector((state) => state.auth);
 
-  const [generatedPassword, setGeneratedPassword] = useState("");
-
-  // Extracting countries from the countries-list package
   const countryOptions = Object.values(countries);
-
-  // Lists
   const sports = [
-    "Swimming",
-    "Athletics",
-    "Gymnastics",
-    "Cycling",
-    "Basketball",
-    "Football",
-    "Tennis",
-    "Boxing",
-    "Rowing",
-    "Diving",
-    "Wrestling",
-    "Sailing",
-    "Archery",
-    "Equestrian",
-    "Triathlon",
-    "Volleyball",
-    "Handball",
-    "Table Tennis",
-    "Taekwondo",
-    "Canoeing",
-    "Fencing",
-    "Shooting",
-    "Badminton",
-    "Rhythmic Gymnastics",
-    "Weightlifting",
-    "Hockey",
-    "Rugby Sevens",
-    "Synchronized Swimming",
-    "Water Polo",
-    "Modern Pentathlon",
+    "Swimming", "Athletics", "Gymnastics", "Cycling", "Basketball",
+    "Football", "Tennis", "Boxing", "Rowing", "Diving", "Wrestling",
+    "Sailing", "Archery", "Equestrian", "Triathlon", "Volleyball",
+    "Handball", "Table Tennis", "Taekwondo", "Canoeing", "Fencing",
+    "Shooting", "Badminton", "Rhythmic Gymnastics", "Weightlifting",
+    "Hockey", "Rugby Sevens", "Synchronized Swimming", "Water Polo",
+    "Modern Pentathlon"
   ];
-  const genders = ["Male", "Female", "Other"]
+  const genders = ["Male", "Female", "Other"];
 
-  // State for validation and registration success
   const [validationError, setValidationError] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
-  // Initialize useNavigate for redirection
   const navigate = useNavigate();
 
   const handleRegisterAdmin = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
 
-    // Check if any required field is empty
     if (
       firstname.trim() === "" ||
       lastname.trim() === "" ||
@@ -87,21 +56,17 @@ const CreateUser = () => {
       selectedCountry.trim() === "" ||
       phonenumber.trim() === ""
     ) {
-      // Validation error: Some fields are empty
       setValidationError(true);
       setRegistrationSuccess(false);
       return;
     }
 
-    // Generate a random password for the new admin
     const generatedPassword = generateRandomPassword();
-    setGeneratedPassword(generatedPassword); // Set the generated password in the state
+    setGeneratedPassword(generatedPassword);
 
     try {
-      // Create a new user with email and password
       await createUserWithEmailAndPassword(auth, email, generatedPassword);
 
-      // Create an object with the user's data (excluding password)
       const userData = {
         firstname,
         lastname,
@@ -110,45 +75,17 @@ const CreateUser = () => {
         sport,
         selectedCountry,
         phonenumber,
-        generatedPassword,
         gender,
       };
 
-      // Add the user's data to Firestore
       const docRef = await addDoc(collection(firestore, "users"), userData);
 
       if (docRef) {
-        // Registration and Firestore data addition successful
         setRegistrationSuccess(true);
-
-        // Set the generated password in the state
         setGeneratedPassword(generatedPassword);
-
-        // Send password reset email to the new admin
         await sendPasswordResetEmail(auth, email);
 
-        // Display confirmation dialog
-        const confirmed = window.confirm(
-          `User [ ${email} ] created successfully. \nGenerated Password: ${generatedPassword}. \nIt is adviced that ${firstname} ${lastname} should check their email to CHANGE PASSWORD!!!!!`
-        );
-
-        // If user confirms, navigate to SuperAdminDashboard
-        if (confirmed) {
-          setFirstname("");
-          setLastame("");
-          setEmail("");
-          setUsername("");
-          setSport("");
-          setSelectedCountry("");
-          setPhonenumber("");
-          setGeneratedPassword("");
-          setGender("");
-          setValidationError(false);
-          setRegistrationSuccess(false);
-
-        } else {
-
-        }
+        setModalIsOpen(true);
       } else {
         console.error("Error adding user data to Firestore.");
         setRegistrationSuccess(false);
@@ -159,11 +96,8 @@ const CreateUser = () => {
     }
   };
 
-  // Function to generate a random password
   const generateRandomPassword = () => {
-    // Generate a random alphanumeric password
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     const passwordLength = 10;
     let password = "";
     for (let i = 0; i < passwordLength; i++) {
@@ -172,16 +106,32 @@ const CreateUser = () => {
     }
     return password;
   };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setFirstname("");
+    setLastame("");
+    setEmail("");
+    setUsername("");
+    setSport("");
+    setSelectedCountry("");
+    setPhonenumber("");
+    setGender("");
+    setGeneratedPassword("");
+    setValidationError(false);
+    setRegistrationSuccess(false);
+  };
+
   return (
     <div className="flex flex-auto">
       <div>
         <SuperAdminNavBar />
       </div>
-      <div className=" flex min-h-screen  max-w-3xl mx-auto p-4 justify-center items-center">
-        <div className="login_container  items-center justify-center grid grid-cols-2 gap-4 p-8 rounded-xl shadow-md w-full max-w-4xl">
+      <div className="flex min-h-screen max-w-3xl mx-auto p-4 justify-center items-center">
+        <div className="login_container items-center justify-center grid grid-cols-2 gap-4 p-8 rounded-xl shadow-md w-full max-w-4xl">
           <div className="col-span-2">
             <h1 className="text-2xl font-semibold text-center mb-4">
-              Create New User
+              Create User
             </h1>
             {validationError && (
               <p className="text-red-500 mb-2 text-center">
@@ -213,9 +163,9 @@ const CreateUser = () => {
                     id="password"
                     name="password"
                     placeholder="Generated Password"
-                    value={generatedPassword} // Display the autogenerated password
+                    value={generatedPassword}
                     className="bg-transparent w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300"
-                    disabled // Disable the input field to prevent editing
+                    disabled
                   />
                 </div>
                 <div>
@@ -325,20 +275,42 @@ const CreateUser = () => {
                     ))}
                   </select>
                 </div>
-              </div>
-
-              <div className="flex justify-center mt-5">
-                <button
-                  type="submit"
-                  className="bg-blue-500 text-white py-2 px-4 rounded"
-                >
-                  Create User
-                </button>
+                <div className="col-span-2 text-center">
+                  <button
+                    type="submit"
+                    className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                  >
+                    Create User
+                  </button>
+                </div>
               </div>
             </form>
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Admin Created"
+        className="fixed inset-0 flex items-center justify-center z-50 p-4"
+        overlayClassName="fixed inset-0 bg-black bg-opacity-50 z-40"
+      >
+        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+          <h2 className="text-xl font-semibold mb-4">User Created Successfully</h2>
+          <p>Email: {email}</p>
+          <p>Password: {generatedPassword}</p>
+
+          <div className="font-bold p-3">
+            <p>It is advised that {email} should check email to change password</p>
+          </div>
+          <button
+            onClick={closeModal}
+            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 items-center justify-center"
+          >
+            Close
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };
