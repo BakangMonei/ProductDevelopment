@@ -13,10 +13,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Install dependencies
         run: npm install
-      - name: Start server
-        run: npm start &
       - name: Wait for server to be ready
-        run: npx wait-on http://localhost:3000
+        run: npx wait-on https://product-development.vercel.app
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
