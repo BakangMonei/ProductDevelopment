@@ -1,5 +1,5 @@
 describe('moneiPDTestFirst.cy.js', () => {
   it('playground', () => {
-    // cy.mount()
+    cy.mount()
   })
 })

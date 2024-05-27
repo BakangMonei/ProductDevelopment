@@ -1,5 +1,5 @@
 describe('LoginPage.cy.js', () => {
   it('playground', () => {
-    // cy.mount()
+    cy.mount()
   })
 })
