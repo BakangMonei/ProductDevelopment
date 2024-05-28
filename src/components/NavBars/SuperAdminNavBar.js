@@ -226,6 +226,26 @@ const SuperAdminNavBar = () => {
                 </span>
                 <span className="mx-4 font-normal text-md">View Users</span>
               </Link>
+              <Link
+                to="/SuperAdminEnquiryForm"
+                className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+              >
+                <span className="text-left">
+                  <svg
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    viewBox="0 0 2048 1792"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill="#5e72e4"
+                      d="M1070 1178l306-564h-654l-306 564h654zm722-282q0 182-71 348t-191 286-286 191-348 71-348-71-286-191-191-286-71-348 71-348 191-286 286-191 348-71 348 71 286 191 191 286 71 348z"
+                    ></path>
+                  </svg>
+                </span>
+                <span className="mx-4 font-normal text-md">View Enquiries</span>
+              </Link>
             </div>
             {/* Others*/}
             <div>
@@ -272,6 +292,26 @@ const SuperAdminNavBar = () => {
                 </span>
                 <span className="mx-4 font-normal text-md">View Live Streams</span>
               </Link>
+              <Link
+                to="/SuperAdminEnquiry"
+                className="flex items-center justify-start p-2 my-4 font-thin text-gray-500 transition-colors duration-200 hover:text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+              >
+                <span className="text-left">
+                  <svg
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    viewBox="0 0 2048 1792"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill="#5e72e4"
+                      d="M960 0l960 384v128h-128q0 26-20.5 45t-48.5 19h-1526q-28 0-48.5-19t-20.5-45h-128v-128zm-704 640h256v768h128v-768h256v768h128v-768h256v768h128v-768h256v768h59q28 0 48.5 19t20.5 45v64h-1664v-64q0-26 20.5-45t48.5-19h59v-768zm1595 960q28 0 48.5 19t20.5 45v128h-1920v-128q0-26 20.5-45t48.5-19h1782z"
+                    ></path>
+                  </svg>
+                </span>
+                <span className="mx-4 font-normal text-md">View All Enquiries</span>
+              </Link>
               <div>
                 {currentUser ? (
                   <button
@@ -290,6 +330,7 @@ const SuperAdminNavBar = () => {
                 )}
               </div>
             </div>
+            
           </nav>
         </div>
       </div>

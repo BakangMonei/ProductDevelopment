@@ -1,5 +1,6 @@
 import { lazy } from "react";
-import { BrowserRouter as Router,
+import {
+  BrowserRouter as Router,
   Route, Routes, Navigate,
 } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -30,6 +31,11 @@ import AdminTwoBlogPage from "./components/blog/AdminTwoBlogPage";
 import CreateSuperAdmin from "./components/Forms/CreateSuperAdmin";
 import ContactAdmins from "./components/Forms/ContactAdmins";
 import LandingPage from "./pages/main/LandingPage";
+import ChatBot from "./components/chatbot/ChatBot";
+import EnquiryForm from "./components/Forms/EnquiryForm";
+import SuperAdminEnquiryForm from "./components/Forms/SuperAdminEnquiryForm";
+import UserEnquiry from "./components/enquiry/UserEnquiry";
+import SuperAdminEnquiry from "./components/enquiry/SuperAdminEnquiry";
 
 const RegistrationPage = lazy(() => import("./pages/main/RegistrationPage"));
 const ForgotPassword = lazy(() => import("./pages/main/ForgotPassword"));
@@ -107,24 +113,32 @@ function App() {
             path="/ContactAdmins"
             element={<PrivateRoute element={<ContactAdmins />} />}
           />
+
           <Route
             path="/create-administrators"
             element={<PrivateRoute element={<CreateAdmin />} />}
           />
           <Route
-            path="/CreateUser" element={<PrivateRoute element={<CreateUser />} />}/>
+            path="/CreateUser" element={<PrivateRoute element={<CreateUser />} />} />
 
-          <Route path="/ViewUploadedVideos" element={<PrivateRoute element={<ViewUploadedVideos />} />}/>
+          <Route path="/ViewUploadedVideos" element={<PrivateRoute element={<ViewUploadedVideos />} />} />
 
           <Route path="/Settings" element={<PrivateRoute element={<Settings />} />} />
 
+          <Route path="/EnquiryForm" element={<EnquiryForm />} />
           <Route path="/UserProfile" element={<UserProfile />} />
+          <Route path="/SuperAdminEnquiryForm" element={<SuperAdminEnquiryForm />} />
           <Route path="/FavoritesList" element={<FavoritesList />} />
           <Route path="/UserFavorites" element={<UserFavorites />} />
           <Route path="/BlogPage" element={<BlogPage />} />
           <Route path="/AdminBlogPage" element={<AdminBlogPage />} />
           <Route path="/AdminTwoBlogPage" element={<AdminTwoBlogPage />} />
+
+          <Route path="/UserEnquiry" element={<UserEnquiry />} />
+          <Route path="/SuperAdminEnquiry" element={<SuperAdminEnquiry />} />
           <Route path="/Setting" element={<Setting />} />
+
+          <Route path="/ChatBot" element={<ChatBot />} />
         </Routes>
       </Router>
     </Provider>

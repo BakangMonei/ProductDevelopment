@@ -115,10 +115,10 @@ export const RegistrationPage = () => {
     const passwordError = validatePassword(password, repassword);
 
     // Check if captcha has been verified
-    // if (!isCaptchaVerified) {
-    //   alert(`Verify you're human`);
-    //   return;
-    // }
+    if (!isCaptchaVerified) {
+      alert(`Verify you're human`);
+      return;
+    }
 
     if (passwordError.error) {
       setValidationError(true);
@@ -378,14 +378,14 @@ export const RegistrationPage = () => {
               </button>
             </div>
 
-            {/* <div className="item-center justify-center flex-auto p-3">
+            <div className="item-center justify-center flex-auto p-3">
               <ReCAPTCHA
                 sitekey="6LcgtOIfAAAAAPKY4tPJouA-7ujrn7IHYJNvuOk6"
                 // sitekey="6Lcmd9EpAAAAAB-OWZucytCG02_mFrByM5sJDEid"
                 onChange={verifyCaptcha}
                 onExpired={resetCaptcha}
               />
-            </div> */}
+            </div>
           </form>
         </div>
         <div className="col-span-1 flex justify-center items-center">

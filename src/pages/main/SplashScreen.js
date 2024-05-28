@@ -19,7 +19,7 @@ const SplashScreen = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="progress-container">
-        <div className="progress-bar" style={{ width: `${progress}%` }} />
+        <div className="progress-bar w-auto" style={{ width: `${progress}%` }} />
       </div>
       <div className="progress-text">{progress}%</div>
     </div>

@@ -1,16 +1,15 @@
 import Navigation from "../../components/NavBars/Navigation";
 import Hero from "../../components/NavBars/hero";
-import mobilehero from "../../assets/images/image-hero-mobile.png";
-import desktophero from "../../assets/images/image-hero-desktop.png";
 import baaagggggg from "../../assets/images/bg2.jpg";
+import ChatBot from "../../components/chatbot/ChatBot";
 
 function LandingPage() {
   return (
-    <div className=" font-epilogue bg-[hsl(0,0%,98%)]">
+    <div className=" font-epilogue bg-[hsl(0,0%,98%)] h-screen">
       <div className=" flex flex-col">
         <Navigation />
-        <img src={baaagggggg} alt="image-hero-mobile" className="lg:hidden" />
-        <div className=" lg:flex lg:mx-44 lg:gap-4 lg:mt-10">
+        <img src={baaagggggg} alt="image-hero-mobile" className="lg:hidden max-h-full" />
+        <div className=" lg:flex lg:mx-44 lg:gap-4 lg:mt-10 max-h-full">
           <img
             src={baaagggggg}
             alt="image-hero-desktop"
@@ -19,6 +18,7 @@ function LandingPage() {
           <Hero />
         </div>
       </div>
+      <ChatBot/>
     </div>
   );
 }

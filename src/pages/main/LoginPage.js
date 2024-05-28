@@ -26,8 +26,8 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
   const db = getFirestore();
   // const siteKey = process.env.API_SITE_KEY; // Accessing the environment variable
 
-  // const siteKey = "6LcgtOIfAAAAAPKY4tPJouA-7ujrn7IHYJNvuOk6"; // Hardcode the site key
-  const siteKey = process.env.REACT_APP_API_SITE_KEY;
+  const siteKey = "6LcgtOIfAAAAAPKY4tPJouA-7ujrn7IHYJNvuOk6"; // Hardcode the site key
+  // const siteKey = process.env.REACT_APP_API_SITE_KEY;
 
   const [loginClicked, setLoginClicked] = useState(false); // Add this state variable
 
@@ -56,10 +56,10 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
       return;
     }
     // check the captch has been verified
-    // if (!isCaptchaVerified) {
-    //   alert(`Verify you're human`);
-    //   return;
-    // }
+    if (!isCaptchaVerified) {
+      alert(`Verify you're human`);
+      return;
+    }
 
     try {
       const userSnapshot = await getDocs(
@@ -170,14 +170,14 @@ export const LoginPage = ({ showPasswordToggle, showPassword }) => {
               </a>
             </div>
           </div>
-          {/* <div className="justify-center items-center flex p-3">
+          <div className="justify-center items-center flex p-3">
             <ReCAPTCHA
               sitekey={siteKey}
               // sitekey="6Lcmd9EpAAAAAB-OWZucytCG02_mFrByM5sJDEid"
               onChange={verifyCaptcha}
               onExpired={resetCaptcha}
             />
-          </div> */}
+          </div>
           <button
             type="submit"
             className="w-full bg-gray-500 text-white py-2 rounded-3xl hover:bg-gray-800 transition duration-200"

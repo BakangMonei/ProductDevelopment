@@ -77,11 +77,11 @@ const Sidebar = () => {
                 Favorites
               </Link>
             </li>
-            {/* <li>
-              <Link to="" className="block py-2 px-4 hover:bg-gray-700">
-                Events
+            <li>
+              <Link to="/UserEnquiry" className="block py-2 px-4 hover:bg-gray-700">
+                Make an Equiry
               </Link>
-            </li> */}
+            </li>
             <li>
               <Link
                 to="/BlogPage"
