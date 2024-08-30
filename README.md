@@ -10,6 +10,6 @@
 
 ### SuperAdmin
 
-**Email:** superadmin@gmail.com
+**Email:** superadmin@mail.com
 
 **password:** 123456789
